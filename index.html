@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link href="https://fonts.googleapis.com/css?family=PT+Mono" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="styles/base_styles.css">
+		<link rel="stylesheet" type="text/css" href="styles/building_styles.css">
+		<link rel="stylesheet" type="text/css" href="styles/center_styles.css">
+		<link rel="stylesheet" type="text/css" href="styles/menu_styles.css">
+		<link rel="stylesheet" type="text/css" href="styles/tooltip_styles.css">
+		<link rel="stylesheet" type="text/css" href="styles/minigame_styles.css">
+		
+		<title>Galactic Grind</title>
+		
+		<script src='https://cdn1.kongregate.com/javascripts/kongregate_api.js'></script>
+		<script src = "scripts/jquery.js"></script>
+		<script src = "scripts/tweaker.js"></script>
+		<script src = "scripts/save.js"></script>
+		<script src = "scripts/switcher.js"></script>
+		<script src = "scripts/tooltip.js"></script>
+		<script src = "scripts/effects.js"></script>
+		<script src = "scripts/challenges.js"></script>
+		<script src = "scripts/number.js"></script>
+		<script src = "scripts/production.js"></script>
+		<script src = "scripts/buffs.js"></script>
+		<script src = "scripts/karma.js"></script>
+		<script src = "scripts/buildings.js"></script>
+		<script src = "scripts/upgrades.js"></script>
+		<script src = "scripts/achievements.js"></script>
+		<script src = "scripts/tutorial.js"></script>
+		<script src = "scripts/menus.js"></script>
+		<script src = "scripts/unlocks.js"></script>
+		<script src = "scripts/minigames/main.js"></script>
+		<script src = "scripts/minigames/effects.js"></script>
+		<script src = "scripts/minigames/html.js"></script>
+		<script src = "scripts/subgames.js"></script>
+		<script src = "scripts/assistants.js"></script>
+		<script src = "scripts/automation.js"></script>
+		<script src = "scripts/stats.js"></script>
+		<script src = "scripts/tips.js"></script>
+		<script src = "scripts/main.js"></script>
+		<script src = "scripts/kong.js"></script>
+		<script src = "scripts/init.js"></script>
+		<script src = "scripts/hotkeys.js"></script>
+	</head>
+	<body>
+		<div id = "left_content">
+			<center style = "font-size : 24px;font-weight : 600" id="subgame_title">Other</center>
+			<div id = "subgame_buttons_container" style="float:left;">
+				<div id="corruption_subgame_button" style="cursor:pointer;float:left;height:48px;width:48px;background:url(images/upgrade_sheet.png) 0px -912px;" onmouseover="tooltip(this, 0, 19, 'Corruption Subgame', 'Click to open up the corruption subgame.')" onmouseleave="hideTooltip()" onclick="subgames[0].createHTML();"></div>
+				
+				<div id="angelic_assistant_button" style="cursor:pointer;float:left;height:48px;width:48px;background:url(images/upgrade_sheet.png) -96px -960px;" onmouseover="tooltip(this, 2, 20, 'Angelic Assistant', 'Click to open the menu for the Angelic Assistant.<br>Level: ' +assistants[0].level+ '<br>Progress: ' +Math.floor(assistants[0].xp)+ ' / ' +assistants[0].next_xp + '<br>' + ((stored_bonuses.length > 0) ? buffs[stored_bonuses[0][0]].name + ' Stored <br>' : '') + ((stored_bonuses.length > 1) ? buffs[stored_bonuses[1][0]].name + ' Stored <br>' : ''))" onmouseleave="hideTooltip()" onclick="assistants[0].createHTML();"></div>				
+				
+				<div id="research_assistant_button" style="cursor:pointer;float:left;height:48px;width:48px;background:url(images/upgrade_sheet.png) 0px -336px;" onmouseover="tooltip(this, 0, 7, 'Research Assistant', 'Click to open the menu for the Research Assistant.<br>Level: ' +assistants[3].level+ '<br>Progress: ' +Math.floor(assistants[3].xp)+ ' / ' +assistants[3].next_xp + '')" onmouseleave="hideTooltip()" onclick="assistants[3].createHTML();"></div>	
+				
+				<div id="demonic_assistant_button" style="cursor:pointer;float:left;height:48px;width:48px;background:url(images/upgrade_sheet.png) -144px -960px;" onmouseover="tooltip(this, 3, 20, 'Demonic Assistant', 'Click to open the menu for the Demonic Assistant.<br>Level: ' +assistants[1].level+ '<br>Progress: ' +Math.floor(assistants[1].xp)+ ' / ' +assistants[1].next_xp + '<br> ' + ((assistants[1].level >= 5) ? 'Next Demonic Vengance: ' + (demonic_vengeance+1) * 2 + '% <br>' : ''))" onmouseleave="hideTooltip()" onclick="assistants[1].createHTML();"></div>
+				
+				<div id="alien_assistant_button" style="cursor:pointer;float:left;height:48px;width:48px;background:url(images/upgrade_sheet.png) -192px -960px;" onmouseover="tooltip(this, 4, 20, 'Alien Assistant', 'Click to open the menu for the Alien Assistant.<br>Level: ' +assistants[2].level+ '<br>Progress: ' +Math.floor(assistants[2].xp)+ ' / ' +assistants[2].next_xp + '')" onmouseleave="hideTooltip()" onclick="assistants[2].createHTML();"></div>					
+				
+				<div id="zen_assistant_button" style="cursor:pointer;float:left;height:48px;width:48px;background:url(images/upgrade_sheet.png) -432px -1488px;" onmouseover="tooltip(this, 9, 31, 'Zen Assistant', 'Click to open the menu for the Zen Assistant.<br>Level: ' +assistants[4].level+ '<br>Progress: ' +Math.floor(assistants[4].xp)+ ' / ' +assistants[4].next_xp + '<br>' + ((assistants[4].level >= 15) ? ((calm) ? 'Calm On' : 'Calm Off') : ''))" onmouseleave="hideTooltip()" onclick="assistants[4].createHTML();"></div>	
+				
+				<div id="automation_assistant_button" style="cursor:pointer;float:left;height:48px;width:48px;background:url(images/upgrade_sheet.png) -384px -1440px;" onmouseover="tooltip(this, 8, 30, 'Automation Assistant', 'Click to open the menu for the Automation Assistant.<br>Level: ' +assistants[6].level+ '<br>Progress: ' +Math.floor(assistants[6].xp)+ ' / ' +assistants[6].next_xp)" onmouseleave="hideTooltip()" onclick="assistants[6].createHTML();"></div>
+				
+				<div id="corrupt_assistant_button" style="cursor:pointer;float:left;height:48px;width:48px;background:url(images/upgrade_sheet.png) -432px -1392px;" onmouseover="tooltip(this, 9, 29, 'Corrupt Assistant', 'Click to open the menu for the Corrupt Assistant.<br>Level: ' +assistants[5].level+ '<br>Progress: ' +Math.floor(assistants[5].xp)+ ' / ' +assistants[5].next_xp)" onmouseleave="hideTooltip()" onclick="assistants[5].createHTML();"></div>		
+				
+				<div id="reset_menu_button" style="cursor:pointer;float:left;height:48px;width:48px;background:url(images/upgrade_sheet.png) -240px -960px;" onmouseover="tooltip(this, 5, 20, 'Reset', 'Click to open the menu for reseting.<br><br>You have: <span style=\'color:#ffd21f;\'>' +fancyNumber(KARMA_POINTS)+ '</span> Karma Points that each increase production by 1%.<br><span style=\'color:#ffd21f;\'>' +fancyNumber(KARMA_POINTS - SPENT_KARMA_POINTS)+ '</span> are available for upgrades.<br><br>The next reset will grant <span style=\'color:#ffd21f;\'>' + fancyNumber(FUTURE_KARMA_POINTS - KARMA_POINTS) + '</span> Karma Points increasing total Karma Points to <span style=\'color:#ffd21f;\'>' + fancyNumber(FUTURE_KARMA_POINTS) + '</span>.')" onmouseleave="hideTooltip()" onclick="openSoftReset();MENU_CLOSE = false;"></div>				
+				
+				<div id="challenge_menu_button" style="cursor:pointer;float:left;height:48px;width:48px;background:url(images/upgrade_sheet.png) -144px -1488px;" onmouseover="tooltip(this, 3, 31, 'Challenges', 'Click to open the menu for challenges.')" onmouseleave="hideTooltip()" onclick="openChallenges();MENU_CLOSE = false;"></div>				
+				
+				<div id="challenge_display" style="cursor:pointer;float:left;height:48px;width:48px;background:url(images/upgrade_sheet.png) -240px -960px;" onmouseover="tooltip(this, 3, 31, 'Challenges', 'Click to open the menu for challenges.')" onmouseleave="hideTooltip()" oncontextmenu="endChallenge(CURRENT_CHALLENGE)"></div>
+			</div>
+			<div id = "big_break">
+				<br>
+				<br>
+			</div>
+			<div><center style = "font-size : 24px;font-weight : 600">Upgrades</center></div>
+			<div id = "upgrades_container">
+				
+			</div>
+		</div>
+		
+		<div id = "center_content">
+			<div id = "button_container" style="position:absolute;left:8px;top:96px">
+				<img id="global_statistics" onclick = "openGlobals($('#information_statistics'))" onmouseover="globalStatisticTooltip(this)" onmouseout="hideTooltip()" src="images/icon_stats.png"><br>
+				<img id="global_settings" src="images/icon_settings.png" onclick = "openGlobals($('#information_settings'))" onmouseover="globalSettingsTooltip(this)" onmouseout="hideTooltip()"><br>
+				<img id="global_upgrades" onclick = "openGlobals($('#information_upgrades'))" onmouseover="globalUpgradesTooltip(this)" onmouseout="hideTooltip()"src="images/icon_upgrades.png"><br>
+				<img id="global_info" onclick = "openGlobals($('#information_currency'))" onmouseover="globalInformationTooltip(this)" onmouseout="hideTooltip()" src="images/icon_building_information.png" oncontextmenu = "toggleCurrency()");><br>
+				<img id="global_achievements" onclick = "openAchievements();" onmouseover="achievementTooltip(this)" onmouseout="hideTooltip()" src="images/icon_achievements.png" ><br>
+				<img id="global_shop" onclick = "if (!kongregate.services.isGuest()) {openShop();MENU_CLOSE = false;} else {openLoginMenu();MENU_CLOSE = false;}" onmouseover="shopTooltip(this)" onmouseout="hideTooltip()" src="images/icon_store.png" ><br>
+				<img id="global_fullscreen" height = "40px" width = "40px" style = "position:relative;left:4px;" onclick = "openFullscreen();" onmouseover="fullscreenTooltip(this)" onmouseout="hideTooltip()" src="images/fullscreen.png"><br>
+			</div>
+		
+			<div id = "clock_container" style = "text-align : center;font-size : 30px;">
+				<span id = "speed_display">1x</span>
+				<img id = "speed_icon" src = "images/ui_speed_1.png" style="cursor:pointer" onclick = "increaseSpeed();">
+				<span id = "time_remaining" >0s</span>
+			</div>
+			
+			<div id = "buff_container">
+				<div id = "small_credits_display">LOADING</div>
+			</div>
+			
+			<div id = "world_container" onclick = "handleClick();">
+				<img style="position:absolute;" src="images/world_background.png" >
+				<div id="world_continents" style="border-radius:64px;position:absolute;height:128px;width:128px;background:url(images/world_continents.png) 0px 0;"></div>
+				<div id="world_atmosphere" style="border-radius:64px;position:absolute;height:128px;width:128px;background:url(images/world_atmosphere.png) 0px 0;"></div>
+				<img style="position:absolute;" src="images/world_overlay.png">
+				<img id="world_bg" style="position:absolute;" src="images/world_overlay_2.png">
+				<br/>
+			</div>
+					   
+			<div id = "credits_display">LOADING</div>
+			
+			<div id = "detail_container">
+				
+			</div>
+			
+			<div id="click_value_container" style="font-size:22px;position:absolute;bottom:50%;bottom: calc(50% - 70px);left:calc(50% + 60px);transform: translate(-50%, 0);">
+			</div>
+			
+			<div id = "global_container" onclick = "MENU_CLOSE = false;">
+				<div class="detail_title">Information</div> 
+				<img src = "images/button_x.png" style = "position:absolute;top:0px;right:0px;cursor:pointer" onclick = "$('#global_container').hide();" onmouseover = "$(this).attr('src', 'images/button_x_hover.png')" onmouseout = "$(this).attr('src', 'images/button_x.png')">
+				<div id = "information_statistics" class = "expandable" onclick = "$(this).children(':nth-child(2)').slideToggle('slow')">
+					<div id = "information_statistics_header">Statistics</div>
+					<div style="text-align:left;" id = "information_statistics_content"></div>
+				</div>
+				<div id = "information_settings" class = "expandable" onclick = "$(this).children(':nth-child(2)').slideToggle('slow')">
+					<div id = "information_settings_header">Settings</div>
+					<div style="text-align:left;" id = "information_settings_content"></div>
+				</div>
+				<div id = "information_upgrades" class = "expandable" onclick = "$(this).children(':nth-child(2)').slideToggle('slow')">
+					<div id = "information_currency_header">Bought Upgrades</div>
+					<div style="text-align:left;" id = "information_upgrades_content"></div>
+				</div>
+				<div id = "information_currency" class = "expandable" onclick = "$(this).children(':nth-child(2)').slideToggle('slow')">
+					<div id = "information_currency_header">Currencies</div>
+					<div style="text-align:left;" id = "information_currency_content"></div>
+				</div>
+				<div id = "information_popup" class = "expandable" onclick = "$(this).children(':nth-child(2)').slideToggle('slow')">
+					<div id = "information_popup_header">Recent Popups</div>
+					<div style="text-align:left;" id = "information_popup_content"></div>
+				</div>
+			</div>
+			
+			<div id = "tip_container">
+				<span id = "tip_content"></span><br>
+				<img style = "cursor:pointer;" src = "images/button_close.png" onclick = "$('#tip_container').fadeOut();queue_timer = 0;">
+			</div>
+			
+			<div id="save_element" style="position:absolute;left:5px;bottom:30px;background:url('images/misc_save.png') 0 0px;height:36px;width:36px" onclick="save();"></div>
+			<div id="save_element_empty" onmouseover="saveTooltip(this)" onmouseout="hideTooltip();" style="cursor:pointer;position:absolute;left:5px;bottom:30px;background:url('images/misc_save_empty.png') 0 0px;height:36px;width:36px" onclick="save();"></div>
+			
+			
+			<div id = "tier_container" style = "position:absolute;right:0px;top:120px;">
+				<img onclick = "changeTier(1)" id = "button_tier_1" src = "images/tier_1_active.png"><br><br>
+				<img onclick = "changeTier(2)" id = "button_tier_2" src = "images/tier_2.png"><br><br>
+				<img onclick = "changeTier(3)" id = "button_tier_3" src = "images/tier_3.png">
+			</div>
+		</div>
+		
+		<div id = "right_content">
+			<center style = "font-size : 24px; font-weight : 600">Buildings</center>
+			
+			<center id = "buy_count_selector" style = "font-size : 24px; font-weight : 600">
+				Buy: 
+				<span style = "cursor:pointer" id = "buy_count_1" onclick = "changeBuyCount(1)" class = "buy_count">1</span>
+				<span style = "cursor:pointer" id = "buy_count_5" onclick = "changeBuyCount(5)">5</span>
+				<span style = "cursor:pointer" id = "buy_count_10" onclick = "changeBuyCount(10)">10</span>
+				<span style = "cursor:pointer" id = "buy_count_50" onclick = "changeBuyCount(50)">50</span>
+			</center>
+			<div id = "buy_new" class = "building" onclick = "createBuildingMenu()">
+				<div class = "building_price" id = "tier_cost_display">100</div>
+				<div class = "building_name">Unlock New</div>
+				<img class = "building_icon" src = "images/building_icon_new.png">
+			</div>
+			<div id = "buildings_container"></div>
+		</div>
+		
+		<div id = "menu_container"></div>
+		
+		<canvas id = "fullscreen_research" height = "450" width = "750" style = "z-index : 20; height : 450px; width : 750px; border : 5px solid black; position : absolute; left : 50%; top : 50%; transform : translate(-50%, -50%); cursor : grab"></canvas> 		
+		<img id="close_fullscreen" onclick="toggleResearchFullScreen()" src="images/close_fullscreen.png" style = "z-index : 20; position:absolute; left:50%; bottom: 20px; transform : translate(-50%, 0%); cursor : pointer;">
+		
+		<canvas id = "fullscreen_karma" height = "450" width = "750" style = "z-index : 119; height : 450px; width : 750px; border : 5px solid black; position : absolute; left : 50%; top : 50%; transform : translate(-50%, -50%); cursor : grab"></canvas>
+		<img id="close_karma_tree" onclick="closeKarmaFullscreen()" src="images/close_fullscreen.png" style = "z-index : 20; position:absolute; left:50%; bottom: 20px; transform : translate(-50%, 0%); cursor : pointer;">
+		
+		<div id = "tooltip" style = "z-index : 120">
+			<div id = "tooltip_icon" style = "float:left;width:48px;height:48px;"></div>
+			&nbsp;
+			<span id = "tooltip_title"></span>
+			<hr><br>
+			<span id = "tooltip_content"></span>
+		</div>
+		
+		<div id="popup_text" style="z-index:100000;font-size:30px;position:absolute;color:#FFFFFF;pointer-events: none;text-shadow:0px 0px 8px #000000;">
+		</div>        
+		
+		<div id="popup_achievement" style="z-index:100001;font-size:30px;position:absolute;color:#FFFFFF;pointer-events: none;text-shadow:0px 0px 8px #000000;">
+			<div id="achievement_display"></div>
+			<div id="achievement_title"></div>
+		</div>
+		
+		<div id="click_farm_display" style="position:absolute;top:0px;left:0px;z-index:99;">
+		
+		</div>
+		
+		<img id="click_farm_clicker" src="images/building_icon_click.png"/>
+	
+		<div id="offline_popup" style="z-index:9999" onclick="MENU_CLOSE = false;">
+			<img src="images/button_x.png" style="position:absolute;top:0px;right:0px;cursor:pointer" onclick="$('#offline_popup').hide();" onmouseover="$(this).attr('src', 'images/button_x_hover.png')" onmouseout="$(this).attr('src', 'images/button_x.png')">
+		
+			<center>
+				<span style="font-size:25px;">Offline Production</span>
+				<hr>
+				<br>
+				<span id = "offline_intro">During your  60s spent offline, you received: </span>
+				<br>
+				<br>
+				<span id = "offline_contents"></span>
+				<br>
+				<br>
+				<img id = "offline_got_it_button" style = "cursor:pointer;display:inline-block" src = "images/button_close.png" onclick = "$('#offline_popup').hide();">
+			</center>
+		</div>
+	
+		<div id="save_popup" style="z-index:10000" onclick="MENU_CLOSE = false;">
+			<center>
+				<span style="font-size:20px;">Open Import/Export Menu</span>
+				<br>
+				<span id="save_help"></span>
+				<textarea rows="20" cols="45" id="export_textarea"></textarea>
+				<button onclick='importSave()' type='button' class='basic_button'>Import</button>
+				<button onclick='exportSave()' type='button' class='basic_button'>Export</button>
+				<button onclick='$("#save_popup").hide()' type='button' class='basic_button'>Cancel</button>
+			</center>
+		</div>
+		
+		<div id="wipe_popup" style="z-index:10001" onclick="MENU_CLOSE = false;">
+			<center>
+				<span style="font-size:20px;">Are you sure you want to delete your save file? This will permanently erase all progress of this save.</span>
+				<br>
+				<br>
+				<button onclick='wipeSave()' type='button' class='basic_button'>Wipe Save</button>
+				<button onclick='$("#wipe_popup").hide()' type='button' class='basic_button'>Cancel</button>
+			</center>
+		</div>
+		
+		<div id = "dark_box_container" style="opacity:0.9;position:absolute;left:0px;top:0px;height:100%;width:100%;pointer-events:none" >
+			<div class = "dark_box" id = "dark_box_1" style="height:0px;width:0px;position:absolute;left:0px;top:0px;"></div>
+			<div class = "dark_box" id = "dark_box_2" style="height:0px;width:0px;position:absolute;left:0px;top:0px;"></div>
+			
+			<div class = "dark_box" id = "dark_box_3" style="height:0px;width:0px;position:absolute;right:0px;bottom:0px;"></div>
+			<div class = "dark_box" id = "dark_box_4" style="height:0px;width:0px;position:absolute;right:0px;bottom:0px;"></div>
+		</div>
+		
+		<div id = "tutorial_text_container">
+			<span id = "tutorial_content">Welcome to Galactic Grind, Click on the globe to start the tutorial.</span><br>
+			<img id = "tutorial_got_it_button" style = "cursor:pointer;position:absolute;left:50%;bottom:5px;transform:translateX(-50%)" src = "images/button_close.png" onclick = "currentTutorialStep();">
+			<span id = "skip_tutorial_button" style = "cursor:pointer;position:absolute;right:5px;bottom:5px;" onclick = "current_tutorial.end();">Skip</span>
+		</div>
+		
+		<script>
+			$("#tooltip").hide();
+			$("#save_popup").hide();
+			$("#wipe_popup").hide();
+			$("#click_farm_clicker").hide();
+			$("#detail_container").hide();
+			$("#global_container").hide();
+			$("#fullscreen_research").hide();
+			$("#close_fullscreen").hide();
+			$("#small_credits_display").hide();
+			$("#offline_popup").hide();
+			updateClockDisplay();
+			$("#tier_cost_display").html(fancyNumber(tierPrice(CURRENT_TIER)));
+			closeKarmaFullscreen()
+			document.getElementById("fullscreen_research").onmousedown = function(e) {
+				isDown = true;
+				var map_camera = minigames[5].vars.research_camera;
+				
+				map_camera.start_x = e.offsetX + map_camera.x;
+				map_camera.start_y = e.offsetY + map_camera.y;
+				
+				document.getElementById("fullscreen_research").style.cursor = "grabbing";
+				
+			}
+			document.getElementById("fullscreen_research").onmouseup = function(e) {
+				isDown = false;
+				document.getElementById("fullscreen_research").style.cursor = "grab";
+			}
+			document.getElementById("fullscreen_research").onmouseout = function(e) {
+				isDown = false;
+				hideTooltip();
+				//document.getElementById("canvas_map").style.cursor = "grab";
+			}
+			document.getElementById("fullscreen_research").onmousemove = function(e) {
+				hideTooltip();
+				researchMouseDetection(e);
+				
+				var map_camera = minigames[5].vars.research_camera;
+				if(!isDown) return;
+				var x = e.offsetX;
+				var y = e.offsetY;
+				map_camera.x -= x - map_camera.start_x + map_camera.x;
+				map_camera.y -= y - map_camera.start_y + map_camera.y;
+				
+				renderResearch();
+			}
+			document.getElementById("fullscreen_research").onclick = function(e) {
+				researchClickDetection(e);
+			}
+			
+			document.getElementById("fullscreen_karma").onmousedown = function(e) {
+				isDown = true;
+				var map_camera = karma_tree.camera;
+				
+				map_camera.start_x = e.offsetX + map_camera.x;
+				map_camera.start_y = e.offsetY + map_camera.y;
+				
+				document.getElementById("fullscreen_karma").style.cursor = "grabbing";
+				
+			}
+			document.getElementById("fullscreen_karma").onmouseup = function(e) {
+				isDown = false;
+				document.getElementById("fullscreen_karma").style.cursor = "grab";
+			}
+			document.getElementById("fullscreen_karma").onmouseout = function(e) {
+				isDown = false;
+				hideTooltip();
+				//document.getElementById("canvas_map").style.cursor = "grab";
+			}
+			document.getElementById("fullscreen_karma").onmousemove = function(e) {
+				hideTooltip();
+				karmaMouseDetection(e);
+				
+				var map_camera = karma_tree.camera;
+				if(!isDown) return;
+				var x = e.offsetX;
+				var y = e.offsetY;
+				map_camera.x -= x - map_camera.start_x + map_camera.x;
+				map_camera.y -= y - map_camera.start_y + map_camera.y;
+				
+				renderKarmaTree();
+			}
+			document.getElementById("fullscreen_karma").onclick = function(e) {
+				karmaClickDetection(e);
+			}
+			
+			if (!KONG_ENABLED) {$("#global_shop").remove()}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,268 @@
+#menu_building {
+    text-align : center;
+    position : absolute;
+    top : 100px;
+    border : 3px solid black;
+    background : radial-gradient(rgba(200, 200, 200, 0.2), rgba(0, 0, 0, 0.2)), url("../images/noise_blue.png");
+    padding : 10px;
+    
+    left : 50%;
+    top : 50%;
+    transform : translate(-50%, -50%);
+}
+#hotkey_menu {
+	border : 3px solid black;
+	position:absolute;
+	left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+	height: 550px;
+	width: 400px;
+	z-index: 60;
+	background : radial-gradient(rgba(200, 200, 200, 0.2), rgba(0, 0, 0, 0.2)), url("../images/noise_blue.png");
+}
+#hotkey_menu > table , #hotkey_menu > td,  #hotkey_menu > th {
+	border: 3px solid grey;
+	margin: 0 auto;
+}
+#hotkey_menu > table {
+	position: relative;
+	top: 15px;
+}
+table, td, th {
+	border: 2px solid grey;
+}
+#save_popup, #wipe_popup, #offline_popup, #soft_reset_confirmation, #challenge_background, #challenge_popup, #login_popup {
+    position : absolute;
+    width : 350px;
+    background : radial-gradient(rgba(200, 200, 200, 0.2), rgba(0, 0, 0, 0.2)), url("../images/noise_blue.png");
+    border : 2px solid black;
+    padding : 8px;
+    border-radius : 3px;
+	left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+#offline_popup {
+	width : 500px;
+}
+#assistant_background, #building_automation_background, #soft_reset_background {
+	position:absolute;
+	left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+	height: 450px;
+	width: 390px;
+	z-index: 59;
+	background: radial-gradient(rgba(200, 200, 200, 0.2), rgba(0, 0, 0, 0.2)), url(../images/noise_blue.png);
+}
+.subgame_background {
+	position:absolute;
+	left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+	height: 550px;
+	width: 900px;
+	z-index: 60;
+	background: radial-gradient(rgba(200, 200, 200, 0.2), rgba(0, 0, 0, 0.2)), url(../images/noise_black.png);
+}
+.subgame_reset_background {
+	position:absolute;
+	left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+	height: 450px;
+	width: 550px;
+	padding: 10px;
+	z-index: 61;
+	background: radial-gradient(rgba(200, 200, 200, 0.2), rgba(0, 0, 0, 0.2)), url(../images/noise_blue.png);
+}
+.subgame_close {
+	position: absolute;
+	right: -24px;
+	top: -24px;
+	cursor: pointer;
+}
+.subgame_upgrades {
+	position: absolute;
+	left: 10px;
+	top: 20px;
+	width: 196px;
+}
+.subgame_credit_display {
+    position : absolute;
+    left : 0;
+    right : 0;
+    margin : auto;
+    left : 50%;
+    top : calc(50% + 105px);
+    transform : translate(-50%, -50%);
+    text-align : center;
+	font-size : 22px;
+}
+#reset_button_corruption {
+	background-color: #057f0a;
+	border: 2px solid black;
+	border-radius: 4px;
+	padding: 15px 32px;
+	cursor: pointer;
+	font-size: 125%;
+	color: #EAEAEA;
+	-webkit-transition: background-color 0.5s, padding 0.5s; /* Safari */
+	transition: background-color 0.5s, padding 0.5s;
+}
+#reset_button_corruption:hover {
+	background-color: #05b20c;
+	padding: 20px 37px;
+}
+#corruption_clicker {
+	-webkit-transition: rotate 0.5s; /* Safari */
+	transition: rotate 0.5s;
+}
+.corruption_count {
+	color: #14ff03;
+	text-shadow: 0px 0px 8px #32b54a;
+	display: inline-block;
+	position:relative;
+	top: -17px;
+}
+.corruption_building {
+	position: relative;
+	border: 3px solid #087c00;
+	border-radius: 0px;
+	display: inline-block;
+	width: 150px;
+}
+.menu_building_title {
+    font-size : 32px;
+}
+.buy_count {
+    color : #4dff4d;
+	text-shadow : 0px 0px 4px #80ff80;
+}
+.gambler_button:hover {
+	-webkit-filter: drop-shadow(2px 2px 2px #111);
+	filter: drop-shadow(2px 2px 2px #111);
+	cursor: pointer;
+}
+.category_inactive {
+-webkit-filter: grayscale(100%);
+   -moz-filter: grayscale(100%);
+	 -o-filter: grayscale(100%);
+	-ms-filter: grayscale(100%);
+		filter: grayscale(100%);
+}
+/* W3School Checkboxes */
+.container {
+  display: inline-block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 19px;
+  width: 19px;
+  background-color: #eee;
+}
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+.container input:checked ~ .checkmark {
+  background-color: #23db23;
+}
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+.container .checkmark:after {
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.basic_button {
+	cursor: pointer;
+	background-color: #EEE;
+	padding: 5px 10px;
+	border: none;
+	text-decoration: none;
+	display: inline-block;
+}
+.basic_button:hover {
+	background-color: #CCC
+}
+
+.dark_box {
+	background-color: #211000;
+}
+
+.help_marker {
+	background-color: rgba(255, 255, 255, 0.3);
+	color: white;
+	border-radius: 20px;
+	padding-left: 4px;
+	padding-right: 4px;
+}
+.help_marker:hover {
+	background-color: rgba(255, 255, 255, 0.5)
+}
+
+.automatable {
+	cursor: pointer;
+	filter: grayscale(80%);
+}
+.automated {
+	filter: grayscale(0%)
+}
+#kong_shop {
+    position : absolute;
+    width : 710px;
+	height: 595px;
+	overflow:scroll;
+	overflow-x:hidden;
+    background : radial-gradient(rgba(200, 200, 200, 0.2), rgba(0, 0, 0, 0.2)), url("../images/noise_blue.png");
+    border : 2px solid black;
+    padding : 8px;
+    border-radius : 3px;
+	left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+.kong_container {
+	display: inline-block;
+	float: left;
+	text-align: center;
+	width: 225px;
+	border: 3px solid #ff9130;
+	border-radius: 4px;
+	height: 250px;
+}
+#assistant_background {
+	z-index: 61;
+}

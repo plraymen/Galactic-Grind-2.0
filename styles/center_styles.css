@@ -1,0 +1,183 @@
+#credits_display {
+    position : absolute;
+    left : 0;
+    right : 0;
+    margin : auto;
+    left : 50%;
+    top : calc(50% + 150px);
+    transform : translate(-50%, -50%);
+    text-align : center;
+	font-size : 32px;
+	color : #085415;
+	text-shadow : 0px 0px 8px #32b54a;
+}
+#small_credits_display {
+	color : #085415;
+	text-shadow : 0px 0px 8px #32b54a;
+}
+#world_container {
+    cursor : pointer;
+    position : absolute;
+    left : 50%;
+    top : 50%;
+    transform : translate(-64px, -64px);
+    margin : auto;
+    bottom : 300px;
+    text-align : center;
+}
+#clock_container {
+    position : absolute;
+    left : 50%;
+    transform : translate(-50%);
+    top : 10px;
+    width : 500px;
+    height : 50px;
+    border : 3px solid #2b1b10;
+    border-radius : 3px;
+    background-image: radial-gradient(#c36d1a, #6d3e0f);
+}
+#clock_container > span, #clock_container > img {
+    position : absolute;
+}
+#speed_display {
+    text-align : right;
+}
+#tip_container {
+    display: none;
+    text-align : center;
+    font-size : 16px;
+    bottom : 1px;
+    left : 50%;
+    transform : translate(-50%);
+    position : absolute;
+    height:100px;
+    width:299px;
+    z-index:100;
+    background:url(../images/tip_background.png);
+    text-shadow : 0px 0px 4px #000000;
+}
+#tutorial_text_container {
+    display: none;
+    text-align : center;
+    font-size : 16px;
+    position : absolute;
+    height:100px;
+    width:299px;
+    z-index:100;
+    background:url(../images/tip_background.png);
+    text-shadow : 0px 0px 4px #000000;
+	border: 3px solid black;
+	border-radius: 3px;
+}
+#detail_container, #global_container, #achievement_container {
+    position : absolute;
+    border-radius : 5px;
+    border : 3px solid black;
+    background : radial-gradient(rgba(200, 200, 200, 0.2), rgba(0, 0, 0, 0.2)), url("../images/noise_blue.png");
+    width : 400px;
+    height : 85%;
+    min-height : 550px;
+    left : 50%;
+    top : 50%;
+    transform : translate(-40%, -50%);
+    z-index : 101;
+    text-align : center;
+    overflow:auto;
+}
+#detail_container::-webkit-scrollbar, #global_container::-webkit-scrollbar, #hotkey_menu::-webkit-scrollbar, #kong_shop::-webkit-scrollbar {
+  width: 8px;  /* for vertical scrollbars */
+}
+#detail_container::-webkit-scrollbar-track, #global_container::-webkit-scrollbar-track, #hotkey_menu::-webkit-scrollbar-track, #kong_shop::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+#detail_container::-webkit-scrollbar-thumb, #global_container::-webkit-scrollbar-thumb, #hotkey_menu::-webkit-scrollbar-thumb, #kong_shop::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.detail_title {
+    font-size : 40px;
+    color : #ff9400;
+	text-shadow : 0px 0px 8px #ffbb5e;
+    font-weight: bold;  
+}
+.expandable {
+    background-color: #000000;
+    background-image: radial-gradient(#222222, #000000);
+    border-radius: 4px;
+    cursor: pointer;
+    color: #DADADA;
+    padding: 15px;
+    max-height: auto;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    margin : 10px;
+}
+.ritual_container > img {
+    float: left;
+    margin-right : 10px;
+    margin-left : 0px;
+    margin-bottom : 50px;
+    margin-top : 50px;
+    vertical-align : center;
+    display: table-cell;
+}
+.ritual_container {
+    display : contents;
+}
+
+#buff_container {
+    position : absolute;
+    left : 50%;
+    transform : translate(-50%);
+    top: 80px;
+}
+.buff_bottom {
+	position : absolute;
+	left: 4px !important;
+	bottom: 4px;
+	width: 150px;
+	top: auto !important;
+	transform: unset !important;
+	height:auto !important;
+}
+.buff_background {
+    display : inline-block;
+    position : relative;
+    margin : 3px;
+    margin-top : 0px;
+}
+
+.building_tab {
+    position : absolute;
+    top : 0px;
+    right : 0px;
+    width : 90%;
+    height : 100%;
+    text-align : center;
+    background : url("../images/tab_background.png");
+    background-repeat: stretch;
+    background-size: 100% 100%;
+}
+.building_tab_title {
+    position : relative;
+    top : 30px;
+    font-size : 40px;
+    color : #ff9400;
+	text-shadow : 0px 0px 8px #ffbb5e;
+    font-weight: bold;   
+}
+.building_tab_sidebar {
+    width : 60px;
+    position : absolute;
+    top : 70px;
+    left : 25px;
+}
+.building_tab_sidebar > img:hover {
+   -webkit-filter: drop-shadow(2px 2px 2px #111);
+  filter: drop-shadow(2px 2px 2px #111);   
+}
+#button_container > img:hover, #tier_container > img:hover {
+	cursor: pointer;
+	-webkit-filter: drop-shadow(2px 2px 2px #999);
+    filter: drop-shadow(2px 2px 2px #999); 
+}

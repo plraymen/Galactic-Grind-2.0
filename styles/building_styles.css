@@ -1,0 +1,83 @@
+.building_menu_icon {
+	cursor : pointer;
+}
+.building {
+    width : 300px;
+    height : 70px;
+    position : relative;
+    background-image : url("../images/building_background.png");
+    cursor : pointer;
+    overflow : hidden;
+}
+.building:hover {
+    box-shadow: inset 0 0 300px 70px rgba(255, 255, 255, 0.05);
+}
+.building_icon {
+    position : absolute;
+    top : 3px;
+    left : 3px;
+}
+.building_name {
+    position : absolute;
+    left : 70px;
+    bottom : 3px;
+    font-size : 30px;
+    color : #ff9400;
+	text-shadow : 0px 0px 8px #ffbb5e;
+    font-weight: bold;
+}
+.building_count {
+    position : absolute;
+    right : 3px;
+    bottom : 3px;
+    font-size : 30px;
+    color : #e5e5e5;
+    text-shadow : 0px 0px 8px #f5f5f5;
+    font-weight: bold;
+}
+.building_price {
+    position : absolute;
+    top : 3px;
+    left : 70px;
+    color : #085415;
+    text-shadow : 0px 0px 6px #4Fd16a;
+    font-size : 18px;
+    font-weight: bold;
+}
+.building_buff {
+    position : absolute;
+    top : 23px;
+    left : 70px;
+}
+
+.tab_icon {
+    position : absolute;
+    top: 2px;
+    left : -40px;
+    transition: 0.3s;
+}
+.tab_icon:hover {
+    left : -16px;
+}
+.tab_icon_extended {
+	left: -16px;
+}
+.switch_icon {
+	position: absolute;
+	bottom: 4px;
+	left: 54px;
+}
+.switch_icon:hover {
+	-webkit-filter: drop-shadow(1px 1px 1px #999);
+    filter: drop-shadow(1px 1px 1px #999);
+	transform: scale(1.2);
+}
+.switcher_icon {
+	height: 28px;
+	width: 28px;
+}
+.switcher_icon:hover {
+	-webkit-filter: drop-shadow(1px 1px 1px #999);
+    filter: drop-shadow(1px 1px 1px #999);
+	transform: scale(1.2);
+}

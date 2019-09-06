@@ -1,0 +1,89 @@
+body {
+    /* font-family: 'PT Mono', monospace; */
+    font-family : "Courier";
+    color : white;
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    overflow:hidden;
+}
+hr {
+    border: 0;
+    height: 1px;
+    background: #333;
+    background-image: linear-gradient(to right, #333, #ccc, #333);
+}
+
+#left_content {
+    position : absolute;
+    top : 0px;
+    left : 0px;
+    width : 154px;
+    height : 100%;
+    background-color : black;
+	background-image: url("../images/noise_black.png");
+}
+#center_content {
+    position : absolute;
+    top : 0px;
+    left : 154px;
+    width : calc(100% - 454px);
+    height : 100%;
+    background-color : black;
+}
+#big_break {
+	display:none;
+}
+#subgame_buttons_container {
+	width:144px;
+}
+@media (min-width: 1048px) {
+	#big_break {
+		display: block;
+	}
+	#left_content {
+		width: 202px;
+	}
+	#center_content {
+		left: 202px;
+		width: calc(100% - 502px);
+	}
+	#subgame_buttons_container {
+		width:192px;
+	}
+}
+@media (min-width: 1096px) {
+	#left_content {
+		width: 250px;
+	}
+	#center_content {
+		left: 250px;
+		width: calc(100% - 550px)
+	}
+	#subgame_buttons_container {
+		width:240px;
+	}
+}
+#right_content {
+    position:absolute;
+    top : 0px;
+    right : 0px;
+    width : 300px;
+    height : 100%;
+    background-color : black;
+	background-image: url("../images/noise_black.png");
+}
+
+.blinking {
+	animation: blinkingText 1.6s infinite;
+}
+
+@keyframes blinkingText {
+	0% {color:#FFF;}
+	25% {color: transparent;}
+	50% {color: #FFF;}
+	75% {color: transparent;}
+	100% {color: #FFF;}
+}

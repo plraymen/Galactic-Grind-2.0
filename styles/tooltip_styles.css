@@ -1,0 +1,24 @@
+#tooltip {
+    position : absolute;
+    width : 350px;
+    background : radial-gradient(rgba(200, 200, 200, 0.2), rgba(0, 0, 0, 0.2)), url("../images/noise_blue.png");
+    border : 2px solid black;
+    padding : 3px;
+    border-radius : 3px;
+	pointer-events: none;
+}
+#tooltip_title {
+    font-size : 24px;
+    color : #FAFAFA;
+    text-shadow : 0px 0px 8px #000000;
+}
+#tooltip_icon {
+    float : left;
+}
+#tooltip_content {
+    font-size : 14px;
+    color : #EAEAEA;
+    text-shadow : 0px 0px 4px #000000;
+	position:relative;
+	top:-6px;
+}
