@@ -32,22 +32,19 @@ function Research(name, description, tooltip, sx, sy, x, y, cost, max, effect, c
 	this.bought = 0;
 	this.researched = false;
 	
-	/**
-	 * Draws the research node on the specified canvas context.
+	/** Draws the research node on the specified canvas context.
 	 * @param {object} ctx - The canvas context to draw onto.
 	 */
 	this.render = function (ctx) {
 		ctx.drawImage(research_image, this.sx, this.sy, 48, 48, this.x - minigames[5].vars.research_camera.x, this.y - minigames[5].vars.research_camera.y, 48, 48);
 	}
-	/**
-	 * Draws a stylized question mark on the canvas to hint a research node that is not yet available for the user.
+	/** Draws a stylized question mark on the canvas to hint a research node that is not yet available for the user.
 	 * @param {object} ctx - The canvas context to draw onto.
 	 */
 	this.renderUnknown = function (ctx) {
 		ctx.drawImage(research_image, 48*4, 0, 48, 48, this.x - minigames[5].vars.research_camera.x, this.y - minigames[5].vars.research_camera.y, 48, 48);
 	}
-	/**
-	 * Draws a line connecting this research node with the previous research node.
+	/** Draws a line connecting this research node with the previous research node.
 	 * @param {object} ctx - The canvas context to draw onto.
 	 */
 	this.drawLine = function (ctx) {
@@ -117,6 +114,9 @@ function renderResearch() {
 		var previous = research[research[i].previous_research]
 		if (research[i].researched) {
 			research[i].render(ctx);
+			
+			if (research[i].bought == research[i].max) {drawGradientCircle(research[i].x + 23, research[i].y + 23, 20)}
+			
 		} else if (previous.researched) {
 			research[i].render(ctx);
 			drawCircle(research[i].x + 24, research[i].y + 24, 22);
@@ -149,6 +149,34 @@ function drawCircle(x, y, radius, karma) {
     game_ctx.fillStyle = "rgba(0,0,0,.4)";
     game_ctx.fill();
 }
+/** Lightens up an area on the canvas through a gradient circle.
+ * @param {int} x - The x position to draw the circle.
+ * @param {int} y - The y position to draw the circle.
+ * @param {int} radius - The radius of the circle to draw.
+ * @param {bool} karma - Determines whether circle is drawn on the karma or research canvas (true: karma, false: research).
+ */
+function drawGradientCircle(x, y, radius, karma) {
+	var inner_radius = 14;
+	var outer_radius = 22;
+	var game_ctx = minigames[5].vars.research_ctx;
+	var camera = minigames[5].vars.research_camera;
+	
+	if (karma) {
+		game_ctx = karma_tree.context;
+		camera = karma_tree.camera;
+	}
+	
+	var gradient = game_ctx.createRadialGradient(x-camera.x, y-camera.y, inner_radius, x-camera.x, y-camera.y, outer_radius);
+	gradient.addColorStop(0, 'rgba(20,255,3,0)');
+	gradient.addColorStop(1, 'rgba(135,255,135,0.8)');
+	
+	game_ctx.globalCompositeOperation = "luminosity";
+	game_ctx.beginPath();
+    game_ctx.arc(x-camera.x, y-camera.y, radius, 0, 2 * Math.PI, false);
+    game_ctx.fillStyle = gradient;
+    game_ctx.fill();
+	game_ctx.globalCompositeOperation = "source-over";
+}
 /** Handles mousemove event for the research canvas, to render tooltips when needed.
  * @param {event object} e - The event object for the mousemove event.
  */
@@ -175,6 +203,8 @@ function researchMouseDetection(e) {
 			}
 		}
 	}
+	
+	renderResearch();
 }
 /** Handles click event for the research canvas, allowing the user to unlock research nodes.
  * @param {event object} e - The event object for the click event.
@@ -1092,7 +1122,7 @@ function flux() {
 		case 4:
 			var temp_add = Math.round(60 + Math.random() * 60)
 			addClockTicks(-temp_add);
-			if (CLOCK_TICKS < 0) {CLOCK_TICKS = 0}
+			if (CLOCK_TICKS < 0) {CLOCK_TICKS = 0; addClockTicks(0);}
 			addClockTicks(0);
 			popupText("<center>Fluctuation</center><br> " + secondsToTime(temp_add) + " removed", $("#world_container").offset().left + $("#world_container").width()/2, $("#world_container").offset().top);
 	}
@@ -1115,8 +1145,11 @@ function packageDelivery() {
 	
 	minigames[16].vars.package_bonus = Math.floor((Math.random() * 14));
 	
-	minigames[package_type].update(600);
 	popupText(buildings[package_type].display_name + " Package", $("#world_container").offset().left + $("#world_container").width()/2, $("#world_container").offset().top);
+	
+	if (package_type == 3) {minigames[3].vars.power = minigames[3].vars.max_power}
+	else if (package_type == 10) {minigames[10].vars.alien_power = minigames[10].vars.max_power}
+	else {minigames[package_type].update(600);}
 	
 	updateStorageBars();
 }

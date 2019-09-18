@@ -1,5 +1,13 @@
+/**
+ * @fileOverview Contains all logic for subgames.
+ */
+
+//Global subgame array
 var subgames = [];
 
+/** Represents a subgame.
+ * @constructor
+ */
 function Subgame() {
 	this.unlocked = false;
 	this.credits = 0;
@@ -11,6 +19,7 @@ function Subgame() {
 	this.click_value = 1;
 	this.reset_exponent = 1000;
 	this.corruption_reset_animation = 0;
+	this.buy_count = 1;
 	this.main_called = true;
 	this.buildings = [];
 	this.upgrades = [];
@@ -25,7 +34,7 @@ function Subgame() {
 	this.stored_ticks = 0;
 	this.cancel_suppression = false;
 }
-
+/** Initializes all subgames. */
 function initSubgames() {	
 	var corruption_subgame = new Subgame();
 	
@@ -72,9 +81,45 @@ function initSubgames() {
 			
 			var corruption_centerer = $(document.createElement("center"));
 				var corruption_building_container = $(document.createElement("div"));
-				corruption_building_container.attr("id", "corruption_building_container")
-				corruption_building_container.attr("style", "width:900px;text-align: center")
-			corruption_building_container.attr("style", "position:absolute;height:100px;left:9px;bottom:16px;text-align:center");
+				corruption_building_container.attr("id", "corruption_building_container");
+				corruption_centerer.attr("style", "position:absolute;height:100px;left:9px;bottom:36px;display:block;width:100%");
+			
+				var corruption_multibuy_container = $(document.createElement("center"));
+					corruption_multibuy_container.html("Buy: ")
+					var one_x = $(document.createElement("span"));
+						one_x.attr("id", "corrupt_buy_count_1");
+						one_x.attr("style", "cursor: pointer");
+						one_x.attr("onclick", "subgames[0].changeBuyCount(1)");
+						one_x.attr("class", "buy_count");					
+						one_x.html("1");					
+					var five_x = $(document.createElement("span"));
+						five_x.attr("id", "corrupt_buy_count_5");
+						five_x.attr("style", "cursor: pointer");
+						five_x.attr("onclick", "subgames[0].changeBuyCount(5)");
+						five_x.html(" 5");
+					var ten_x = $(document.createElement("span"));
+						ten_x.attr("id", "corrupt_buy_count_10");
+						ten_x.attr("style", "cursor: pointer");
+						ten_x.attr("onclick", "subgames[0].changeBuyCount(10)");
+						ten_x.html(" 10");
+					var fivety_x = $(document.createElement("span"));
+						fivety_x.attr("id", "corrupt_buy_count_50");
+						fivety_x.attr("style", "cursor: pointer");
+						fivety_x.attr("onclick", "subgames[0].changeBuyCount(50)");
+						fivety_x.html(" 50");					
+					var max_x = $(document.createElement("span"));
+						max_x.attr("id", "corrupt_buy_count_10000");
+						max_x.attr("style", "cursor: pointer");
+						max_x.attr("onclick", "subgames[0].changeBuyCount(10000)");
+						max_x.html(" Max");
+						
+					corruption_multibuy_container.append(one_x);
+					corruption_multibuy_container.append(five_x);
+					corruption_multibuy_container.append(ten_x);
+					corruption_multibuy_container.append(fivety_x);
+					corruption_multibuy_container.append(max_x);
+				corruption_building_container.append(corruption_multibuy_container);
+			corruption_building_container.attr("style", "text-align:center;cursor:pointer;");
 			corruption_centerer.append(corruption_building_container);
 			
 			for (var i = 0; i < this.buildings.length; i++) {
@@ -354,6 +399,17 @@ function initSubgames() {
 		} else {
 			popupText("Not Enough Corruption", $("#reset_button_corruption").offset().left + $("#reset_button_corruption").width()/2, $("#reset_button_corruption").offset().top);
 		}
+	}
+	corruption_subgame.changeBuyCount = function (count) {
+		this.buy_count = count;
+
+		$("#corrupt_buy_count_1").attr("class", "");
+		$("#corrupt_buy_count_5").attr("class", "");
+		$("#corrupt_buy_count_10").attr("class", "");
+		$("#corrupt_buy_count_50").attr("class", "");
+		$("#corrupt_buy_count_10000").attr("class", "");
+		
+		$("#corrupt_buy_count_"+count).attr("class", "buy_count");
 	}
 	
 	corruption_subgame.initBuildings = function () {
@@ -663,12 +719,23 @@ function initSubgames() {
 	
 	subgames.push(corruption_subgame);
 }
-
+/** Represents a single building for the corruption subgame.
+ * @constructor
+ * @param {string} name - Name of the this building.
+ * @param {int} cost - The base price of this building.
+ * @param {float} base_production - The base amount of corruption credits this building will produce each second.
+ * @param {float} seed_production - The base amount of bad seeds this building will produce each second.
+ * @param {string} icon - The file path to the icon for this building.
+ * @param {boolean} cost_increasing - Determines if this building costs more each time it is bought.
+ * @param {function} onBuy - Function called when this building is bought.
+ */
 function CorruptionBuilding(name, cost, base_production, seed_production, icon, cost_increasing, onBuy) {
 	this.name = name;
+	this.base_cost = cost;
 	this.cost = cost;
 	this.base_production = base_production;
 	this.production = base_production;
+	this.cost_multiplier = 1.4;
 	this.icon = icon;
 	this.cost_increasing = cost_increasing;
 	this.seed_base_production = seed_production;
@@ -678,16 +745,29 @@ function CorruptionBuilding(name, cost, base_production, seed_production, icon, 
 	this.unlocked = false;
 	this.available = false;
 	
-	this.buy = function () {
-		if (subgames[0].credits > this.cost) {
-			this.count += 1;
-			subgames[0].credits -= this.cost;
+	this.totalCost = function (count) {
+		if (count == 10000) {count = getMaxNumberOfAffordableBuildings(subgames[0].credits, this.getCurrentCost(), this.cost_multiplier);}
+		if (subgames[0].buildings.indexOf(this) == 0) {return count * 100;}
+        return (this.base_cost * ((Math.pow(this.cost_multiplier, this.count) * (Math.pow(this.cost_multiplier, count) - 1)) / (this.cost_multiplier - 1)));
+    };
+    this.canBuy = function (count) {
+		if (count == 10000) {count = getMaxNumberOfAffordableBuildings(subgames[0].credits, this.getCurrentCost(), this.cost_multiplier)}
+		
+        return this.totalCost(count) < subgames[0].credits;
+    };
+	
+	this.buy = function (count) {
+		if (subgames[0].credits > this.totalCost(subgames[0].buy_count)) {
+			subgames[0].credits -= this.totalCost(subgames[0].buy_count);
+			if (count == 10000) {this.count += getMaxNumberOfAffordableBuildings(subgames[0].credits, this.getCurrentCost(), this.cost_multiplier)}
+			else {this.count += subgames[0].buy_count;}
 			subgames[0].calculateProduction();
 
 			$("#corruption_building_" + subgames[0].buildings.indexOf(this)).html(shortNumber(this.count));
-			
-			if (this.cost_increasing) {this.cost *= 1.4}
 		}
+	}
+	this.getCurrentCost = function () {
+		return (this.base_cost) * Math.pow(this.cost_multiplier, this.count);
 	}
 	
 	this.createHTML = function (container) {
@@ -724,9 +804,9 @@ function CorruptionBuilding(name, cost, base_production, seed_production, icon, 
 				
 				var corruption_building = $(document.createElement("div"));
 				corruption_building.attr("class", "corruption_building");
-				corruption_building.attr("onmouseover","tooltip(this, 0, 19, '"+ subgames[0].buildings[i].name +"', 'You own ' + shortNumber(subgames[0].buildings["+i+"].count) + ' ' + subgames[0].buildings["+i+"].name +'s, that each produce ' + fancyNumber(subgames[0].buildings["+i+"].production) + ' corruption per second" + seed_string + ".<br>Cost '+ fancyNumber(subgames[0].buildings["+i+"].cost) +'')");
+				corruption_building.attr("onmouseover","tooltip(this, 0, 19, '"+ subgames[0].buildings[i].name +"', 'You own ' + shortNumber(subgames[0].buildings["+i+"].count) + ' ' + subgames[0].buildings["+i+"].name +'s, that each produce ' + fancyNumber(subgames[0].buildings["+i+"].production) + ' corruption per second" + seed_string + ".<br>Cost '+ fancyNumber(subgames[0].buildings["+i+"].totalCost(subgames[0].buy_count)) + ((subgames[0].buy_count == 10000) ? (' (' + getMaxNumberOfAffordableBuildings(subgames[0].credits, subgames[0].buildings["+i+"].getCurrentCost(), subgames[0].buildings["+i+"].cost_multiplier) + ')') : ''))");
 				corruption_building.attr("onmouseout", "hideTooltip();");
-				corruption_building.attr("onclick", "subgames[0].buildings["+i+"].buy()");
+				corruption_building.attr("onclick", "subgames[0].buildings["+i+"].buy(subgames[0].buy_count)");
 					
 					var corruption_building_img = $(document.createElement("img"));
 					corruption_building_img.attr("src", subgames[0].buildings[i].icon);
@@ -745,6 +825,18 @@ function CorruptionBuilding(name, cost, base_production, seed_production, icon, 
 			}
 	}
 }
+/** Represents an upgrade for the corruption subgame.
+ * @constructor
+ * @param {string} name - Name of the this upgrade.
+ * @param {string} description - Description shown on this upgrade's tooltip.
+ * @param {string} flavor_text - Small flavor text to be shown on this upgrade's tooltip.
+ * @param {int} x - The x location on the upgrade tiled map for this upgrade's icon
+ * @param {int} y - The y location on the upgrade tiled map for this upgrade's icon
+ * @param {int} price - The base cost of this upgrade.
+ * @param {function} effect - This upgrade's effect, called each tick.
+ * @param {function} onBuy - Function called when this upgrade is bought.
+ * @param {function} evalTooltip - Function to generate tooltip.
+ */
 function CorruptionUpgrade(name, description, flavor_text, x, y, price, effect, onBuy, evalTooltip) {
     this.display_name = name;
     this.price = price;
@@ -787,9 +879,8 @@ function CorruptionUpgrade(name, description, flavor_text, x, y, price, effect, 
     };
 
 }
-
+/** Updates buttons to open subgames and assistants. */
 function updateSubgameButtons() {
-	//Add || subgames[1].unlocked later
 	if (subgames[0].unlocked || assistants[0].unlocked || assistants[1].unlocked || assistants[2].unlocked || assistants[3].unlocked || assistants[4].unlocked || assistants[5].unlocked || assistants[6].unlocked || RESET_UNLOCKED || CHALLENGES_UNLOCKED || CURRENT_CHALLENGE != -1) {
 		$("#subgame_title").show();
 		$("#subgame_buttons_container").show();

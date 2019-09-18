@@ -1,8 +1,16 @@
+/**
+ * @fileOverview Handles the creation, use, and updation of hotkeys.
+ */
+
+//Global object to store hotkeys
 var hotkeys = {};
+
+//Global variables to track the user editing hotkeys
 CHANGE_HOTKEY = false;
 CHANGING_HOTKEY = null;
 HOTKEY_ELEMENT = null;
 
+//Event listener to trigger hotkey effects
 document.addEventListener('keydown', (event) => {
 	var key = event.key;
 
@@ -187,7 +195,7 @@ document.addEventListener('keydown', (event) => {
 		}
 	}
 });
-
+//Event listener handle right click functionality for the click farm
 window.oncontextmenu = function (e) {
 	var x = e.pageX;
 	var y = e.pageY;
@@ -212,7 +220,7 @@ window.oncontextmenu = function (e) {
 	}
     return false;     // cancel default menu
 }
-
+/** Instantiates the default values for the hotkeys. */
 function initHotkeys() {
 	hotkeys = {
 		building_1: '1',
@@ -239,13 +247,18 @@ function initHotkeys() {
 		miniMenu: 'Control',
 	}
 }
-function updateHotkey(hotkey, newValue) {
+/** Updates the specified hotkey to be the new value.
+ * @param {string} hotkey - The name of the hotkey to change.
+ * @param {string} new_value - The value to replace the current hotkey value.
+ */
+function updateHotkey(hotkey, new_value) {
 	hotkeys[hotkey] = newValue;
 }
+/** Sets all hotkey values to their default values. */
 function resetHotkeys() {
 	initHotkeys();
 }
-
+/** Creates and appends the HTML for the menu to edit hotkeys. */
 function hotkeyMenu() {
 	var hotkey_menu = $(document.createElement("div"));
 	hotkey_menu.attr("id", "hotkey_menu");
@@ -319,7 +332,7 @@ function hotkeyMenu() {
 	
 	$(document.body).append(hotkey_menu);
 }
-
+/** Changes the currently selected hotkey to the new value, and updates the hotkey menu accordingly. */
 function changeHotkey(toKey) {
 	HOTKEY_ELEMENT.html(toKey);
 	updateHotkey(CHANGING_HOTKEY, toKey);
@@ -331,7 +344,7 @@ function changeHotkey(toKey) {
 	CHANGING_HOTKEY = null;
 	HOTKEY_ELEMENT = null;
 }
-
+/** Function fired when the user begins to edit a hotkey. */
 function triggerHotkeyChange(element) {
 	ele = $(element);
 	
@@ -345,11 +358,7 @@ function triggerHotkeyChange(element) {
 	CHANGING_HOTKEY = key;
 	HOTKEY_ELEMENT = ele;
 }
-
-// $(document).contextmenu(function() {
-    // return false;
-// });
-
+// Event handler to handle clicking out of submenus functionality
 $(document).on("click", function () {
 	if (MENU_CLOSE && settings.menu_close) {
 		$("#assistant_background").remove();
@@ -370,6 +379,7 @@ $(document).on("click", function () {
 	}
 	MENU_CLOSE = true;
 });
+/** Switches the document into fullscreen mode. */
 function openFullscreen() {
   elem = document.documentElement;
   if (!document.fullscreenElement && !document.mozFullScreenElement &&

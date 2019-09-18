@@ -1087,6 +1087,7 @@ function initMinigames() {
 		if (this.vars.investment_time <= 0 && this.vars.investing) {
 			this.vars.investing = false;
 			CREDITS += this.vars.investment_value;
+			stats.credits_earned += this.vars.investment_value;
 			this.vars.investments_made += 1;
 			popupText("Investment Returned:" + fancyNumber(this.vars.investment_value), $("#world_container").offset().left + $("#world_container").width()/2, $("#world_container").offset().top);
 			hideTooltip();

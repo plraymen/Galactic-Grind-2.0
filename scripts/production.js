@@ -1,3 +1,10 @@
+/**
+ * @fileOverview Handles the calculates for production per second and production per click.
+ */
+ 
+/** Sets the global variable PRODUCTION to its proper value.
+* @param {float} dt - Time since last frame.
+*/
 function calculateProduction(dt) {
     var temp_production = 0;
 	COST_REDUCTION = 1;
@@ -213,7 +220,7 @@ function calculateProduction(dt) {
 	LAST_REDUCTION = COST_REDUCTION;
 	FUTURE_KARMA_POINTS = Math.floor(Math.pow(stats.credits_earned / 1e22, 0.4));
 }
-
+/** Handles the player clicking on the world icon. */
 function handleClick() {
 	stats.total_clicks += 1;
 	var research_bonus = 1;
@@ -268,11 +275,10 @@ function handleClick() {
 	click_animations.push([-20,0, Math.round(Math.random() * (40 - (-40)) + (-40)), Math.round(Math.random() * 30) + 10, click_value,1]);
 	
 	if (click_animations.length >= 20) {click_animations.shift()}
-	
-	//if (upgrades[23].bought) {
-	//	CLICK_BASE += (100 + (1 * stats.total_clicks)) * stats.total_clicks; 
-	//}
 }
+/** Handles autoclicks, called every tick.
+* @param {float} dt - Time since last frame.
+*/
 function autoclick(dt) {
 	var autoclick_multiplier = 0;
 	if (assistants[0].unlocked) {autoclick_multiplier += (0.25 + Math.floor(assistants[0].level/10) * 0.25) * dt}
@@ -300,7 +306,9 @@ function autoclick(dt) {
 		handleClick();
 	}
 }
-
+/** Calculates offline production.
+* @param {float} time - Time time since the user last played.
+*/
 function offlineProduction(time) {
 	if (assistants[1].level >= assistant_levels[1]) {
 		for (var i = 0; i < assistants.length; i++) {

@@ -6,8 +6,7 @@
 var buffs = [];
 var building_buffs = [];
 
-/**
- * Represents the temporary bonuses for indivual buildings.
+/** Represents the temporary bonuses for individual buildings.
  * @constructor
  * @param {string} name - The name of the building buff.
  * @param {int} id - The index of the building buff in the building_buffs array.
@@ -27,14 +26,15 @@ function BuildingBuff(name, id, icon, effect, duration) {
 var overcharge = new BuildingBuff("overcharge", 0, "images/building_buff_overcharge.png", function() {}, 10);
 building_buffs.push(overcharge);
 
-/**
- * Represents the temporary global bonuses/penalties.
+/** Represents the temporary global bonuses/penalties.
  * @constructor
- * @param {string} name - The name of the building buff.
- * @param {int} id - The index of the building buff in the building_buffs array.
- * @param {string} icon - The file path for the icon associated with this buff.
- * @param {function} effect - The effect of the bonus called every tick.
- * @param {int} duration - The length of the bonus in seconds.
+ * @param {string} name - The name of the buff.
+ * @param {int} id - The index of the buff in the buffs array.
+ * @param {int} x - The x position of the icon on the buffs tile map.
+ * @param {int} y - The y position of the icon on the buffs tile map.
+ * @param {function} localTooltip - Function that returns the tooltip for the buffs.
+ * @param {function} effect - Function is called each tick to in.
+ * @param {boolean} stackable - Determines if repeating activations of this buff should result in more time or more stacks.
  */
 function Buff(name, id, x, y, localTooltip, effect, stackable, negative) {
     this.name = name;
@@ -49,6 +49,7 @@ function Buff(name, id, x, y, localTooltip, effect, stackable, negative) {
 	this.negative = negative || false;
     this.active = false;
 	this.frozen = false;
+	/** Creates and appends the HTML for this buff's icon */
     this.createHTML = function () {
         this.removeHTML();
 
@@ -84,6 +85,7 @@ function Buff(name, id, x, y, localTooltip, effect, stackable, negative) {
         $("#buff_container").append(buff_background);
 		var self = this;
     };
+	/** Toggle this buff's frozen property, to prevent the buff from being updated in a normal manner. */
 	this.toggleFreeze = function () {
 		if (buildings[9].count == 0) {return;}
 		if (this.id == 26) {return;}
@@ -104,20 +106,26 @@ function Buff(name, id, x, y, localTooltip, effect, stackable, negative) {
 			this.createHTML();
 		}
 	}
-    this.updateHTML = function () {
+    /** Updates the HTML for this buff's icon. */
+	this.updateHTML = function () {
         if (!this.active) {return;}
         var distance = this.time/this.max_time * 48;
         var y = 48 - distance;
         
         $("#buff_"+this.id).attr("style", "border-radius:3px;position:absolute;left:0px;top:"+y+"px;width:48px;height:"+distance+"px;background-color:#000000;opacity:0.5");
     };
+	/** Removes the HTML of this buff's icon. */
     this.removeHTML = function () {
         $("#buff_background_" + this.id).remove();
     };
-    this.showTooltip = function () {
+    /** Displays the tooltip for this buff. */
+	this.showTooltip = function () {
          tooltip("#buff_background_"+this.id, this.x/48, this.y/48, this.name, this.localTooltip(), this.localTooltip);       
     };
-    this.activate = function (duration) {
+    /** Sets this buff to be active for some time. 
+	 *  @param {float} duration - The base length that this buff will stay active.
+	 */
+	this.activate = function (duration) {
 		if (calm && this.id != 6) {return;}
         if (!stackable) {
 			var store_count = 0
@@ -170,14 +178,17 @@ function Buff(name, id, x, y, localTooltip, effect, stackable, negative) {
 				if (assistants[1].unlocked && this.negative) {assistants[1].xp += 30}
 			}
 			
-			if (this.negative && assistants[1].level >= assistant_levels[3] && assistants[1].abilities[3].available()) {
+			if (assistants[1].unlocked && this.negative && assistants[1].level >= assistant_levels[3] && assistants[1].abilities[3].available()) {
 				this.time *= 0.5;
 				assistants[1].abilities[3].cd -= 1;
 				setTimeout(function () {popupText("Time Reduced", $("#demonic_assistant_button").offset().left + $("#demonic_assistant_button").width()/2 + 130, $("#demonic_assistant_button").offset().top)}, 1);
 			}
         }
     };
-    this.update = function (dt) {
+	/** Updates the buff. 
+	 *  @param {float} dt - Time time since the last frame.
+	 */
+	this.update = function (dt) {
       if (this.active && !this.frozen) {
         this.time -= dt / (1 + (minigames[19].vars.active_effects.includes(3) * (GAME_SPEED - 1) * 0.1));
         if (this.time <= 0) {
@@ -188,7 +199,7 @@ function Buff(name, id, x, y, localTooltip, effect, stackable, negative) {
             this.removeHTML();
             hideTooltip();
 			
-			if (assistants[1].level >= assistant_levels[0] && this.negative) {
+			if (assistants[1].unlocked && assistants[1].level >= assistant_levels[0] && this.negative) {
 				var neg = false;
 				for (var i = 0; i < buffs.length; i++) {
 					if (buffs[i].active && buffs[i].negative) {
@@ -209,14 +220,16 @@ function Buff(name, id, x, y, localTooltip, effect, stackable, negative) {
     };
     
 }
-
+/** Updates each bonus/penalty every tick.
+ * @param {float} dt - The time since the last frame.
+ */
 function updateBuffs(dt) {
     for (var i = 0; i < buffs.length; i++) {
         buffs[i].updateHTML();
         buffs[i].update(dt);
     }
 }
-
+/** Instantiates all buffs. */
 function initBuffs() {
 	var blood_rush = new Buff("Blood Rush", 0, 0, 0, function () {return "Increases production by 25%.<br><span style='float:left;'>"+ Math.round(buffs[0].time) +"s remaining</span>";} ,function () {PRODUCTION_MULTIPLIER *= 1.25;}, false);
 	var soot_bonus = new Buff("Soot Bonus", 1, 1, 0, function () {return "Increases production by "+Math.round((0.12 + minigames[0].vars.soot_counters * 0.03) * 100)+"%.<br><span style='float:left;'>"+ Math.round(buffs[1].time) +"s remaining</span>";} ,function () {PRODUCTION_MULTIPLIER *= 1.12 + minigames[0].vars.soot_counters * 0.03;}, false);

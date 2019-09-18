@@ -1,5 +1,19 @@
+/**
+ * @fileOverview Contains all logic for tooltips.
+ */
+
+//Global array to store list of last text popups for the user
 var popup_log = [];
 
+/** Creates a tooltip at the specified element.
+ * @param {element} element - The element to create the tooltip in relation to.
+ * @param {int} x - The x position in the tile map that the tooltip will appear.
+ * @param {int} y - The y position in the tile map that the tooltip will appear.
+ * @param {string} title - The title to be displayed on the tooltip.
+ * @param {string} content - The text to be displayed on the tooltip.
+ * @param {function} refresh - Function to be called to continually update tooltip if need be.
+ * @param {boolean} upgrade_sheet - Determines if the tile sheet used is the upgrade or buff sheet.
+ */
 function tooltip(element, x, y, title, content, refresh, upgrade_sheet) {
     $("#tooltip").show();
     
@@ -60,7 +74,11 @@ function researchTooltip(node) {
 	
     var x = ele.offset().left + node.x - minigames[5].vars.research_camera.x + 48;
     var y = ele.offset().top + node.y - minigames[5].vars.research_camera.y;
-    
+	
+	if (x + $("#tooltip").width() > $(window).width()) {
+		x = ele.offset().left + node.x - minigames[5].vars.research_camera.x - $("#tooltip").width();
+	}
+   
     $("#tooltip").offset({ top: (y), left: (x)});
 }
 function karmaTooltip(node) {
@@ -81,6 +99,10 @@ function karmaTooltip(node) {
     var x = ele.offset().left + node.x - karma_tree.camera.x + 48;
     var y = ele.offset().top + node.y - karma_tree.camera.y;
     
+	if (x + $("#tooltip").width() > $(window).width()) {
+		x = ele.offset().left + node.x - minigames[5].vars.research_camera.x - $("#tooltip").width();
+	}	
+
     $("#tooltip").offset({ top: (y), left: (x)});
 }
 function updateTooltip() {

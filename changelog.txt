@@ -1,0 +1,41 @@
+Version 1.04 - Bugfixes and Testing
+- Added buttons for Discord, and Testing. 
+- Fixed alien power being usable before the building is unlocked.
+- Fixed Demonic Assistant's abilities working without being unlocked.
+- Fixed minimenus not unlocking new features.
+- Fixed deliveries removing power if power is in use.
+- Updates the display for buildings after resets.
+
+Version 1.03 - Bugfixes and UI
+- Added multi-buy to the corruption subgame. 
+- Added MAX buy buttons.
+- Centered 1st line corruption buildings.
+- Researches will light up when maxed out.
+- Upgrades unlocked with achievements will now persist through resets.
+- Research and karma tooltips will now flip when needed.
+- Fixed buildings displaying incorrect prices for a split second.
+- Fixed extra seconds sometimes displaying as a negative.
+- Fixed investments not increasing the credits earned statistic.
+- Fixed Calm and Corrupt Sacrifice reopening menus.
+- Fixed scientific notation for corruption subgame.
+- Fixed extra jacks being added to the gambler deck.
+- Fixed a few typos.
+
+Version 1.02 - Bugfixes and UI
+- Added scientific notation option.
+- Added New Zealand.
+- Added all on/off for factory automation.
+- Achievements now persist through resets.
+- Fixed free buildings not unlocking upgrades.
+- Fixed programs ran not persisting through resets.
+- Fixed settings menu staying open.
+- Fixed "offline production" popping up at random times.
+- Other minor bugfixes.
+- Slight optimizations.
+
+Version 1.01 - Challenges Hotfixed
+ - Hotfixed ending challenges sometimes erasing save.
+ - Completed challenges now have green check marks.
+ - Tutorials no long reappear in challenges.
+ - Petty decree can no longer be frozen.
+ - Fixed autobuy not working in minimenus.

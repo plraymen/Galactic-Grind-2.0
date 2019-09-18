@@ -286,8 +286,23 @@ function initAutomation() {
 			autobuy_div.attr("id", "autobuy_div");
 			autobuy_div.attr("style", "font-size: 130%;");
 			autobuy_div.html("<br>All Available Autobuys:<br><br>");
+			
+		var allon_button = $(document.createElement("div"));
+			allon_button.attr("onclick", "automation[6].allOn()");
+			allon_button.attr("id", "allon_button");
+			allon_button.attr("style", "display:inline-block;font-size: 20px; font-weight: 900; color: black; background-color: #018f17; border: 3px solid black; border-radius: 4px; padding:5px; background-image: linear-gradient(#e8e8e8, #9c9c9c); margin: 8px; cursor: pointer; width: 140px;");
+			allon_button.html("All On");
+		
+		var alloff_button = $(document.createElement("div"));
+			alloff_button.attr("onclick", "automation[6].allOff()");
+			alloff_button.attr("id", "alloff_button");
+			alloff_button.attr("style", "display:inline-block;font-size: 20px; font-weight: 900; color: black; background-color: #018f17; border: 3px solid black; border-radius: 4px; padding:5px; background-image: linear-gradient(#e8e8e8, #9c9c9c); margin: 8px; cursor: pointer; width: 140px;");
+			alloff_button.html("All Off");
 		
 		$("#building_automation_background").append(autobuy_div);
+		$("#building_automation_background").append(allon_button);
+		$("#building_automation_background").append(alloff_button);
+		$("#building_automation_background").append(document.createElement("br"));
 			
 		for (var i = 0; i < buildings.length; i++) {
 			if (buildings[i].unlocked) {
@@ -309,6 +324,20 @@ function initAutomation() {
 		automation[i].autobuy = !automation[i].autobuy;
 		if (automation[i].autobuy) {ele.attr("src", ele.attr("active_autobuy"))}
 		else {ele.attr("src", ele.attr("inactive_autobuy"))}
+	}
+	factory_automation.allOn = function () {
+		for (var i = 0; i < automation.length; i++) {
+			if (buildings[i].count != 0) {automation[i].autobuy = true;}
+			openAutomation(6);
+			openAutomation(6);
+		}
+	}	
+	factory_automation.allOff = function () {
+		for (var i = 0; i < automation.length; i++) {
+			if (buildings[i].count != 0) {automation[i].autobuy = false;}
+			openAutomation(6);
+			openAutomation(6);
+		}
 	}
 	
 	var bonus_automation = new Automation();

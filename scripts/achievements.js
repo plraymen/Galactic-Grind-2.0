@@ -5,8 +5,7 @@
 //Global achievement array
 var achievements = [];
 
-/**
- * Represents an achievement goal for the user.
+/** Represents an achievement goal for the user.
  * @constructor
  * @param {string} name - The name of the achievement.
  * @param {int} x - The x position on the achievement tile map for this achievement's icon.
@@ -40,14 +39,15 @@ function Achievement(name, x, y, tooltip, tooltip_x, tooltip_y, previous_achieve
 	
 	this.testUnlock = testUnlock;
 	
+	/** Empty placeholder function. */
 	this.unlock = function () {
 		
 	};
-	
+	/** Sets this achievement to be viewable and unlockable to the user. */
 	this.makeAvailable = function () {
 		this.available = true;
 	};
-	
+	/** Generates and appends the HTML for this achievement's icon. */
 	this.createHTML = function () {
 		var achievement = $(document.createElement("div"));
 		
@@ -1036,10 +1036,15 @@ function showAchievement(i) {
 	
 	if (upgrades[205].bought) {addClockTicks(30);}
 }
-
 /** Updates the HTML for the tooltip to represent the achievements.
  * @param {element} self - The HTML to display the tooltip relative to.
  */
 function achievementTooltip(self) {
 	tooltip(self, 1, 20, "Achievements", "Click to view the list of your completed achievements.", function () {}, true);
+}
+/** Unlocks upgrades for achievements to have the upgrades persist through resets. */
+function testAchievementUpgrades() {
+	for (var i = 0; i < achievements.length; i++) {
+		if (achievements[i].unlocked && achievements[i].upgrade != null) {upgrades[achievements[i].upgrade].makeAvailable();}
+	}
 }

@@ -1,7 +1,29 @@
-// 1000 x 560
+/**
+ * @fileOverview Handles the creation and logic of buildings.
+ */
+ 
+// Global array to store building objects
 var buildings = [];
+// Global array to store switch objects for mini-menus
 var switches = [];
 
+/** Represents a single building.
+ * @constructor
+ * @param {string} display_name - The name of the building to be displayed on this building's background.
+ * @param {string} tab_name - The name of the building to be displayed inside this building's submenu.
+ * @param {string} name - Lowercase version of the param tab_name with no spaces.
+ * @param {string} description - The text to be displayed in submenu to describe this building's effects to the user.
+ * @param {string} explanation - A detailed explanation to be displayed when user accesses this building's help menu.
+ * @param {int} cost - The base price of this building.
+ * @param {float} base_production - The base amount of credits this building will produce each second.
+ * @param {int} tier - The tier for this building.
+ * @param {array} upgrade - An array to store upgrades that are unlocked via purchasing this building.
+ * @param {string} icon - The file path to the icon for this building.
+ * @param {string} tab_icon - The file path to the icon to open this building's menu.
+ * @param {string} tab_icon_hover - The file path to the hovered icon to open this building's menu.
+ * @param {int} x - The x location on the upgrade tiled map for this building's buy new tooltip.
+ * @param {int} y - The y location on the upgrade tiled map for this building's buy new tooltip.
+ */
 function Building(display_name, tab_name, name, description, explanation, cost, base_production, tier, upgrade, icon, tab_icon, tab_icon_hover, x, y) {
     this.display_name = display_name;
     this.tab_name = tab_name;
@@ -32,12 +54,18 @@ function Building(display_name, tab_name, name, description, explanation, cost, 
     };
     
     this.totalCost = function (count) {
+		if (count == 10000) {count = getMaxNumberOfAffordableBuildings(CREDITS, this.getCurrentCost(), this.cost_multiplier)}
+		
         return (this.cost * ((Math.pow(this.cost_multiplier, this.count - this.free_count) * (Math.pow(this.cost_multiplier, count) - 1)) / (this.cost_multiplier - 1))) / COST_REDUCTION;
     };
     this.canBuy = function (count) {
+		if (count == 10000) {count = getMaxNumberOfAffordableBuildings(CREDITS, this.getCurrentCost(), this.cost_multiplier)}
+		
         return this.totalCost(count) < CREDITS;
     };
     this.buy = function (count) {
+		if (count == 10000) {count = getMaxNumberOfAffordableBuildings(CREDITS, this.getCurrentCost(), this.cost_multiplier)}
+		
         if (this.canBuy(count)) {
 			UNDO_COUNT = count;
 			UNDO_PRICE = this.totalCost(count);
@@ -48,6 +76,7 @@ function Building(display_name, tab_name, name, description, explanation, cost, 
             CREDITS -= this.totalCost(count);
             this.count += count;
             UPDATE_BUILDINGS = true;
+			updateBuildings();
             updateUnlocks();
 			
 			if (minigames[5].vars.research_tree[25].researched) {
@@ -70,6 +99,9 @@ function Building(display_name, tab_name, name, description, explanation, cost, 
         }
 		this.unlockUpgrades();
     };
+	this.getCurrentCost = function () {
+		return (this.cost) * Math.pow(this.cost_multiplier, this.count - this.free_count) / COST_REDUCTION
+	}
 	this.unlockUpgrades = function () {
         if (this.count >= 10 && this.upgrade[0] != undefined) {upgrades[this.upgrade[0]].makeAvailable()}
         if (this.count >= 25 && this.upgrade[1] != undefined) {upgrades[this.upgrade[1]].makeAvailable()}
@@ -155,7 +187,9 @@ function Building(display_name, tab_name, name, description, explanation, cost, 
         if (!this.switched) {
 			var building = $("#building"+this.name);
 			building.find(".building_count").html(this.count);
-			building.find(".building_price").html(fancyNumber(this.totalCost(BUY_COUNT)));
+			
+			if (BUY_COUNT == 10000) {building.find(".building_price").html(fancyNumber(this.totalCost(BUY_COUNT)) + "(" + getMaxNumberOfAffordableBuildings(CREDITS, this.getCurrentCost(), this.cost_multiplier) + ")");}
+			else {building.find(".building_price").html(fancyNumber(this.totalCost(BUY_COUNT)));}
 			
 			if (CREDITS < this.totalCost(BUY_COUNT)) {
 				building.find(".building_price").attr("style", "color:#e02900;text-shadow:0px 0px 8px #ff451c");
@@ -241,11 +275,7 @@ function Building(display_name, tab_name, name, description, explanation, cost, 
 		}
 	}	
 }
-
-function updateFreeCount() {
-	
-}
-
+/** Updates the HTML for each building's price display */
 function updateBuildingPrices() {
 	for (var i = 0; i < buildings.length; i++) {
 		buildings[i].updatePriceColor();
@@ -257,6 +287,9 @@ function updateBuildingPrices() {
 		$("#tier_cost_display").attr("style", "color:#085415;text-shadow:0px 0px 8px #32b54a");
 	}
 }
+/** Changes the building's displayed to the ones of the specified tier.
+ * @param {int} tier - The tier to be switched to.
+ */
 function changeTier(tier) {
 	if (CURRENT_TIER != tier) {
 		$("#button_tier_1").attr("src", "images/tier_1.png");
@@ -284,12 +317,15 @@ function changeTier(tier) {
         $("#building"+buildings[i].name).remove();
 		if (buildings[i].tier == CURRENT_TIER && buildings[i].unlocked) {buildings[i].createHTML();}
 		UPDATE_BUILDINGS = true;
+		
     }
 	
 	$("#tier_cost_display").html(fancyNumber(tierPrice(CURRENT_TIER)));
 	updateBuildingEffects();
 	updateBuildingPrices();
+	updateBuildings();
 }
+/** Updates each building's HTML */
 function updateBuildings() {
     if (!UPDATE_BUILDINGS) return;
     
@@ -300,6 +336,7 @@ function updateBuildings() {
     
     UPDATE_BUILDINGS = false;
 }
+/** Instantiates all buildings, and each building's stats. */
 function initBuildings() {
     var cultist = new Building("Cultist",
                                "Cultist", 
@@ -662,6 +699,9 @@ function initBuildings() {
     buildings.push(temporal);
     buildings.push(political);
 }
+/** Unlocks the specified building.
+ * @param {string} name - The name of the building to unlock.
+ */
 function unlockBuilding(name) {
     var len = buildings.length;
     for (var i = 0; i < len; i++) {
@@ -670,6 +710,10 @@ function unlockBuilding(name) {
         }
     }
 }
+/** Calculates the price to unlock the next building of the specified tier.
+ * @param {int} tier - The tier to use for calculation.
+ * @return - The price of the next building.
+ */
 function tierPrice(tier) {
     var tier_unlocked = 0;
     var tier_1_base_cost = 1;
@@ -689,7 +733,9 @@ function tierPrice(tier) {
     
     return cost;
 }
-
+/** Creates the HTML for the submenu of the given building object.
+ * @param {Building} building - The building to be used to create the submenu.
+ */
 function createBuildingTab(building) {
     $(".building_tab").remove();
     
@@ -753,7 +799,9 @@ function createBuildingTab(building) {
     minigames[building_index].createHTML();
     SHOWN_TAB = building_index;
 }
-
+/** Creates the HTML for the specified building's upgrades to be displayed on hover.
+ * @param {int} building_id - The index of the building to be displayed.
+ */
 function hoverUpgrades(building_id) {
 	$("#upgrade_hover_display").remove();
 	
@@ -772,7 +820,9 @@ function hoverUpgrades(building_id) {
 	
 	$("#hover_upgrade_container").append(upgrade_display);
 }
-
+/** Toggles the submenu of the given building object.
+ * @param {Building} building - The building to be used to create the submenu.
+ */
 function toggleBuildingTab(building) {
 	hideTooltip();
 	
@@ -795,6 +845,10 @@ function toggleBuildingTab(building) {
 	
 	toggleBuffLocation();
 }
+/** Generates the statistics to be displayed for the specified building.
+ * @param {int} building_id - The index of the building to be displayed.
+ * @return {string} - The statistics text.
+ */
 function calculateStats(building_id) {
     var building = buildings[building_id];
     
@@ -808,9 +862,20 @@ function calculateStats(building_id) {
     
     return stats_string;
 }
+/** Sets the TIER_ONE_COUNT variable to be the total number of tier one buildings. */
 function tierOneCount() {
 	TIER_ONE_COUNT = 0;
 	for (var i = 0; i < 7; i++) {
 		TIER_ONE_COUNT += buildings[i].count;
 	}
+}
+/** Utility function modified from Jim808's code: https://www.reddit.com/r/incremental_games/comments/3tki2w/incremental_game_math_functions/ */
+function getMaxNumberOfAffordableBuildings(money, singlePurchaseCost, costBase) {
+        if (singlePurchaseCost > money) {
+            return 1;
+        }
+        var result = Math.log(1 + ((costBase - 1) * money / singlePurchaseCost)) / Math.log(costBase);
+        result = Math.floor(result);
+
+        return result;
 }

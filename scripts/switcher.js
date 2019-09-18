@@ -315,9 +315,13 @@ function switchedCultist() {
 	ritual_container.append(ritual_rush);
 	ritual_container.append(ritual_construction);
 	ritual_container.append(ritual_time);
-	if (unlocks[1].unlocked) ritual_container.append(ritual_soot);
-	if (unlocks[2].unlocked) ritual_container.append(ritual_purity);
-	if (unlocks[3].unlocked) ritual_container.append(ritual_karma);
+	ritual_container.append(ritual_soot.hide());
+	ritual_container.append(ritual_purity.hide());
+	ritual_container.append(ritual_karma.hide());
+	
+	if (unlocks[1].unlocked) ritual_soot.show();
+	if (unlocks[2].unlocked) ritual_purity.show();
+	if (unlocks[3].unlocked) ritual_karma.show();
 	
 	return ritual_container;
 }
@@ -366,8 +370,11 @@ function switchedGambler() {
 	gambler_container.append(discard_icon);
 	gambler_container.append(draw_button);
 	gambler_container.append(discard_button);
-	if (unlocks[5].unlocked) gambler_container.append(shuffle_button);
-	if (unlocks[6].unlocked) gambler_container.append(peek_button);
+	gambler_container.append(shuffle_button.hide());
+	gambler_container.append(peek_button.hide());
+	
+	if (unlocks[5].unlocked) shuffle_button.show();
+	if (unlocks[6].unlocked) peek_button.show();
 	
 	return gambler_container;
 }

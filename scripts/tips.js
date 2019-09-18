@@ -1,14 +1,25 @@
+/**
+ * @fileOverview Contains all logic for tip popups, and exclamation pips.
+ */
+
+//Global arrays to store tip and pip data
 var tip_queue = [];
 var tips = [];
 var pips = [];
-
+//Global variable to track tip queue timing
 var queue_timer = 0;
 
+/** Represents a information tip.
+ * @constructor
+ * @param {string} text - Text to be displayed on the tip.
+ * @param {function} condition - Function to return whether the tip should be displayed.
+ * @param {int} precedence - Determines the order of tips to be displayed, higher is displayed first.
+ */
 function Tip(text, condition, precedence) {
     this.text = text;
     this.condition = condition;
     this.shown = false;
-    
+    /** Determines if this tip should be displayed. */
     this.test = function () {
         if (this.condition() && !this.shown) {
 			var slotted = false;
@@ -24,6 +35,9 @@ function Tip(text, condition, precedence) {
         }
     }
 }
+/** Updates each tip, called every slow tick.
+ * @param {float} dt - Time since of last frame.
+ */
 function tipTick(dt) {
 	if (!$("#tip_container").is(":visible")) {queue_timer += dt;}
     
@@ -43,12 +57,16 @@ function tipTick(dt) {
 		}
     }
 }
+/** Creates and displays the given tip to the user.
+ * @param {object} tip - The tip to be displayed.
+ */
 function HTMLTip(tip) {
     var text = tip.text;
     
     $("#tip_container").fadeIn();
     $("#tip_content").html(text);
 }
+/** Initializes all tip object instances. */
 function initTips() {
     var tip_buy_buildings = new Tip("Quick Tip: You can buy multiples of each building by clicking on their background.", function () {return TIER_1_COUNT - TIER_ONE_COUNT == 0;}, 10);
     var tip_tier_two = new Tip("Quick Tip: You can buy tier two buildings by clicking the \"2\" button on the right.", function () {return TIER_2_UNLOCKED == true}, 9);
@@ -72,7 +90,10 @@ function initTips() {
     tips.push(tip_friends); //8
     tips.push(tip_buy); //9
 }
-
+/** Creates and displays the an exclamation pip to the user.
+ * @param {element} element - HTML element to display the pip at.
+ * @param {array} group - The group of elements this pip is associated with.
+ */
 function createPip(element, group) {
     var pip = new Pip(element, group);
     
@@ -80,17 +101,27 @@ function createPip(element, group) {
     
     updatePips();
 }
+/** Updates all exclamation pips */
 function updatePips() {    
     var len = pips.length;
     for (var i = 0; i < len; i++) {
 		HTMLPip(pips[i].element, pips[i]);
     }
 }
+/** Represents a exclamation pip.
+ * @constructor
+ * @param {element} element - HTML element to display the pip at.
+ * @param {array} group - The group of elements this pip is associated with.
+ */
 function Pip(element, group) {
     this.element = element;
     this.hover = true;
     this.group = group || null;
 }
+/** Creates an exclamation pip at the given element.
+ * @param {string} element_id - The id of the element that the pip will be created in relation to.
+ * @param {object} pip - The pip object to be used to create the pip.
+ */
 function HTMLPip(element_id, pip) {
     var element = $(element_id);
     if (!element.length) {return;}
@@ -115,25 +146,3 @@ function HTMLPip(element_id, pip) {
     
    element.parent().append(pip);
 }
-
-/*
-function HTMLPip(element_id, pip) {	
-	var element = $(element_id);
-	if (!element.length) {return;};
-	if (!element.is("img")) {
-		return HTMLPipNormal(element_id, pip);
-	}
-	if (element.hasClass("unlocked")) {return;};
-
-	element.addClass("unlocked");
-    if (pip.hover) {
-        element.on("mouseenter", function () {
-            element.off("mouseenter");
-            $("#pip_"+element.attr("id")).fadeOut().remove();
-            pips.splice(pips.indexOf(pip), 1);
-		});
-	}
-	$(element_id).after('<img src="images/exclimation_pip.png" class="img_pip" id="pip_'+element.attr("id")+'"/>');
-}
-*/
-//Lambda Expression

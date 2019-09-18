@@ -19,6 +19,7 @@ function softReset() {
 	var temp_stats = stats;
 	var temp_subgames = subgames;
 	var temp_minigames = minigames;
+	var temp_achievements = achievements;
 	var temp_challenges = challenges;
 	var temp_challenge_unlocked = CHALLENGES_UNLOCKED;
 	var temp_current_challenge = CURRENT_CHALLENGE;
@@ -28,6 +29,7 @@ function softReset() {
 	var temp_calm = calm;
 	var temp_tutorial = tutorial_list;
 	var temp_corrupt_bonus = corrupt_bonus;
+	var programs_ran = minigames[11].vars.programs_ran;
 	
 	var temp_levels = [];
 	var temp_xp = [];
@@ -47,16 +49,21 @@ function softReset() {
 	KARMA_POINTS = temp_karma_points;
 	SWITCHER = temp_switcher;
 	
+	achievements = temp_achievements;
 	minigames = temp_minigames;
 	
 	minigames[5] = research;
 	minigames[5].vars.research_points += temp_research_stockpile * 10;
 	minigames[11] = computer;
+	minigames[11].vars.programs_ran = programs_ran;
+	buildings[11].stats["Programs Ran"] = programs_ran;
 	
 	//Resets most mini-game currencies
 	minigames[0].vars.blood = minigames[0].vars.max_blood;
 	minigames[1].vars.gold = 0;
 	minigames[2].vars.draw_charges = minigames[2].vars.draw_charges_max;
+	minigames[2].vars.deck = [7, 1, 3 ,4, 2, 5, 6, 0];
+	minigames[2].vars.discard_pile = [0];
 	minigames[3].vars.power = minigames[3].vars.max_power;
 	minigames[4].vars.investing = false;minigames[4].vars.investment_time = 300
 	minigames[7].vars.bonus_time = 90;
@@ -111,6 +118,7 @@ function softReset() {
 			$("#tier_cost_display").html(fancyNumber(tierPrice(buildings[i].tier)));
 			
 			changeTier(buildings[i].tier);
+			buildings[i].unlockUpgrades();
 		}
 	}
 	
@@ -124,9 +132,14 @@ function softReset() {
 
 	minigames[1].vars.stored_ids = [];
 	
-	UPDATE_BUILDINGS = true;
 	updateSubgameButtons();
+	testAchievementUpgrades();
+	
+	UPDATE_BUILDINGS = true;
+	UPDATE_UPGRADES = true;
 	save();
+	
+	window.setTimeout(function () {$("#offline_popup").hide();}, 10);
 }
 
 function openSoftReset() {

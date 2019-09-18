@@ -61,7 +61,7 @@ table, td, th {
 	left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-	height: 550px;
+	height: 580px;
 	width: 900px;
 	z-index: 60;
 	background: radial-gradient(rgba(200, 200, 200, 0.2), rgba(0, 0, 0, 0.2)), url(../images/noise_black.png);
@@ -265,4 +265,10 @@ table, td, th {
 }
 #assistant_background {
 	z-index: 61;
+}
+.info_button:hover {
+	-webkit-filter: drop-shadow(1px 1px 1px #999);
+    filter: drop-shadow(1px 1px 1px #999);
+	transform: scale(1.1);
+	cursor:pointer;
 }

@@ -1,0 +1,200 @@
+Cultist Rituals:
+    Ritual of Soot: Increases production by 25% + 4% per activation for 3 minutes, but permanently decreases production by 1%. (Unlocked with 15 cultist)
+    Ritual of Purity: Resets the ritual of soot, and and permanently increases production by 10% if has 50 more soot activations. (Unlocked with 5 soot actiavtions)
+    Ritual of Time: Grants 30 seconds worth of time, but grants a stacking 10% decrease in production for 90 seconds. (Unlocked with time)
+    Ritual of Construction: Instantly grants 1 free cultist, but has a stacking 1% chance of failure per cultist already owned. (Available by default)
+    Karmatic Ritual: Increases cultist permanently by 15 + 2 for each time activated. This persists through resets. (Unlocked after reseting)
+    Blood Rush: Increases production by 50% for 66 seconds. (Available by default)
+    
+    Description, Stats, Rituals, Upgrades
+Cultist Bonus Upgrades:
+	Blood Debt: After activating a ritual, another one can be activated whether or not you have enough blood. This can reduce your blood into the negatives.
+	Occult Summoning: Instantly grants 10 free cultists (their price increases accordingly).
+	Blood Fast: Increases production by 10% when no bonuses are currently active.
+	Occult Oversight: Increases value from clicking by (0.5 + sqrt(rituals_activated/10)/10)% of total production.
+	
+	Blood Festival: Increases maximum blood based on total blood spent. (3rd root(blood)/2 + 1).
+	Nihilism: Increases the amount of blood generated each second based on how low your blood is. (Max 10%).
+	
+
+Gold Upgrades: Deeper Mines, 
+
+	Gold Rush: After Spending gold game speed is increased by 50% for 15 seconds
+	Golden Deeds: Every Gold bar mined from now on permanently increases the production of mines by %0.2. This persists through resets
+	Coin Clipping: Decreases the time it takes to mine a gold bar by 10 seconds
+	Gold Reserves: Instantly Grants 100 Bars
+	
+	Wild Spender: Increases production by 5% (Unlocked after spending gold 10 times).
+	Forced levy: After spending gold two gold bars are refunded (Unlocked after spending gold 30 times).
+	
+	
+Gambler - Can draw, discard and reshuffle/peek at deck
+	Gains one draw every minute 5 charges:
+	Gains one discard every 2 minutes 3 charges:
+	Can Automatically reshuffle after the deck is half empty
+	Can peek once every 10 minutes/ 2 charges
+
+Ace of Spades - Increases production by 3% permanently, Two of Spades - Decreases production by for 3% permanently 
+Ace of clubs - Grants 30 Seconds worth of time, Two of Clubs - Instantly removes 20 seconds worth of credits (Cannot reduce credits to the negatives).
+Ace of Hearts - Increases production by 50% for 2 minutes, Two of hearts - decreases production by 33% for 1 minutes
+Ace of Diamonds - Increases the active time of each bonus by 20 seconds. Two of diamonds - Instantly removes one current bonus chosen at random
+
+Jack of Spades - Instantly grants 20 seconds worth credits 
+Jack of Clubs - Instantly grants 2 gold bars
+
+Gambler Upgrades: 
+	
+	Re-deal: Gives the option to shuffle the deck if half or more of the cards have been drawn.
+	Marked Cards: Gives the option to peek at the next card once every 10 mins. Stores 2 Charges.
+	Bowers: Adds the jack of spades/clubs to the deck.
+	Increasing Luck: Doubles draw and discard charges
+	
+	Eye Spy: Increases number of peek charges by 1.
+	Patience: Every further draw increases gamblers production by 1 + 1 for each previous draw since this upgrade was bought. This bonus persists through resets
+
+Power Upgrades:
+
+	Batteries: Increases the maximum power that can be stored by 50.
+	Supercharge: Increases the effects of powered buildings by 10%.
+	Gathering Storm: Increases production based on total power generated ((power * 10)^(1/4))
+	Static Charge: Increases the rate of power generation by 0.5 per second.
+
+	Tesla Coils:
+Bank
+	Investment - Spend 5 minutes worth of production to receive 7 minutes worth of production after 5 minutes.
+	Buy Gold - Reduce production by 10% for 1 minute in exchange for 1 Gold bar (Birch Gold).
+	Sell Gold - Increases production by 10% for 1 minute at the cost of 2 gold bars.
+	
+Bank Upgrades: 
+	Hedge Funds - Increases the return on investment from 7 to 7.5 minutes worth of production.
+	Economic Bubble - For 1 Minute after each investment production is increased by 10%.
+	Charity Investment - Increases production of banks by 1% for each investment activated from now on. This persists through resets.
+	Lucky Investment - Every Time an investment is there is a chance to get a free bank (Same formula as the cultist except worse short term better long term)
+	
+Research: Slowly grants research points that can be used to access research upgrades from a large tree set in a pannable window. Each research requires the previous research to be researched at least once, and can other requirements. Some researches can be researched multiple times.
+
+Expanding Knowledge: Increases production of research centers by 0.5% for each research completed (Max: 1, Cost: 1).
+	Efficient Cultists: Increases production and work rate of cultists by 1% (Max: 5, Cost: 1)
+		Cultist's Storage: increases cultist's maximum blood by 10 (Max: 3, Cost 10)
+		Accelerated Rituals: increases work rate of cultists by 1% (Max: 5, Cost: 3)
+		
+	Efficient Mines: Increases production and work rate of mines by 1% (Max: 5, Cost: 1)
+		Gold Rebate: Each time gold is spent to refill a building currency, 1 gold bar is refunded. (Max: 2, Cost 10)
+		Accelerated Mines: increases work rate of mines by 1% (Max: 5, Cost: 3)
+		
+	Efficient Gamblers: Increases production and work rate of gamblers by 1% (Max: 5, Cost: 1)
+		Gambler's Storage: Increases the maximum amount of card draws available to gamblers by 1 (Max: 3, Cost: 10)
+		Accelerated Gambling: increases work rate of gamblers by 1% (Max: 5, Cost: 3)
+		
+	Efficient Power: Increases production and work rate of power plants by 1% (Max: 5, Cost: 1)
+		Power Storage: Increases maximum power by 30 (Max 3, Cost: 10)
+		Accelerated Lightning: increases work rate of power by 1% (Max: 5, Cost: 3)
+		
+	Efficient Banks: Increases production and work rate of banks by 2% (Max: 25, Cost: 2)
+		Accelerated Banking: increases work rate of banks by 1% (Max: 5, Cost: 3)
+		
+	Efficient Factories: Increases production and work rate of factories by 2% (Max: 10, Cost: 2)
+		Factory Storage: Increases the duration of bonuses by 3% (Max: 3, Cost: 10)
+		
+	Timely Workers: Increases production by 5% while using extra seconds (Max: 1, Cost: 4)
+		Trickle of Time: Once per minute grants one free second of time (Max: 3, Cost 6)
+		Warp Speed: Increases maximum speed of extra seconds by 1 (Max: 1, Cost 10)
+		
+		
+		
+	Curiosity: Decreases the amount of time it takes to generate a research point by 1 second (Max: 10, Cost 2)		
+	Observation Study: Decreases the amount of time it takes to generate a research point by 10 seconds each time a bonus is activated (Max: 1, Cost 15)		
+	Epiphanic Stockpile: Will grant 10 Research points upon resetting (Max: 5, Cost 5)		
+	
+	
+	Real-Estate Deal: Every time a building is bought grants one second worth of time (Max: 1, Cost: 15).
+	
+	Smart Clicks: Increases value of clicks by 1% of production (Max: 1, Cost: 10)
+		
+		
+	
+	Rush of Knowledge: Grants 60 seconds worth of time instantly (Max: 1, Cost 2)
+		Alchemy: Grants 1 gold bar instantly (Max: Unlimited, Cost: 2)
+		Leap of Knowledge: Grants 4 seconds worth of time instantly (Max: Unlimited, Cost: 1)
+		Epiphanic Idea: Increase production by 10% for 2 minutes and 30 seconds (Max: Unlimited, Cost: 10)
+	
+Factory: A building whose production will not decrease even when temporary bonuses wear off.
+
+Tier 2 Buildings:
+	//Carpenter: Very Slowly unlocks new buildings that contain an idle subgame.
+		//Sacrificial Shrine: Subgame based on having workers producing an death count granting upgrades
+		//Corrupted Shrine:
+		//Shrine of Reason:
+	Bureaucratic Center: Allows the ability select multiple different policies with benefits; however the longer these policies are in place the greater a production reduction boost is.
+
+	Acceleration Laboratory: Increases price, production, clicks, and speed over time
+		Can Choose to accelerate either building prices, production, clicks or game speed, can switch twice per 10 minutes.
+			Building Prices: Each time a building is bought the next building is reduced by a stacking 1% this stacks up to 15 times for 30 seconds
+			Clicks: Each click increases the value of the next click by a stacking 0.1%. This stacks up to 150 times for 30 seconds
+			Production: Each time an upgrade is bought production is increased by 3% this stacks up to 5 times
+			
+	Fluctuation Lab: 
+	
+	
+	
+Prices at:
+10 - 619.2
+25 - 9539.7
+50 - 910043.9
+75 - 86.81 Million
+100 - 8.28 Billion
+125 - 790.05 Billion
+
+Global Bonuses:
+	Blood Fast: Increases production by 10% when no bonuses are currently active.
+	Gathering storm: increases production by power_generated^(1/4) ~ 8%-12%
+	
+	Gambling Bonus (1x%)
+	Cultist Purity Bonus (5x%)
+
+Reset Bonuses:
+	Cultist Karma Ritual
+	Mine Karma Upgrade
+	Research Center Epiphanic Stockpile
+	
+Todo:
+-Finish cryogenic upgrades (4?)
+-Organize Upgrades for bought display
+-Add Settings.
+-Unbuyable upgrades are greyed out and price is red
+-Add credit display in the bottom left when a building is open.
+-Make icons by buildings stay extended when the building is open
+-Fix ritual of soot tooltip.
+-Redify Prices
+
+-Check updating details when only tab is open and box is hidden
+
+------
+Habits
+------
+- Wake 6:30 A.M. / Bed 10:00 P.M. Everyday
+- Keep room organized
+
+
+-----
+Major
+-----
+- Finish Galactic Grind 2.0
+- College Classes
+
+----------------
+Important Chunks
+----------------
+-F
+
+==
+- Email Vlad
+==
+
+-------
+Classes
+-------
+CS 2311 - Discrete Structures
+CS 2321 - Data Structures
+MA 2160 - Calculus II
+MA 2330 - Intro to Linear Algebra

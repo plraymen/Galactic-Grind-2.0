@@ -17,16 +17,17 @@ function unlock(element, condition, pip) {
 			}
 		} else {
 			if (this.condition()) {
-				for (var i = 0; i < element.length; i++) {
+				for (var i = 0; i < this.element.length; i++) {
 					if ($("#"+this.element[i]).length != 0) {
 						var ele = this.element[i];
+						$("#"+ele).show();
 						var temp_pip = function () {createPip($("#"+ele))};
 						setTimeout(temp_pip, 50);
 						this.unlocked = true;
 					}
 				}
 			} else {
-				for (var i = 0; i < element.length; i++) {
+				for (var i = 0; i < this.element.length; i++) {
 					$("#"+this.element[i]).hide();
 				}
 			}
@@ -136,12 +137,12 @@ function updateCreditUnlocks() {
 function initUnlocks() {
     var game_speed_unlock = new unlock("clock_container", function () {return !!CLOCK_TICKS}, function () {createPip($("#clock_container"));});
     //var ritual_speed_unlock = new unlock("ritual_1", function () {return !!CLOCK_TICKS}, function () {createPip($("#ritual_1"));});
-    var ritual_purity_unlock = new unlock("ritual_2", function () {return buildings[0].count >= 55}, function () {createPip($("#ritual_2"));});
-    var ritual_soot_unlock = new unlock("ritual_3", function () {return buildings[0].count >= 15}, function () {createPip($("#ritual_3"));});
-    var ritual_karma_unlock = new unlock("ritual_4", function () {return buildings[0].count >= 15}, function () {createPip($("#ritual_4"));});
+    var ritual_purity_unlock = new unlock(["ritual_2", "ritual_main_2"], function () {return buildings[0].count >= 55}, function () {createPip($("#ritual_2"));});
+    var ritual_soot_unlock = new unlock(["ritual_3", "ritual_main_3"], function () {return buildings[0].count >= 15}, function () {createPip($("#ritual_3"));});
+    var ritual_karma_unlock = new unlock(["ritual_4", "ritual_main_4"], function () {return buildings[0].count >= 15}, function () {createPip($("#ritual_4"));});
     var gold_unlock = new unlock(["cultist_gold_refill", "gambler_gold_refill", "power_plant_gold_refill", "research_center_gold_refill", "bank_gold_refill"], function () {return buildings[1].count >= 1}, function () {});
-    var shuffle = new unlock("shuffle_button", function () {return upgrades[36].bought}, function () {createPip($("#shuffle_button"));});
-    var peek = new unlock("peek_button", function () {return upgrades[37].bought}, function () {createPip($("#peek_button"));});
+    var shuffle = new unlock(["shuffle_button", "shuffle_button_main"], function () {return upgrades[36].bought}, function () {createPip($("#shuffle_button"));});
+    var peek = new unlock(["peek_button", "peek_button_main"], function () {return upgrades[37].bought}, function () {createPip($("#peek_button"));});
     var overcharge = new unlock(["cultist_overcharge", "mine_overcharge", "gambler_overcharge", "bank_overcharge", "research_center_overcharge", "factory_overcharge"], function () {return buildings[3].count >= 1}, function () {});
     var bank_gold = new unlock(["cash_to_gold", "gold_to_cash"], function () {return buildings[1].count >= 1}, function () {});
     var tier_2_button = new unlock(["button_tier_1", "button_tier_2"], function () {return TIER_2_UNLOCKED}, function () {});

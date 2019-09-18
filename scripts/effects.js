@@ -1,9 +1,16 @@
+/**
+ * @fileOverview Handles the rendering and logic of building special visual effects.
+ */
+ 
+/** Tick called every 5 seconds, used to update each building's icon. */
 function effectTick() {
 	if (settings.effects) {
 		updateBuildingEffects();
 	}
+	updateUnlocks();
+	UPDATE_BUILDINGS = true;
 }
-
+/** Calls each function associated with the icons of buildings. */
 function updateBuildingEffects() {
 	if (settings.effects) {
 		if (CURRENT_TIER == 1) {
@@ -20,7 +27,7 @@ function updateBuildingEffects() {
 		}
 	}
 }
-
+/** Removes any special effects associated with building icons. */
 function disableEffects() {
 	if (CURRENT_TIER == 1) {
 		if (buildings[0].count > 0) {$("#buildingcultist").children().first().attr("src", "images/building_icon_cultist.png");}
@@ -35,7 +42,7 @@ function disableEffects() {
 		if (buildings[11].count > 0) {$("#buildingmainframe_computer").children().first().attr("src", "images/building_icon_computer.png");}
 	}
 }
-
+/** Updates the cultist building's icon with special effects. */
 function updateCultistEffects() {
 	if (buildings[0].count > 0) {	
 		var percentage = minigames[0].vars.blood / minigames[0].vars.max_blood;
@@ -57,14 +64,14 @@ function updateCultistEffects() {
 		}
 	}
 }
-
+/** Updates the mine building's icon with special effects. */
 function updateMineEffects() {
 	if (buildings[1].count > 0) {
 		var radius = Math.log(minigames[1].vars.gold + 1);
 		$("#buildingmine").children().first().css("filter", "drop-shadow(0px 0px " + radius + "px #f5d130)");
 	}
 }
-
+/** Updates the gambler building's icon with special effects. */
 function updateGamblerEffects() {
 	if (buildings[2].count > 0) {
 		var percentage = minigames[2].vars.draw_charges / minigames[2].vars.draw_charges_max;
@@ -80,14 +87,14 @@ function updateGamblerEffects() {
 		}	
 	}
 }
-
+/** Updates the power plants building's icon with special effects. */
 function updatePowerEffects() {
 	if (buildings[3].count > 0) {
 		var percentage = Math.log(minigames[3].vars.power / minigames[3].vars.max_power * 2 + 1);
 		$("#buildingpower_plant").children().first().css("filter", "drop-shadow(0px 0px " + percentage * 2 + "px #53f9ff)");
 	}
 }
-
+/** Updates the bank building's icon with special effects. */
 function updateBankEffects() {
 	if (buildings[4].count > 0) {
 		if (!minigames[4].vars.investing) {
@@ -98,7 +105,7 @@ function updateBankEffects() {
 		}	
 	}
 }
-
+/** Updates the research center building's icon with special effects. */
 function updateResearchEffects() {
 	if (buildings[5].count > 0) {
 		var research_points = minigames[5].vars.research_points;
@@ -120,21 +127,21 @@ function updateResearchEffects() {
 		}
 	}	
 }
-
+/** Updates the warp facility building's icon with special effects. */
 function updateWarpEffects() {
 	if (buildings[7].count > 0) {
 		var percentage = minigames[7].vars.warp_charges * 0.75;
 		$("#buildingwarp_facility").children().first().css("filter", "drop-shadow(0px 0px " + percentage + "px #75ffff)");
 	}
 }
-
+/** Updates the alien research lab building's icon with special effects. */
 function updateAlienEffects() {
 	if (buildings[10].count > 0) {
 		var percentage = Math.log(minigames[10].vars.alien_power / minigames[10].vars.max_power * 2 + 1);
 		$("#buildingalien_lab").children().first().css("filter", "drop-shadow(0px 0px " + percentage * 2 + "px #ffffb0)");
 	}
 }
-
+/** Updates the mainframe computer building's icon with special effects. */
 function updateComputerEffects() {
 	if (buildings[11].count > 0) {
 		if (minigames[11].vars.program_1 || minigames[11].vars.program_2 || minigames[11].vars.program_3) {

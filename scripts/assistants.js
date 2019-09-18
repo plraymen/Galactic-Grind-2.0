@@ -28,8 +28,7 @@ var research_upgrades = [219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 
 var research_iter = 0;
 var research_growth = 1;
 
-/**
- * Represents this game's assistants.
+/** Represents this game's assistants.
  * @constructor
  * @param {string} name - The name of the assistant.
  * @param {string} description - The description of what the assistant does.
@@ -49,6 +48,14 @@ function Assistant(name, description, icon, x, y) {
 	this.next_xp = 60;
 	this.abilities = [];
 	
+	/**
+	 * @constructor
+	 * @param {string} name - The name of the assistant.
+	 * @param {string} description - The description of what the assistant does.
+	 * @param {string} icon - The file path for the icon associated with this assistant.
+	 * @param {int} x - The x location on the upgrade tile map for the icon.
+	 * @param {int} y - The y location on the upgrade tile map for the icon.
+	 */
 	this.update = function (dt) {
 		if (this.unlocked) {
 			this.xp += dt * ASSISTANT_RATE * (1 + kongBuys.experienced_assistants);
@@ -193,8 +200,7 @@ function Assistant(name, description, icon, x, y) {
 		}
 	}
 }
-/**
- * Represents the abilities this game's assistants.
+/** Represents the abilities this game's assistants.
  * @constructor
  * @param {string} name - The name of the ability.
  * @param {string} description - The description of what the ability does.
@@ -383,7 +389,10 @@ function initAssistants() {
 	var zen_assistant = new Assistant("Zen Assistant", function () {return "Zen assistants increase production when no bonuses are active by (" + roundPlace(this.level).toFixed(1) + "%). Over time Zen Assistants gain progress to higher levels, which can unlock new abilities." }, "images/assistant_zen.png", 0, 7);
 	
 		var zen_ability_1 = new Ability("Time", "Grants 30 seconds worth of extra time.", "images/ability_zen_1.png", 9, 31, false, 600, function () {addClockTicks(30)});
-		var zen_ability_2 = new Ability("Calm", "Toggle to prevent all bonuses, both positive and negative, from being activated. Production is also increased by 25%.", "images/ability_zen_2.png", 9, 31, false, 300, function () {calm = !calm;assistants[4].createHTML();});
+		var zen_ability_2 = new Ability("Calm", "Toggle to prevent all bonuses, both positive and negative, from being activated. Production is also increased by 25%.", "images/ability_zen_2.png", 9, 31, false, 300, function () {
+			calm = !calm;
+			if ($("#assistant_background").length && assistant_opened == 4) {assistants[4].createHTML();}
+		});
 		var zen_ability_3 = new Ability("Order", "Decreases the price of all buildings by 15%", "images/ability_zen_3.png", 9, 31, true, 0);
 		var zen_ability_4 = new Ability("Reason", "Grants 45 research points.", "images/ability_zen_4.png", 9, 31, false, 1800, function () {minigames[5].vars.research_points += 45;});
 		var zen_ability_5 = new Ability("Power", "Increases production by 25%.", "images/ability_zen_5.png", 9, 31, true, 0);
@@ -399,11 +408,14 @@ function initAssistants() {
 	
 	var corrupt_assistant = new Assistant("Corrupt Assistant", function () {return "Corrupt assistants increase the production of the corrupt subgame by (" + roundPlace(this.level).toFixed(1) + "%). Over time Corrupt Assistants gain progress to higher levels, which can unlock new abilities." }, "images/assistant_corrupt.png", 0, 7);
 	
-		var corrupt_ability_1 = new Ability("Underground Corruption", "Increases production by 25 for 60 seconds.", "images/ability_corrupt_1.png", 0, 19, false, 600, function () {buffs[32].activate(60)});
+		var corrupt_ability_1 = new Ability("Underground Corruption", "Increases production by 25% for 60 seconds.", "images/ability_corrupt_1.png", 0, 19, false, 600, function () {buffs[32].activate(60)});
 		var corrupt_ability_2 = new Ability("Corrupt Warp", "Instantly grants 5 minutes worth of corruption.", "images/ability_corrupt_2.png", 0, 19, false, 600, function () {subgames[0].credits += subgames[0].production * 300});
 		var corrupt_ability_3 = new Ability("Corrupt Zoning", "Decreases the price of all buildings by 15%", "images/ability_corrupt_3.png", 0, 19, true, 0);
 		var corrupt_ability_4 = new Ability("Corrupt Extension", "Increases the duration of all temporary effects (both positive and negative) in the main game by 10%.", "images/ability_corrupt_4.png", 0, 19, true, 0);
-		var corrupt_ability_5 = new Ability("Corrupt Sacrifice", "Sacrifice all bad seeds to permanently increase production in the main game by 0.5.", "images/ability_corrupt_5.png", 0, 19, false, 600, function () {corrupt_bonus += 0.005;subgames[0].buildings[0].count = 0;assistants[5].createHTML();});
+		var corrupt_ability_5 = new Ability("Corrupt Sacrifice", "Sacrifice all bad seeds to permanently increase production in the main game by 0.5%.", "images/ability_corrupt_5.png", 0, 19, false, 600, function () {
+			corrupt_bonus += 0.005;subgames[0].buildings[0].count = 0;
+			if ($("#assistant_background").length && assistant_opened == 5) {assistants[5].createHTML();}
+		});
 		
 		corrupt_assistant.abilities.push(corrupt_ability_1);
 		corrupt_assistant.abilities.push(corrupt_ability_2);

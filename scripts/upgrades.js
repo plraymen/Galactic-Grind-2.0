@@ -25,6 +25,7 @@ function Upgrade(display_name, name, description, flavor_text, x, y, price, effe
 			
 			if (upgrades[146].bought) {
 				buildings[10].count += 1;
+				buildings[10].unlockUpgrades()
 				UPDATE_BUILDINGS = true;
 			}
 			
@@ -2528,6 +2529,7 @@ function initUpgrades() {
 			
 			for (var i = 0; i < 7; i++) {
 				buildings[i].count = next_biggest;
+				buildings[i].unlockUpgrades()
 			}
 			UPDATE_BUILDINGS = true;
 		},
@@ -2806,7 +2808,7 @@ function initUpgrades() {
         9,
 		0,
         function () {},
-        function () {buildings[6].count += 5;UPDATE_BUILDINGS = true},
+        function () {buildings[6].count += 5; buildings[6].unlockUpgrades(); UPDATE_BUILDINGS = true},
         function () {},
 	)//}	
 	var upgrade_227 = new Upgrade( //{ 
@@ -3046,7 +3048,7 @@ function initUpgrades() {
         9,
 		0,
         function () {},
-        function () {buildings[6].count += 5;UPDATE_BUILDINGS = true},
+        function () {buildings[6].count += 5; buildings[6].unlockUpgrades(); UPDATE_BUILDINGS = true},
         function () {},
 	)//}
 	var upgrade_247 = new Upgrade( //{ 

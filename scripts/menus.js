@@ -1,3 +1,8 @@
+/**
+ * @fileOverview Handles the creation and interaction of independent menus.
+ */
+
+/** Creates the menu that allows the player to choose a new building to unlock. */
 function createBuildingMenu() {
     if (document.getElementById("menu_building")) {return;}
     
@@ -39,19 +44,23 @@ function createBuildingMenu() {
     
     $("#menu_container").append(container);
 }
+/** Updates the current by count to the specified value (10000 = buy max).
+ * @param {int} count - The value to replace the current buy count.
+ */
 function changeBuyCount(count) {
     BUY_COUNT = count;
     $("#buy_count_1").attr("class", "");
     $("#buy_count_5").attr("class", "");
     $("#buy_count_10").attr("class", "");
     $("#buy_count_50").attr("class", "");
+    $("#buy_count_10000").attr("class", "");
     
     $("#buy_count_"+count).attr("class", "buy_count");
     
     UPDATE_BUILDINGS = true;
     updateBuildings();
 }
-
+/** Updates the extra second display. */
 function updateClockDisplay() {
     var container = $("#clock_container");
     var icon = $("#speed_icon");
@@ -71,7 +80,7 @@ function updateClockDisplay() {
     var time_left = container.width()/2 + icon.width()/2 + 8;
     time_remaining.css({ top : 7, left : time_left});
 }
-
+/** Switches the location on the screen where temporary bonuses and the credit display is. */
 function toggleBuffLocation() {
 	if (SHOWN_TAB == -1) {
 		$("#center_content").append($("#buff_container"));
@@ -85,14 +94,18 @@ function toggleBuffLocation() {
 		$("#small_credits_display").show();
 	}
 }
-
+/** Opens the menu to import or export the save file. 
+ * @param {event} event - The click event (will be canceled)
+ */
 function openImportExport(event) {
 	$("#export_textarea").val("Click export to export your save, or paste a save here then click import to import a save.");
 	$("#save_popup").show();
 	
 	stopProp(event);
 }
-
+/** Opens the menu to wipe the current save file. 
+ * @param {event} event - The click event (will be canceled)
+ */
 function openWipeSave(event) {
 	$("#wipe_popup").show();
 	

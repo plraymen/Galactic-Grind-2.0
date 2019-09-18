@@ -42,6 +42,7 @@ function startChallenge(i, force) {
 				$("#tier_cost_display").html(fancyNumber(tierPrice(buildings[j].tier)));
 				
 				changeTier(buildings[j].tier);
+				buildings[j].unlockUpgrades();
 			}
 		}
 		
@@ -88,13 +89,14 @@ function endChallenge(i) {
 		CURRENT_CHALLENGE = -1;
 		updateSubgameButtons();
 		
-		if (challenges[i].unlocked && !temp_unlocked) {buildings[i].free_count += 10; buildings[i].count += 10;}
+		if (challenges[i].unlocked && !temp_unlocked) {buildings[i].free_count += 10; buildings[i].count += 10; buildings[i].unlockUpgrades()}
 		if (challenges[1].unlocked && !temp_unlocked && i == 1) {minigames[1].vars.gold += 100;}
 		if (challenges[5].unlocked && !temp_unlocked && i == 5) {minigames[5].vars.research_points += 60;}
 		if (challenges[6].unlocked && !temp_unlocked && i == 6) {buildings[i].free_count += 10; buildings[i].count += 10;}
 		if (challenges[4].unlocked && !temp_unlocked && i == 4) {minigames[4].vars.investment_time = 0;minigames[4].vars.investing = false;}
 		
 		save();
+		UPDATE_BUILDINGS = true;
 		
 		window.setTimeout(function () {$('#challenge_popup').remove()}, 10);
 	}
@@ -284,6 +286,7 @@ function challengeSacrifice(building_id) {
 					if (buildings[i].unlocked) {
 						buildings[i].count += 2;
 						buildings[i].free_count += 2;
+						buildings[i].unlockUpgrades()
 					}
 				}
 

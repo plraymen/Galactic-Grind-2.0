@@ -1,7 +1,15 @@
+/**
+ * @fileOverview Handles the initialization of all game elements when the page loads.
+ */
+ 
+//Global variables to cache canvas tile maps
 var research_image;
 var karma_image;
 var isDown = false;
 
+/** Calls functions to initialize most game objects.
+ * @param {boolean} soft - Determines if the initialization was called directly after a soft reset.
+ */
 function init(soft) {
     $("#popup_text").css("opacity", 0);
     
@@ -47,6 +55,7 @@ function init(soft) {
 	
 	if (!soft) {window.setTimeout(function () {tutorial_list[0].trigger();}, 500);}
 }
+//Event handler to call init() on page load
 $(document).ready(function() { 
     init();
 });

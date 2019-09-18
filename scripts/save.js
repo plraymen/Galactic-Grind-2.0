@@ -1,17 +1,22 @@
+/**
+ * @fileOverview Handles saving, loading, exporting, importing, and wiping, of the save file.
+ */
+ 
+/** Saves all necessary game data.
+* @param {boolean} challenge - Determines if a challenge is currently active.
+*/
 function save(challenge) {
 	var save = generateSave();
 	
-    //if (!challenge) {
-		localStorage.setObject("save_file", save);
-	//} else {
-	//	localStorage.setObject("challenge_save", save);
-	//}
+	localStorage.setObject("save_file", save);
 	
 	SAVE_TIME = 0;
 	
 	if (KONG_ENABLED) {updateKongScores();}
 }
-
+/** Helper function to create and return a single object with all necessary game data.
+* @return {object} - The save object.
+*/
 function generateSave() {
 	var save = {};
 	save.VERSION = VERSION;
@@ -210,7 +215,7 @@ function generateSave() {
 	
 	return save;
 }
-
+/** Loads all necessary game data from local storage. */
 function load() {
     var load = localStorage.getObject('save_file');
 	if (CHALLENGE_SAVE) {
@@ -460,6 +465,7 @@ function load() {
 		
 		if (settings.menu_close == undefined) {settings.menu_close = true}
 		if (settings.disable_tips == undefined) {settings.disable_tips = false}
+		if (settings.scientific_notation == undefined) {settings.scientific_notation = false}
 		if (automation[4].vars.auto_gold_to_cash == undefined) {automation[4].vars.auto_gold_to_cash = false}
 		if (automation[4].vars.auto_cash_to_gold == undefined) {automation[4].vars.auto_cash_to_gold = false}
 		if (automation[8].vars.auto_path == undefined) {automation[8].vars.auto_path = false}
@@ -486,7 +492,9 @@ function load() {
 	
 
 }
-
+/** Updates autosave time.
+* @param {float} rt - Exact time since last frame.
+*/
 function saveTick(rt) {
 	SAVE_TIME += rt;
 	
@@ -498,7 +506,7 @@ function saveTick(rt) {
 	$("#save_element").css('height', SAVE_TIME/SAVE_MAX_TIME*36 + "px")
 	
 }
-
+/** Exports the save file to a text format for the user. */
 function exportSave() {
 	if (localStorage.getItem('save_file')) {
 		$("#export_textarea").val(btoa(JSON.stringify(localStorage.getItem('save_file')).replace(/\\/g,'').slice(1, -1)));
@@ -509,15 +517,9 @@ function exportSave() {
 		$("#save_help").html("The game is currently not save, most likely you have auto-saving disabled");	
 	}
 }
+/** Imports a save file. */
 function importSave() {
-	//var load = JSON.parse(atob($("#export_textarea").html()));
-	//console.log(load);
-	//if (!challenge) {
-		localStorage.setItem('save_file', atob($("#export_textarea").val()));
-	//} else {
-	//	var save_var = localStorage.getItem('challenge_save');
-	//	localStorage.setItem('save_file', save_var);
-	//}
+	localStorage.setItem('save_file', atob($("#export_textarea").val()));
 	
 	for (var i = 0; i < buffs.length; i++) {
         buffs[i].removeHTML();
@@ -595,7 +597,9 @@ function importSave() {
 	$("#soft_reset_background").remove();
 	$("#soft_reset_confirmation").remove();
 }
-
+/** Wipes all save data.
+ * @param {boolean} soft - determines if the wipe is being called from a soft reset.
+ */
 function wipeSave(soft) {
 	localStorage.removeItem('save_file');
 	
@@ -698,7 +702,7 @@ function wipeSave(soft) {
 	$("#soft_reset_confirmation").remove();
 }
 
-
+//Helper storage functions
 Storage.prototype.setObject = function(key, value) {
     this.setItem(key, JSON.stringify(value));
 }

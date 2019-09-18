@@ -90,6 +90,8 @@ function htmlClone(building_id, main) {
  * @return {element} - The image element generated.
  */
 function htmlAlienPower(building_id, main) {
+	if (buildings[10].count == 0) {return $(document.createElement("span"))}
+	
 	var building = buildings[building_id];
 	var ele = $(document.createElement("img"));
 	

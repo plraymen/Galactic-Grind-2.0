@@ -1,3 +1,8 @@
+/**
+ * @fileOverview Stores statistics.
+ */
+
+//Global statistic object
 stats = {
 	time_played_offline : 0,
     time_played : 0,
@@ -8,7 +13,9 @@ stats = {
 	click_credits : 0,
 	credits_earned : 0,
 }
-
+/** Helper function to get the total days played for the user.
+* @return {float} - Total days the user has played.
+*/
 function getDaysPlayed() {
 	var days = stats.time_played_offline / 86400;
 	
