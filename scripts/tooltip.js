@@ -53,6 +53,9 @@ function tooltip(element, x, y, title, content, refresh, upgrade_sheet) {
         $("#tooltip").offset({ top: (offset_top), left: (offset_left)});
     }
 }
+/** Creates a tooltip a the specified research node.
+ * @param {node} node - The node to create the tooltip in relation to.
+ */
 function researchTooltip(node) {
 	$("#tooltip").show();
 	TOOLTIP_FUNCTION = null;
@@ -81,6 +84,9 @@ function researchTooltip(node) {
    
     $("#tooltip").offset({ top: (y), left: (x)});
 }
+/** Creates a tooltip a the specified karma node.
+ * @param {node} node - The node to create the tooltip in relation to.
+ */
 function karmaTooltip(node) {
 	$("#tooltip").show();
 	TOOLTIP_FUNCTION = null;
@@ -105,14 +111,21 @@ function karmaTooltip(node) {
 
     $("#tooltip").offset({ top: (y), left: (x)});
 }
+/** Updates the current tooltip if it's text requires updating. */
 function updateTooltip() {
     if (TOOLTIP_FUNCTION != null) {
         $("#tooltip_content").html(TOOLTIP_FUNCTION());
     }
 }
+/** Hides the tooltip. */
 function hideTooltip() {
     $("#tooltip").hide();
 }
+/** Displays popup text at the specified location.
+ * @param {string} text - The text to be displayed.
+ * @param {int} x - The x location on the screen to display the text.
+ * @param {int} y - The y location on the screen to display the text.
+ */
 function popupText(text, x, y) {
     var popup = $("#popup_text");
     popup.html(text);
@@ -126,6 +139,9 @@ function popupText(text, x, y) {
 		popup_log.shift();
 	}
 }
+/** Displays the statisic tooltip.
+ * @param {element} self - The element that called this function.
+ */
 function globalStatisticTooltip(self) {
 	var stat_string = "Credits Earned: " + fancyNumber(stats.credits_earned) + "<br>";
 	stat_string += "Total Clicks: " + stats.total_clicks + "<br>";
@@ -134,17 +150,41 @@ function globalStatisticTooltip(self) {
 	
 	tooltip(self, 6, 6, "View Statistics", stat_string + "Click to view more statistics", function () {return "Credits Earned: " + fancyNumber(stats.credits_earned) + "<br>" + "Total Clicks: " + stats.total_clicks + "<br>" + "Time Played: " + secondsToTime(Math.floor(stats.time_played_real)) + "<br>" + "Click to view more statistics"}, true);
 }
+/** Displays the upgrades tooltip.
+ * @param {element} self - The element that called this function.
+ */
 function globalUpgradesTooltip(self) {
 	tooltip(self, 8, 9, "View Upgrades", "Click to view the upgrades and their effects that you have already purchased.", function () {}, true);
 }
+/** Displays the settings tooltip.
+ * @param {element} self - The element that called this function.
+ */
 function globalSettingsTooltip(self) {
 	tooltip(self, 0, 8, "Settings", "Click to view or edit game settings.", function () {}, true);
 }
+/** Displays the fullscreen tooltip.
+ * @param {element} self - The element that called this function.
+ */
 function fullscreenTooltip(self) {
 	tooltip(self, 8, 17, "Fullscreen", "Click to toggle fullscreen mode.", function () {}, true);
 }
+/** Displays the save tooltip.
+ * @param {element} self - The element that called this function.
+ */
+function saveTooltip(self) {
+	var extra_text = ""
+	
+	if (settings.autosave_rate < 100) {
+		extra_text = "Will automatically save once every " + settings.autosave_rate + " seconds";
+	} else {
+		extra_text = "Autosaving Disabled"
+	}
+	tooltip(self, 9, 0, "Save", "Click to save.<br>" + extra_text, function () {}, true);
+}
+/** Displays the currency tooltip.
+ * @param {element} self - The element that called this function.
+ */
 function globalInformationTooltip(self) {
-	//var curr_string = "";
 	curr_function = function () {
 		return currencyString() + "Right click to toggle building currency display";
 	}
@@ -152,6 +192,7 @@ function globalInformationTooltip(self) {
 	
 	tooltip(self, 0, 0, "Currencies", curr_function(), function () {return curr_function()}, true);
 }
+/** Toggles the permanent display of the currency text. */
 function toggleCurrency() {
 	if (!$("#currency_display").length) {
 		var currency_display = $(document.createElement("div"));
@@ -169,9 +210,13 @@ function toggleCurrency() {
 		$("#currency_display").remove();
 	}
 }
+/** Updates the permanent currency display if visible. */
 function updateCurrencyDisplay() {
 	$("#currency_display").html(currencyString() + "<br>Right click to close");
 }
+/** Returns a formated string containing information on currencies the user has unlocked.
+ * @return - The formated string.
+ */
 function currencyString() {
 	var curr_string = "";
 	if (buildings[0].count != 0) {curr_string += "Blood: <span style='color:#ff1e2d;'>" + Math.floor(minigames[0].vars.blood) + "</span> <span style='color:#ff1ea4;'>(" + Math.round(100 * 0.5 * minigames[0].vars.max_blood/200)/100 + "/s)</span><br>"}
@@ -187,16 +232,10 @@ function currencyString() {
 	
 	return curr_string;
 }
-function saveTooltip(self) {
-	var extra_text = ""
-	
-	if (settings.autosave_rate < 100) {
-		extra_text = "Will automatically save once every " + settings.autosave_rate + " seconds";
-	} else {
-		extra_text = "Autosaving Disabled"
-	}
-	tooltip(self, 9, 0, "Save", "Click to save.<br>" + extra_text, function () {}, true);
-}
+/** Displays the unlock building tooltip.
+ * @param {element} self - The element that called this function.
+ * @param {int} i - The id of the building.
+ */
 function unlockBuildingTooltip(self, i) {
 	var color = "color:#e02900;text-shadow:0px 0px 8px #ff451c;";
 	if (CREDITS >= tierPrice(buildings[i].tier)) {
