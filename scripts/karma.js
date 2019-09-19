@@ -1,4 +1,10 @@
+/**
+ * @fileOverview Handles soft resets.
+ */
+
+//Global array to store karma upgrades
 var karma_upgrades = [];
+//Global object to store canvas data for the karma upgrade tree
 var karma_tree = {
 	camera: {
 		x: -220,
@@ -11,6 +17,7 @@ var karma_tree = {
 	context: 0,
 }
 
+/** Resets most aspects of the game and grants the player an appropriate number of karma points. */
 function softReset() {
 	var temp_spent_karma_points = SPENT_KARMA_POINTS;
 	var temp_karma_points = FUTURE_KARMA_POINTS;
@@ -141,7 +148,7 @@ function softReset() {
 	
 	window.setTimeout(function () {$("#offline_popup").hide();}, 10);
 }
-
+/** Opens the soft reset menu. */
 function openSoftReset() {
 	$("#soft_reset_background").remove();
 		
@@ -197,6 +204,7 @@ function openSoftReset() {
 	
 	updateSoftResetHTML();
 }
+/** Updates the soft reset menu's text. */
 function updateSoftResetHTML() {
 	var content_string = "Resetting now will grant <span style='color:#fcff1f;'>" + fancyNumber(FUTURE_KARMA_POINTS - KARMA_POINTS) + "</span> Karma Points increasing total Karma Points to <span style='color:#fcff1f;'>" + fancyNumber(FUTURE_KARMA_POINTS) + "</span> (which increases production by " + fancyNumber(FUTURE_KARMA_POINTS) + "%)";
 	content_string += "<br><br>Warning: Resetting now will reset ALL progress except: Building Statistics, Karma Points, Total Statistics, Subgames, and Assistant Levels";
@@ -208,6 +216,7 @@ function updateSoftResetHTML() {
 	
 	$("#soft_reset_content").html(content_string);
 }
+/** Displays confirmation message to the user for soft reset. */
 function openSoftResetConfirmation() {
 	$("#soft_reset_confirmation").remove();
 	
@@ -219,7 +228,19 @@ function openSoftResetConfirmation() {
 		
 	$(document.body).append(confirmation);
 }
-
+/** Represents a karma upgrade.
+ * @constructor
+ * @param {string} name - Name of the this karma upgrade to be displayed on the tooltip.
+ * @param {string} description - Description shown on this upgrade's tooltip.
+ * @param {int} sx - The x location on the karma tiled map for this upgrade's canvas icon.
+ * @param {int} sy - The y location on the karma tiled map for this upgrade's canvas icon.
+ * @param {int} x - The x location on the karma tiled map for this upgrade's icon.
+ * @param {int} y - The y location on the karma tiled map for this upgrade's icon.
+ * @param {int} cost - The karma cost of this upgrade.
+ * @param {function} onBuy - Function called when this upgrade is bought.
+ * @param {function} effect - This upgrade's effect, called each tick.
+ * @param {int} previous_karma - The karma upgrade required before this is unlocked.
+ */
 function KarmaUpgrade(name, description, sx, sy, x, y, cost, onBuy, effect, previous_karma) {
 	this.name = name;
 	this.description = description;
@@ -257,7 +278,7 @@ function KarmaUpgrade(name, description, sx, sy, x, y, cost, onBuy, effect, prev
 		}
 	}
 }
-
+/** Initializes all karma upgrades. */
 function initKarmaUpgrades() {
 	karma_upgrades = [];
 	
@@ -294,6 +315,7 @@ function initKarmaUpgrades() {
 	
 	karma_tree.context = document.getElementById("fullscreen_karma").getContext("2d");
 }
+/** Renders the karma tree on the canvas. */
 function renderKarmaTree() {
 	var camera = karma_tree.camera;
 	var ctx = karma_tree.context;
@@ -328,6 +350,9 @@ function renderKarmaTree() {
 	karma_upgrades[0].render(ctx);
 	if (!karma_upgrades[0].bought) {drawCircle(karma_upgrades[0].x + 24, karma_upgrades[0].y + 24, 22, true)}
 }
+/** Handles mouse move event to display tooltips on the karma tree.
+ * @param {event} e - The mouse event.
+ */
 function karmaMouseDetection(e) {
 	karma = karma_upgrades;
 	camera = karma_tree.camera;
@@ -346,6 +371,9 @@ function karmaMouseDetection(e) {
 		}
 	}
 }
+/** Handles mouse click event on the karma tree.
+ * @param {event} e - The mouse event.
+ */
 function karmaClickDetection(e) {
 	karma = karma_upgrades;
 	camera = karma_tree.camera;
@@ -371,11 +399,12 @@ function karmaClickDetection(e) {
 		}
 	}
 }
+/** Closes the karma tree. */
 function closeKarmaFullscreen() {
 	$("#fullscreen_karma").hide();
 	$("#close_karma_tree").hide();
 }
-
+/** Opens the karma tree. */
 function openKarmaFullscreen() {
 	$("#fullscreen_karma").show();
 	$("#close_karma_tree").show();

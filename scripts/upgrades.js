@@ -1,6 +1,23 @@
+/**
+ * @fileOverview Handles all upgrades for the main game.
+ */
+
+//Global array storing all upgrades
 var upgrades = [];
 
-
+/** Represents an upgrade for the main game.
+ * @constructor
+ * @param {string} display_name - Name of the this upgrade to be displayed on the tooltip.
+ * @param {string} name - Name of the this upgrade without caps or spaces.
+ * @param {string} description - Description shown on this upgrade's tooltip.
+ * @param {string} flavor_text - Small flavor text to be shown on this upgrade's tooltip.
+ * @param {int} x - The x location on the upgrade tiled map for this upgrade's icon
+ * @param {int} y - The y location on the upgrade tiled map for this upgrade's icon
+ * @param {int} price - The base cost of this upgrade.
+ * @param {function} effect - This upgrade's effect, called each tick.
+ * @param {function} onBuy - Function called when this upgrade is bought.
+ * @param {function} evalTooltip - Function to generate tooltip.
+ */
 function Upgrade(display_name, name, description, flavor_text, x, y, price, effect, onBuy, evalTooltip) {
     this.display_name = display_name;
     this.name = name;
@@ -65,7 +82,7 @@ function Upgrade(display_name, name, description, flavor_text, x, y, price, effe
         }
     };
 }
-
+/** Initializes all upgrades. */
 function initUpgrades() {
     var upgrade_0 = new Upgrade( //{ Cultist Upgrades
         "Unorthodoxy",
@@ -4314,6 +4331,7 @@ function initUpgrades() {
     upgrades.push(upgrade_323);
     upgrades.push(upgrade_324);
 }
+/** Updates the HTML for all upgrades. */
 function updateUpgrades() {
     if (!UPDATE_UPGRADES) {return;}
     
@@ -4326,18 +4344,10 @@ function updateUpgrades() {
     
     UPDATE_UPGRADES = false;
 }
-function testUpgradeUnlocks() {
-	var click_credits = stats.click_credits
-	if (stats.total_clicks >= 1) {upgrades[20].makeAvailable()}
-	if (click_credits >= 100) {upgrades[21].makeAvailable()}
-	if (click_credits >= 1000) {upgrades[22].makeAvailable()}
-	if (click_credits >= 10000) {upgrades[24].makeAvailable()}
-	if (click_credits >= 50000) {upgrades[25].makeAvailable()}
-	if (click_credits >= 500000) {upgrades[26].makeAvailable()}
-	if (click_credits >= 500000000) {upgrades[27].makeAvailable()}
-	if (click_credits >= 500000000000) {upgrades[28].makeAvailable()}
-	if (click_credits >= 500000000000000) {upgrades[29].makeAvailable()}
-}
+/** Returns the expanded description for the given upgrade.
+ * @param {upgrade} upgrade - The upgrade to reference for the description.
+ * @return {string} - The expanded description.
+ */
 function upgradeDescription(upgrade) {
 	var upgrade_tooltip_value = "";
 	if (upgrade.evalTooltip()) {upgrade_tooltip_value = "<br/>(" +upgrade.evalTooltip() + ")"}
@@ -4345,6 +4355,10 @@ function upgradeDescription(upgrade) {
 	
 	return expanded_description;
 }
+/** Changes the color of the upgrade price description based on whether the user has enough credits.
+ * @param {float} price - The price of the upgrade.
+ * @param {float} currency - The total amount of credits of the specified type owned.
+ */
 function updateUpgradeColor(price, currency) {
 	if (currency >= price) {
 		UPGRADE_COLOR = "color:#00db0a;text-shadow:0px 0px 2px #52d56a;"
@@ -4353,129 +4367,10 @@ function updateUpgradeColor(price, currency) {
 	}
 	
 }
-/*
-	var upgrade_107 = new Upgrade( //{ Warp Upgrades
-        "Temporal Wormholes",
-        "temporal_wormholes",
-        "Increases base production of warp facilities by " + fancyNumber(tweaker.upgrades.tier_2_base_multiplier * tweaker.upgrades.building_base_1)  + ".",
-        "",
-        0,
-        12,
-		tweaker.upgrades.building_price_1 * tweaker.upgrades.tier_2_price_multiplier,
-        function () {buildings[7].production += tweaker.upgrades.building_base_1 * tweaker.upgrades.tier_2_base_multiplier;},
-        function () {},
-        function () {},
-	)//}
-	var upgrade_108 = new Upgrade( //{
-        "Time Spiral",
-        "time_spiral",
-        "Increases base production of warp facilities by " + fancyNumber(tweaker.upgrades.tier_2_base_multiplier * tweaker.upgrades.building_base_2)  + ".",
-        "",
-        1,
-        12,
-		tweaker.upgrades.building_price_2 * tweaker.upgrades.tier_2_price_multiplier,
-        function () {buildings[7].production += tweaker.upgrades.building_base_2 * tweaker.upgrades.tier_2_base_multiplier;},
-        function () {},
-        function () {},
-	)//}
-	var upgrade_109 = new Upgrade( //{
-        "Stitch in Time",
-        "stitch_time",
-        "Increases base production of warp facilities by " + fancyNumber(tweaker.upgrades.tier_2_base_multiplier * tweaker.upgrades.building_base_3)  + ".",
-        "",
-        2,
-        12,
-		tweaker.upgrades.building_price_3 * tweaker.upgrades.tier_2_price_multiplier,
-        function () {buildings[7].production += tweaker.upgrades.building_base_3 * tweaker.upgrades.tier_2_base_multiplier;},
-        function () {},
-        function () {},
-	)//}
-	var upgrade_110 = new Upgrade( //{
-        "Telling Time",
-        "telling_time",
-        "Increases base production of warp facilities by " + fancyNumber(tweaker.upgrades.tier_2_base_multiplier * tweaker.upgrades.building_base_4)  + ".",
-        "",
-        3,
-        12,
-		tweaker.upgrades.building_price_4 * tweaker.upgrades.tier_2_price_multiplier,
-        function () {buildings[7].production += tweaker.upgrades.building_base_4 * tweaker.upgrades.tier_2_base_multiplier;},
-        function () {},
-        function () {},
-	)//}
-	var upgrade_111 = new Upgrade( //{
-        "Stretching Time",
-        "stretching_time",
-        "Increases base production of warp facilities by " + fancyNumber(tweaker.upgrades.tier_2_base_multiplier * tweaker.upgrades.building_base_5)  + ".",
-        "",
-        4,
-        12,
-		tweaker.upgrades.building_price_5 * tweaker.upgrades.tier_2_price_multiplier,
-        function () {buildings[7].production += tweaker.upgrades.building_base_5 * tweaker.upgrades.tier_2_base_multiplier;},
-        function () {},
-        function () {},
-	)//}
-	var upgrade_112 = new Upgrade( //{
-        "Temporal Mastery",
-        "temporal_mastery",
-        "Increases base production of warp facilities by " + fancyNumber(tweaker.upgrades.tier_2_base_multiplier * tweaker.upgrades.building_base_6)  + ".",
-        "",
-        5,
-        12,
-		tweaker.upgrades.building_price_6 * tweaker.upgrades.tier_2_price_multiplier,
-        function () {buildings[7].production += tweaker.upgrades.building_base_6 * tweaker.upgrades.tier_2_base_multiplier;},
-        function () {},
-        function () {},
-	)//}
-	var upgrade_113 = new Upgrade( //{
-        "Warp Storage",
-        "warp_storage",
-        "Increases maximum amount of warps able to be stored by 5.",
-        "",
-        6,
-        12,
-		50000000000000000,
-        function () {},
-        function () {},
-        function () {},
-	)//}
-	var upgrade_114 = new Upgrade( //{
-        "Temporal Anomaly",
-        "temporal_anomaly",
-        "Each time a warp is used 5 extra seconds worth of time are granted.",
-        "",
-        7,
-        12,
-		500000000000000000,
-        function () {},
-        function () {},
-        function () {},
-	)//}
-	var upgrade_115 = new Upgrade( //{
-        "Warp Recharge",
-        "warp_recharge",
-        "Decreases the amount of time it takes to generate another warp by 15 seconds.",
-        "",
-        8,
-        12,
-		5000000000000000000,
-        function () {},
-        function () {},
-        function () {},
-	)//}
-	var upgrade_116 = new Upgrade( //{
-        "Great Leap Forward",
-        "great_leap_forward",
-        "Warp activations grant 35, rather than 30 seconds worth of production.",
-        "",
-        9,
-        12,
-		50000000000000000000,
-        function () {},
-        function () {},
-        function () {},
-	)//}
-*/
-
+/** Returns the X position on the upgrade tile map of the help icon for the specified building id.
+ * @param {int} id - The building id.
+ * @return {int} - The x position on the upgrade tile map.
+ */
 function upgradeHelpX(id) {
 	switch (id) {
 		case 0:
@@ -4522,6 +4417,10 @@ function upgradeHelpX(id) {
 			return 9; 		
 	}
 }
+/** Returns the Y position on the upgrade tile map of the help icon for the specified building id.
+ * @param {int} id - The building id.
+ * @return {int} - The y position on the upgrade tile map.
+ */
 function upgradeHelpY(id) {
 	switch (id) {
 		case 0:

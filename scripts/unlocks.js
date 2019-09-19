@@ -1,5 +1,16 @@
+/**
+ * @fileOverview Contains logic to store features the user has unlocked, and hide those the user has not unlocked yet.
+ */
+
+//Global array to store features to be unlocked.
 var unlocks = [];
 
+/** Represents a feature that the user can unlock.
+ * @constructor
+ * @param {element or array} element - The HTML element or array of elements to be hidden until the user has unlocked this feature.
+ * @param {function} condition - The required condition for this feature to be unlocked.
+ * @param {pip} pip - The pip object that will be displayed when this feature is unlocked.
+ */
 function unlock(element, condition, pip) {
     this.element = element;
     this.condition = condition;
@@ -34,13 +45,14 @@ function unlock(element, condition, pip) {
 		}
     };
 }
-
+/** Calls the condition method of each unlock. */
 function updateUnlocks() {
     len = unlocks.length;
     for (var i = 0; i < len; i++) {
         unlocks[i].update();
     }
 }
+/** Contains test statements to unlock features or upgrades when the user has enough credits. */
 function updateCreditUnlocks() {
 	if (CREDITS >= 2000000) {upgrades[23].makeAvailable();}
 	if (CREDITS >= 5000) {upgrades[72].makeAvailable();}
@@ -134,9 +146,22 @@ function updateCreditUnlocks() {
 		window.setTimeout(function () {tutorial_list[1].trigger();}, 100);
 	}
 }
+/** Tests to unlock upgrades that are unlocked based on clicks. */
+function testUpgradeUnlocks() {
+	var click_credits = stats.click_credits
+	if (stats.total_clicks >= 1) {upgrades[20].makeAvailable()}
+	if (click_credits >= 100) {upgrades[21].makeAvailable()}
+	if (click_credits >= 1000) {upgrades[22].makeAvailable()}
+	if (click_credits >= 10000) {upgrades[24].makeAvailable()}
+	if (click_credits >= 50000) {upgrades[25].makeAvailable()}
+	if (click_credits >= 500000) {upgrades[26].makeAvailable()}
+	if (click_credits >= 500000000) {upgrades[27].makeAvailable()}
+	if (click_credits >= 500000000000) {upgrades[28].makeAvailable()}
+	if (click_credits >= 500000000000000) {upgrades[29].makeAvailable()}
+}
+/** Initalizes all unlocks. */
 function initUnlocks() {
     var game_speed_unlock = new unlock("clock_container", function () {return !!CLOCK_TICKS}, function () {createPip($("#clock_container"));});
-    //var ritual_speed_unlock = new unlock("ritual_1", function () {return !!CLOCK_TICKS}, function () {createPip($("#ritual_1"));});
     var ritual_purity_unlock = new unlock(["ritual_2", "ritual_main_2"], function () {return buildings[0].count >= 55}, function () {createPip($("#ritual_2"));});
     var ritual_soot_unlock = new unlock(["ritual_3", "ritual_main_3"], function () {return buildings[0].count >= 15}, function () {createPip($("#ritual_3"));});
     var ritual_karma_unlock = new unlock(["ritual_4", "ritual_main_4"], function () {return buildings[0].count >= 15}, function () {createPip($("#ritual_4"));});
@@ -182,6 +207,7 @@ function initUnlocks() {
     unlocks.push(challenge_research_center); //20
     unlocks.push(challenge_factory); //21
 }
+/** Tests if tier two buildings should be unlocked. */
 function testTierTwo() {
 	if (TIER_1_COUNT >= 7 && !TIER_2_UNLOCKED) {
 		TIER_2_UNLOCKED = true;
@@ -189,6 +215,7 @@ function testTierTwo() {
 		$("#button_tier_2").show();
 	}
 }
+/** Tests if tier three buildings should be unlocked. */
 function testTierThree() {
 	if (TIER_2_COUNT >= 7 && !TIER_3_UNLOCKED) {
 		TIER_3_UNLOCKED = true;

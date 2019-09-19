@@ -1,5 +1,11 @@
+/**
+ * @fileOverview Handles interfacing with Kongregate's services.
+ */
+
+//Global variable to track if IAP are enabled
 var KONG_ENABLED = true;
 
+//Global object storing the IAP of the user
 var kongBuys = {
 	autoclickers: 0,
 	increased_speed: 0,
@@ -7,7 +13,7 @@ var kongBuys = {
 	experienced_assistants: false,
 	galactic_expansion: false,
 }
-
+/** Sends the user's statistics to Kongregate's servers. */
 function updateKongScores() {
 	if (kongregate) {
 		kongregate.stats.submit('Total Clicks', stats.total_clicks);
@@ -15,10 +21,15 @@ function updateKongScores() {
 		kongregate.stats.submit('Credits Earned Exponent', Math.floor(Math.log(stats.credits_earned)));
 	}
 }
-
+/** Displays the tooltip for the Galactic Shop button.
+ * @param {element} self - The Galactic Shop element.
+ */
 function shopTooltip(self) {
 	tooltip(self, 2, 2, "Galactic Shop", "Click open the galactic shop to spend kreds.", function () {}, true);
 }
+/** Request purchase of the specified item.
+ * @param {int} item - The id of the item to buy.
+ */
 function kongPurchase(item) {
 	if (kongregate) {
 		if (document.exitFullscreen) {
@@ -63,7 +74,9 @@ function kongPurchase(item) {
 		}
 	}
 }
-
+/** Handles the user buying extra time.
+ * @param {object} result - A object with the status of the purchase returned by Kongregate.
+ */
 function handleExtraTimeBuy(result) {
 	if (result.success) {
 		addClockTicks(3600);
@@ -74,7 +87,9 @@ function handleExtraTimeBuy(result) {
 		console.log("Transaction not completed");
 	}
 }
-
+/** Handles the user buying a refill.
+ * @param {object} result - A object with the status of the purchase returned by Kongregate.
+ */
 function handleRefillBuy(result) {
 	if (result.success) {
 		minigames[0].vars.blood = minigames[0].vars.max_blood;
@@ -99,7 +114,9 @@ function handleRefillBuy(result) {
 		console.log("Transaction not completed");
 	}
 }
-
+/** Handles the user buying instant karma.
+ * @param {object} result - A object with the status of the purchase returned by Kongregate.
+ */
 function handleKarmaBuy(result) {
 	if (result.success) {
 		popupText("+" + FUTURE_KARMA_POINTS - KARMA_POINTS, $("#world_container").offset().left + $("#world_container").width()/2, $("#world_container").offset().top);
@@ -110,7 +127,9 @@ function handleKarmaBuy(result) {
 		console.log("Transaction not completed");
 	}
 }
-
+/** Handles the user buying an autoclicker.
+ * @param {object} result - A object with the status of the purchase returned by Kongregate.
+ */
 function handleAutoclickerBuy(result) {
 	if (result.success) {
 		kongBuys.autoclickers += 1;
@@ -120,7 +139,9 @@ function handleAutoclickerBuy(result) {
 		console.log("Transaction not completed");
 	}
 }
-
+/** Handles the user buying increased speed.
+ * @param {object} result - A object with the status of the purchase returned by Kongregate.
+ */
 function handleIncreasedSpeedBuy(result) {
 	if (result.success) {
 		kongBuys.increased_speed += 1;
@@ -129,7 +150,9 @@ function handleIncreasedSpeedBuy(result) {
 		console.log("Transaction not completed");
 	}
 }
-
+/** Handles the user buying galactic expansion.
+ * @param {object} result - A object with the status of the purchase returned by Kongregate.
+ */
 function handleGalacticExpansionBuy(result) {
 	if (result.success) {
 		kongBuys.galactic_expansion = true;
@@ -138,7 +161,9 @@ function handleGalacticExpansionBuy(result) {
 		console.log("Transaction not complete")
 	}
 }
-
+/** Handles the user buying experienced assistants.
+ * @param {object} result - A object with the status of the purchase returned by Kongregate.
+ */
 function handleExperienceAssistantsBuy(result) {
 	if (result.success) {
 		kongBuys.experienced_assistants = true;
@@ -150,7 +175,9 @@ function handleExperienceAssistantsBuy(result) {
 		console.log("Transaction not complete");
 	}
 }
-
+/** Handles the user buying expanded corruption.
+ * @param {object} result - A object with the status of the purchase returned by Kongregate.
+ */
 function handleExpandedCorruptionBuy(result) {
 	if (result.success) {
 		kongBuys.expanded_corruption = true;
@@ -159,7 +186,9 @@ function handleExpandedCorruptionBuy(result) {
 		console.log("Transaction not complete");
 	}
 }
-
+/** Removes the item from the player's account (used for temporary effects such as buying extra time).
+ * @param {string} identifier - The name of the item to remove.
+ */
 function useItem(identifier) {
 	var item_removed = false;
 	kongregate.mtx.requestUserItemList(null, function (result) {
@@ -175,7 +204,7 @@ function useItem(identifier) {
 		}
 	});
 }
-
+/** Logs the list of all items that the are in the player's account. */
 function itemList() {
 	kongregate.mtx.requestUserItemList(null, function (result) {
 		console.log("User item list received, success: " + result.success);
@@ -187,7 +216,7 @@ function itemList() {
 		  }
 	});
 };
-
+/** Loads all the user's previous purchases. */
 function loadPurchases() {
 	var late_popup = false;
 	if (!$("#offline_popup").is(":visible")) {
@@ -291,7 +320,7 @@ function loadPurchases() {
 		});
 	}
 }
-
+/** Opens the Galactic Shop. */
 function openShop() {
 	$("#kong_shop").remove();
 		
@@ -332,7 +361,7 @@ function openShop() {
 	
 	updateShopHTML();
 }
-
+/** Updates the Galactic Shop. */
 function updateShopHTML() {
 	var content = $("#kong_shop_content");
 	content.empty();
@@ -489,7 +518,7 @@ function updateShopHTML() {
 		
 	content.append(refill_container);
 }
-
+/** Opens the menu requesting the user log into kongregate. */
 function openLoginMenu() {
 	$("#login_popup").remove();
 		
@@ -544,21 +573,8 @@ function openLoginMenu() {
 	
 	$(document.body).append(background);
 }
-
+/** Event triggered when the user logs into kongregate in real time. */
 function onKongregateInPageLogin() {
 	loadPurchases();
 	console.log("Event Fired Successfully")
 }
-//kongregate.mtx.purchaseItems(["autoclicker"], function (succ) {console.log(succ.success)});
-
-/*
-kongregate.mtx.requestUserItemList(null, function (result) {
-  console.log("User item list received, success: " + result.success);
-  if(result.success) {
-    for(var i=0; i < result.data.length; i++) {
-      var item = result.data[i];
-      console.log(item);
-    }
-  }
-});
-*/

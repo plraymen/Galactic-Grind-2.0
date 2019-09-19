@@ -1,7 +1,19 @@
+/**
+ * @fileOverview Handles the switching to each building's mini-menu.
+ */
+
+/** Toggles the mini-menu for the specified building.
+ * @param {int} building_id - The id of the building to switch to.
+ */
 function switchBuilding(building_id) {
 	buildings[building_id].switcher();
 	UPDATE_BUILDINGS = true;
 }
+/** Represents a object that stores mini-menu data for a building.
+ * @constructor
+ * @param {string} colorStart - The starting color for the gradient in this building's progress bar.
+ * @param {string} colorEnd - The ending color for the gradient in this building's progress bar.
+ */
 function Switcher(colorStart, colorEnd) {
 	this.color_start = colorStart || "#EEEEEE";
 	this.color_end = colorEnd || "#222222";
@@ -59,6 +71,7 @@ function Switcher(colorStart, colorEnd) {
 		$("#storage_container" + name).css("height", this.ratio() * 58 + "px");
 	}
 }
+/** Initializes all switcher objects. */
 function initSwitches() {
 	var cultist_switcher = new Switcher("#e80000", "#9e0000");
 	var mine_switcher = new Switcher("#fff660", "#ebac00");
@@ -267,7 +280,9 @@ function initSwitches() {
 	switches.push(temporal_switcher);
 	switches.push(political_switcher);
 }
-
+/** Creates and returns extra HTML for the cultist mini-menu. 
+ * @return {element} - The extra HTML.
+ */
 function switchedCultist() {
 	var ritual_container = $(document.createElement("div"));
 		var ritual_rush = $(document.createElement("img"));
@@ -325,6 +340,9 @@ function switchedCultist() {
 	
 	return ritual_container;
 }
+/** Creates and returns extra HTML for the gambler mini-menu.. 
+ * @return {element} - The extra HTML.
+ */
 function switchedGambler() {
 	var gambler_container = $(document.createElement("div"));
 	
@@ -378,6 +396,9 @@ function switchedGambler() {
 	
 	return gambler_container;
 }
+/** Creates and returns extra HTML for the bank mini-menu.. 
+ * @return {element} - The extra HTML.
+ */
 function switchedBank() {
 	var bank_container = $(document.createElement("span"));
 	
@@ -412,6 +433,9 @@ function switchedBank() {
 		
 	return bank_container;
 }
+/** Creates and returns extra HTML for the research mini-menu.. 
+ * @return {element} - The extra HTML.
+ */
 function switchedResearch() {
 	var research_container = $(document.createElement("span"));
 	
@@ -423,6 +447,9 @@ function switchedResearch() {
 	
 	return research_container;
 }
+/** Creates and returns extra HTML for the bonus mini-menu.. 
+ * @return {element} - The extra HTML.
+ */
 function switchedBonus() {
 	var bonus_container = $(document.createElement("span"));
 	
@@ -436,6 +463,9 @@ function switchedBonus() {
 	
 	return bonus_container;
 }
+/** Creates and returns extra HTML for the click mini-menu.. 
+ * @return {element} - The extra HTML.
+ */
 function switchedClick() {
 	var click_container = $(document.createElement("span"));
 	
@@ -463,6 +493,9 @@ function switchedClick() {
 	
 	return click_container;
 }
+/** Creates and returns extra HTML for the computer mini-menu.. 
+ * @return {element} - The extra HTML.
+ */
 function switchedComputer() {
 	var computer_container = $(document.createElement("span"));
 	
@@ -496,6 +529,9 @@ function switchedComputer() {
 	
 	return computer_container;
 }
+/** Creates and returns extra HTML for the acceleration mini-menu.. 
+ * @return {element} - The extra HTML.
+ */
 function switchedAccel() {
 	var accel_container = $(document.createElement("span"));
 	
@@ -535,6 +571,9 @@ function switchedAccel() {
 	
 	return accel_container;
 }
+/** Creates and returns extra HTML for the warp mini-menu.. 
+ * @return {element} - The extra HTML.
+ */
 function switchedWarp() {
 	var warp_container = $(document.createElement("span"));
 	
@@ -546,6 +585,9 @@ function switchedWarp() {
 	
 	return warp_container;
 }
+/** Creates and returns extra HTML for the temporal mini-menu.. 
+ * @return {element} - The extra HTML.
+ */
 function switchedTemporal() {
 	var temporal_container = $(document.createElement("span"));
 	
@@ -596,6 +638,9 @@ function switchedTemporal() {
 	
 	return temporal_container;
 }
+/** Creates and returns extra HTML for the political mini-menu.. 
+ * @return {element} - The extra HTML.
+ */
 function switchedPolitical() {
 	var political_container = $(document.createElement("span"));
 	
@@ -630,7 +675,10 @@ function switchedPolitical() {
 	
 	return political_container;
 }
-
+/** Creates and returns the stats icon for the specified building's mini-menu.. 
+ * @param {int} id - The id of the building.
+ * @return {element} - The stats icon HTML.
+ */
 function switchedStats(id) {
 	var stats = $(document.createElement("img"));
     stats.attr("src", "images/icon_stats.png");
@@ -642,6 +690,10 @@ function switchedStats(id) {
 	
 	return stats;
 }
+/** Creates and returns the help icon for the specified building's mini-menu.. 
+ * @param {int} id - The id of the building.
+ * @return {element} - The help icon HTML.
+ */
 function switchedHelp(id) {
     var help = $(document.createElement("img"));
     help.attr("src", "images/icon_info.png");
@@ -653,7 +705,7 @@ function switchedHelp(id) {
 	
 	return help;
 }
-
+/** Updates the storage bars for each building's mini-menu. */
 function updateStorageBars() {
 	for (var i = 0; i < buildings.length; i++) {
 		if (buildings[i].switched) {switches[i].updateStorageBar(buildings[i].name)}

@@ -1,3 +1,8 @@
+/**
+ * @fileOverview Contains global objects a variables to all the developer to easily modify and balance values.
+ */
+
+//Global object to tweak base values for minigames and upgrades.
 var tweaker = {
 	minigames: {
 		clone_duration: 90,
@@ -36,7 +41,7 @@ var tweaker = {
 		tier_3_max_building_multiplier: 0.002,
 	}
 }
-
+/*
 var CONST_BUILDING_UPGRADE_1 = 6;
 var CONST_BUILDING_UPGRADE_2 = 40;
 var CONST_BUILDING_UPGRADE_3 = 400;
@@ -52,3 +57,4 @@ var CONST_BUILDING_UPGRADE_PRICE_4 = 250000000;
 var CONST_BUILDING_UPGRADE_PRICE_5 = 25000000000;
 var CONST_BUILDING_UPGRADE_PRICE_6 = 2500000000000;
 var CONST_BUILDING_UPGRADE_PRICE_7 = 150000000000000;
+*/

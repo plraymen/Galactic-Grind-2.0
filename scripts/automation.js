@@ -1,5 +1,10 @@
-var automation = [];
+/**
+ * @fileOverview Handles the automation of buying buildings, and automatically activating building effects.
+ */
 
+//Global array to store automation information.
+var automation = [];
+/** Autobuys buildings, and calls automationTick in each automation object. */
 function automationTick() {
 	for (var i = 0; i < automation.length; i++) {
 		if (automation[i].autobuy) {
@@ -10,11 +15,13 @@ function automationTick() {
 		}
 	}
 }
-
+/** Stores automation data of a building.
+ * @constructor
+ */
 function Automation() {
 	this.autobuy = false;
 }
-
+/** Initializes all automation data for each building. */
 function initAutomation() {
 	var cultist_automation = new Automation();
 	

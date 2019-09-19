@@ -1,6 +1,22 @@
+/**
+ * @fileOverview Handles all logic for in game challenges.
+ */
+
+//Global array to store challenge objects
 var challenges = [];
+//The challenge the player is currently attempting (-1 is no challenge)
 var CURRENT_CHALLENGE = -1;
 
+/** Represents a challenge.
+ * @constructor
+ * @param {string} name - Name of this challenge.
+ * @param {string} description - Description shown on this challenge's tooltip.
+ * @param {string} tab_description - Description shown on this challenge's tooltip in the building's submenu.
+ * @param {int} credits - Total number of credits required to complete the challenge.
+ * @param {int} sy - The y location on the karma tiled map for this upgrade's canvas icon.
+ * @param {int} x - The x location on the upgrade tiled map for this challenge's icon.
+ * @param {int} y - The y location on the upgrade tiled map for this challenge's icon.
+ */
 function Challenge(name, description, tab_description, credits, x, y) {
 	this.name = name;
 	this.credits = credits;
@@ -13,6 +29,10 @@ function Challenge(name, description, tab_description, credits, x, y) {
 	this.unlocked = false;
 	this.running = false;
 }
+/** Starts the specified challenge.
+ * @param {int} i - The index of this challenge in the challenge array.
+ * @param {boolean} force - Determines if the user wants to restart the challenge if it is already completed.
+ */
 function startChallenge(i, force) {
 	if (!challenges[i].running && (!challenges[i].unlocked || force)) {
 		var temp_challenges = challenges;
@@ -71,6 +91,9 @@ function startChallenge(i, force) {
 		else if (challenges[i].unlocked) {popupText("Challenge Complete", $("#world_container").offset().left + $("#world_container").width()/2, $("#world_container").offset().top);}
 	}
 }
+/** Ends the specified challenge.
+ * @param {int} i - The index of this challenge in the challenge array.
+ */
 function endChallenge(i) {
 	if (challenges[i].running) {
 		var temp_unlocked = challenges[i].unlocked
@@ -101,8 +124,7 @@ function endChallenge(i) {
 		window.setTimeout(function () {$('#challenge_popup').remove()}, 10);
 	}
 }
-
-
+/** Initializes all challenge objects. */
 function initChallenges() {
 	var cultist_challenge = new Challenge("Bloody Mess", "During this challenge blood will be generated at 10 times the normal rate, and the challenge will be completed once 1 quintillion credits is reached.<br><br>Completion of this challenge will:<br>- Grant 10 free cultists for this run and every future run (This does not increase the cost of cultists).<br>- Increase maximum blood by 30 for every run.<br>- Increase production by 0.05% of the absolute value of blood stored.<br>- Grant  the ability to sacrifice 10 cultists to refill blood.", "This challenge:<br>- Grants 10 free cultists at the start of every new run (This does not increase the cost of cultists).<br>- Increases maximum blood 30.<br>- Increases production by 0.05% of the absolute value of blood stored.<br><br>Click to sacrifice 10 cultists to refill blood.", 1000000000000000000, 0, 31);
 	
@@ -132,7 +154,7 @@ function initChallenges() {
 	challenges.push(click_challenge);
 	challenges.push(temporal_challenge);
 }
-
+/** Opens the menu that allows the user to select a challenge. */
 function openChallenges() {
 	$("#challenge_background").remove();
 		
@@ -177,7 +199,10 @@ function openChallenges() {
 	
 	$(document.body).append(background);
 }
-
+/** Returns the HTML of a button for the specified challenge.
+ * @param {int} id - The id of the challenge.
+ * @return {element} - The HTML for the challenge.
+ */
 function htmlChallenge(id) {
 	var unlocked_text = "";
 	if (challenges[id].unlocked) {
@@ -200,13 +225,16 @@ function htmlChallenge(id) {
 	
 	return challenge;
 }
+/** Updates the tooltip and icon for the current challenge. */
 function updateCurrentChallenge() {
 	if (CURRENT_CHALLENGE != -1) {
 		$("#challenge_display").attr("style", "cursor:pointer;height:48px;width:48px;background:url(images/upgrade_sheet.png) " + challenges[CURRENT_CHALLENGE].x + "px " + challenges[CURRENT_CHALLENGE].y + "px;float:left;");
 		$("#challenge_display").attr("onmouseover", "tooltip(this, "+ (challenges[CURRENT_CHALLENGE].x / -48) +", "+ (challenges[CURRENT_CHALLENGE].y / -48) +", '"+challenges[CURRENT_CHALLENGE].name+"', '"+challenges[CURRENT_CHALLENGE].description + "<br><br>Right click to end this challenge (Note: " +fancyNumber(challenges[CURRENT_CHALLENGE].credits) + " credits are required to complete this challenge)" + "')");
 	}
 }
-
+/** Sacrifices buildings to activate a challenge effect.
+ * @param {int} building_id - The id of the building to sacrifice.
+ */
 function challengeSacrifice(building_id) {
 	switch (building_id) {
 		case 0:
@@ -296,7 +324,7 @@ function challengeSacrifice(building_id) {
 			break;		
 	}
 }
-
+/** Creates a popup informing the user the current challenge is completed. */
 function challengeCompletePopup() {
 	var challenge_popup = $(document.createElement("div"));
 	challenge_popup.attr("id", "challenge_popup");
@@ -331,6 +359,7 @@ function challengeCompletePopup() {
 	
 	$("body").append(challenge_popup);
 }
+/** Tests if the current challenge should be displayed as completed. */
 function testChallengeComplete() {
 	if (CURRENT_CHALLENGE != -1 && !challenges[CURRENT_CHALLENGE].displayed && (stats.credits_earned > challenges[CURRENT_CHALLENGE].credits || CREDITS > challenges[CURRENT_CHALLENGE].credits)) {
 		challenges[CURRENT_CHALLENGE].displayed = true;

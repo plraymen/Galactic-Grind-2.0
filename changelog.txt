@@ -1,3 +1,7 @@
+Version 1.05
+- Credit color is now lighter
+- Code is now commented
+
 Version 1.04 - Bugfixes and Testing
 - Added buttons for Discord, and Testing. 
 - Fixed alien power being usable before the building is unlocked.
