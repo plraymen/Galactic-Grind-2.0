@@ -62,6 +62,7 @@ fullscreen = false;
 
 var click_animations = []; //x, y, value, direction
 
+/*
 var CONST_BUILDING_UPGRADE_1 = 6;
 var CONST_BUILDING_UPGRADE_2 = 40;
 var CONST_BUILDING_UPGRADE_3 = 400;
@@ -77,6 +78,7 @@ var CONST_BUILDING_UPGRADE_PRICE_4 = 250000000;
 var CONST_BUILDING_UPGRADE_PRICE_5 = 25000000000;
 var CONST_BUILDING_UPGRADE_PRICE_6 = 2500000000000;
 var CONST_BUILDING_UPGRADE_PRICE_7 = 150000000000000;
+*/
 
 //Global array to which tab upgrades go into the bought upgrades display
 var upgrade_categories = [
