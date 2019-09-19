@@ -1,14 +1,23 @@
+/**
+ * @fileOverview Contains all logic for the tutorial.
+ */
+
+//Global variables to store tutorial information
 var tutorial_list = [];
 var tutorial_running = false;
 var current_tutorial = null;
 
+/** Represents a subsection of the tutorial.
+ * @constructor
+ * @param {array} stepList - An array of objects containing information for each step in the subtutorial.
+ */
 function SubTutorial(stepList) {
 	this.stepList = stepList;
 	this.triggered = false;
 	this.running = false;
 	this.clickHandler = null;
 	this.step = 0;
-	
+	/** If this tutorial is not already begun, then the tutorial will be started. */
 	this.trigger = function () {
 		if (settings.skip_tutorial) {
 			this.triggered = true;
@@ -21,11 +30,13 @@ function SubTutorial(stepList) {
 			tutorial_running = true;
 		}
 	}
+	/** Resets this tutorial subsection. */
 	this.reset = function () {
 		this.step = 0;
 		this.running = false;
 		this.triggered = false;
 	}
+	/** Moves this tutorial to the next instruction. */
 	this.stepForward = function () {
 		if (this.step < this.stepList.length) {
 			if (this.step == 0) {
@@ -59,6 +70,7 @@ function SubTutorial(stepList) {
 			this.end();
 		}
 	}
+	/** Stops this tutorial. */
 	this.end = function () {
 		this.running = false;
 		current_tutorial = null;
@@ -72,7 +84,7 @@ function SubTutorial(stepList) {
 		}
 	}
 }
-
+/** Instantiates all subsections of the tutorial. */
 function initSubTutorials() {
 	var baseTutorial = new SubTutorial(
 	[
@@ -151,7 +163,13 @@ function initSubTutorials() {
 	tutorial_list.push(baseTutorial);
 	tutorial_list.push(upgradeTutorial);
 }
-
+/** Displays text near the specified element for the tutorial.
+ * @param {string} text - The text to be displayed.
+ * @param {string} relation_element_id - The id of the element to create the text near.
+ * @param {int} relative_x - The x offset of the tutorial text.
+ * @param {int} relative_y - The y offset of the tutorial text.
+ * @param {boolean} got_it - Determines if a got it button should be displayed.
+ */
 function showTutorialText(text, relation_element_id, relative_x, relative_y, got_it) {
 	var ele = $("#"+relation_element_id);
 	
@@ -179,6 +197,9 @@ function showTutorialText(text, relation_element_id, relative_x, relative_y, got
 	$("#tutorial_text_container").fadeIn();
 	$("#tutorial_content").html(text);
 }
+/** Makes the screen semi-opaque except at target element.
+ * @param {string} element_id - The id of the element to be shown.
+ */
 function highlightBox(element_id) {
 	var ele = $("#"+element_id);
 	
@@ -194,6 +215,7 @@ function highlightBox(element_id) {
 	$("#dark_box_3").attr("style", "height:100%;width:" + ($(window).width() - Math.floor(ele_right)) + "px;position:absolute;right:0px;bottom:0px;pointer-events:auto");
 	$("#dark_box_4").attr("style", "width:100%;height:" + ($(window).height() - Math.floor(ele_bottom)) + "px;position:absolute;right:0px;bottom:0px;pointer-events:auto");
 }
+/** Steps the current tutorial forward. */
 function currentTutorialStep() {
 	current_tutorial.stepForward();
 }
