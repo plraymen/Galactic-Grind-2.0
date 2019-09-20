@@ -1,4 +1,5 @@
 Version 1.05
+- Increased the production of tier 3 buildings by 20%.
 - Added achievements for the last 3 assistants.
 - Credit color is now lighter.
 - Code is now commented.

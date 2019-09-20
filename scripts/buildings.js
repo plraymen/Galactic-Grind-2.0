@@ -268,6 +268,7 @@ function Building(display_name, tab_name, name, description, explanation, cost, 
 			var building_id = buildings.indexOf(this);
 			$("#building"+this.name).append(switches[building_id].createHTML(this.name));
 			$("#building"+this.name).append(switches[building_id].createStorageBar());
+			switches[building_id].tooltip(this.name);
 		} else {
 			$("#building"+this.name).children().show();
 			$("#switched"+this.name).remove();

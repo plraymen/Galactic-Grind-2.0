@@ -37,7 +37,7 @@ var tweaker = {
 	},
 	
 	general: {
-		tier_3_base_multiplier: 10,
+		tier_3_base_multiplier: 12,
 		tier_3_max_building_multiplier: 0.002,
 	}
 }

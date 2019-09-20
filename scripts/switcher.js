@@ -70,6 +70,7 @@ function Switcher(colorStart, colorEnd) {
 	this.updateStorageBar = function (name) {
 		$("#storage_container" + name).css("height", this.ratio() * 58 + "px");
 	}
+	this.tooltip = function (name) {};
 }
 /** Initializes all switcher objects. */
 function initSwitches() {
@@ -105,6 +106,10 @@ function initSwitches() {
 	cultist_switcher.ratio = function () {
 		var ratio = minigames[0].vars.blood / minigames[0].vars.max_blood;
 		return ratio;
+	}	
+	cultist_switcher.tooltip = function (name) {
+		$("#storage_bar" + name).attr("onmouseover", "tooltip(this, 5, 1, 'Cultist', 'You currently have <span style=\"color:#ff1e2d;\">'+ Math.floor(minigames[0].vars.blood) +'/' + Math.floor(minigames[0].vars.max_blood) + '</span> blood stored.<br>Blood is produced at a rate of <span style=\"color:#ff1ea4;\">' + Math.round(100 * 0.5 * minigames[0].vars.max_blood/200)/100 + '/s</span>.', function () {return 'You currently have <span style=\"color:#ff1e2d;\">'+ Math.floor(minigames[0].vars.blood) +'/' + Math.floor(minigames[0].vars.max_blood) + '</span> blood stored.<br>Blood is produced at a rate of <span style=\"color:#ff1ea4;\">' + Math.round(100 * 0.5 * minigames[0].vars.max_blood/200)/100 + '/s</span>.'}, true)");
+		$("#storage_bar" + name).attr("onmouseout", "hideTooltip();");
 	}
 	mine_switcher.ratio = function () {
 		var add_max = 0;
@@ -113,6 +118,10 @@ function initSwitches() {
 		}
 		
 		return 1 - (minigames[1].vars.mine_time / (minigames[1].vars.mine_max_time + add_max));
+	}
+	mine_switcher.tooltip = function (name) {
+		$("#storage_bar" + name).attr("onmouseover", "tooltip(this, 8, 2, 'Mine', 'You currently have <span style=\"color:#f6ff53;\">'+ Math.floor(minigames[1].vars.gold) +'</span> gold bars stored.<br>The next gold bar will be mined in <span style=\"color:#f6ff53;\">' + Math.round(minigames[1].vars.mine_time) + 's</span>.', function () {return 'You currently have <span style=\"color:#f6ff53;\">'+ Math.floor(minigames[1].vars.gold) +'</span> gold bars stored.<br>The next gold bar will be mined in <span style=\"color:#f6ff53;\">' + Math.round(minigames[1].vars.mine_time) + 's</span>.'}, true)");
+		$("#storage_bar" + name).attr("onmouseout", "hideTooltip();");
 	}
 	gambler_switcher.addBottom = function (name) {
 		var bottom_container = $(document.createElement("span"));
@@ -124,8 +133,16 @@ function initSwitches() {
 	gambler_switcher.ratio = function () {
 		return (minigames[2].vars.draw_charges / minigames[2].vars.draw_charges_max);
 	}
+	gambler_switcher.tooltip = function (name) {
+		$("#storage_bar" + name).attr("onmouseover", "tooltip(this, 7, 4, 'Gambler', 'You currently have <span style=\"color:#5EC1FF;\">' + Math.floor(minigames[2].vars.draw_charges) + '/' + Math.floor(minigames[2].vars.draw_charges_max) + '</span> draws.<br>The next draw will be available in <span style=\"color:#5EC1FF;\">' + Math.round(minigames[2].vars.draw_time) + 's</span>.', function () {return 'You currently have <span style=\"color:#5EC1FF;\">' + Math.floor(minigames[2].vars.draw_charges) + '/' + Math.floor(minigames[2].vars.draw_charges_max) + '</span> draws.<br>The next draw will be available in <span style=\"color:#5EC1FF;\">' + Math.round(minigames[2].vars.draw_time) + 's</span>.'}, true)");
+		$("#storage_bar" + name).attr("onmouseout", "hideTooltip();");
+	}
 	power_switcher.ratio = function () {
 		return (minigames[3].vars.power / minigames[3].vars.max_power);
+	}
+	power_switcher.tooltip = function (name) {
+		$("#storage_bar" + name).attr("onmouseover", "tooltip(this, 5, 5, 'Power Plant', 'You currently have <span style=\"color:#fddc24;\">' + Math.floor(minigames[3].vars.power) + '/' + Math.floor(minigames[3].vars.max_power) + '</span> power.<br>Power plants produce <span style=\"color:#fddc24;\">' + (minigames[3].vars.power_rate).toFixed(2) + '/s</span>.', function () {return 'You currently have <span style=\"color:#fddc24;\">' + Math.floor(minigames[3].vars.power) + '/' + Math.floor(minigames[3].vars.max_power) + '</span> power.<br>Power plants produce <span style=\"color:#fddc24;\">' + (minigames[3].vars.power_rate).toFixed(2) + '/s</span>.'}, true)");
+		$("#storage_bar" + name).attr("onmouseout", "hideTooltip();");
 	}
 	bank_switcher.addBottom = function (name) {
 		var bottom_container = $(document.createElement("span"));
@@ -139,6 +156,10 @@ function initSwitches() {
 		if (!minigames[4].vars.investing) {ratio = 0}
 		return ratio;
 	}
+	bank_switcher.tooltip = function (name) {
+		$("#storage_bar" + name).attr("onmouseover", "tooltip(this, 7, 6, 'Bank', minigames[4].vars.investing ? 'This investment will return <span style=\"color:#00db0a;\">' + fancyNumber(minigames[4].vars.investment_value) + '</span> credits in <span style=\"color:#CCCCCC;\">' + Math.floor(minigames[4].vars.investment_time) + 's</span>.' : 'The bank is not investing currently', function () {return minigames[4].vars.investing ? 'This investment will return <span style=\"color:#00db0a;\">' + fancyNumber(minigames[4].vars.investment_value) + '</span> credits in <span style=\"color:#CCCCCC;\">' + Math.floor(minigames[4].vars.investment_time) + 's</span>.' : 'The bank is not investing currently'}, true)");
+		$("#storage_bar" + name).attr("onmouseout", "hideTooltip();");
+	}
 	research_switcher.addBottom = function (name) {
 		var bottom_container = $(document.createElement("span"));
 
@@ -150,6 +171,10 @@ function initSwitches() {
 		var ratio = 1 - (minigames[5].vars.research_time / minigames[5].vars.research_time_max);
 		
 		return ratio;
+	}
+	research_switcher.tooltip = function (name) {
+		$("#storage_bar" + name).attr("onmouseover", "tooltip(this, 0, 7, 'Research Center', 'You currently have <span style=\"color:#5036FF;\">'+ Math.floor(minigames[5].vars.research_points) +'</span> research points stored.<br>The next research point will be available in <span style=\"color:#5036FF;\">' + Math.round(minigames[5].vars.research_time) + 's</span>.', function () {return 'You currently have <span style=\"color:#5036FF;\">'+ Math.floor(minigames[5].vars.research_points) +'</span> research points stored.<br>The next research point will be available in <span style=\"color:#5036FF;\">' + Math.round(minigames[5].vars.research_time) + 's</span>.'}, true)");
+		$("#storage_bar" + name).attr("onmouseout", "hideTooltip();");
 	}
 	factory_switcher.ratio = function () {
 		var unlocked = 0;
@@ -165,6 +190,10 @@ function initSwitches() {
 		
 		return automated / unlocked;
 	}
+	factory_switcher.tooltip = function (name) {
+		$("#storage_bar" + name).attr("onmouseover", "var unlocked = 0;var automated = 0;for (var i = 0; i < buildings.length; i++) {	if (buildings[i].unlocked) {unlocked += 1;}; if (automation[i].autobuy) {	automated += 1;}};tooltip(this, 6, 11, 'Factory', 'You currently have <span style=\"color:#CCCCCC;\">'+ Math.floor(automated) +'/' + Math.floor(unlocked) + '</span> buildings set to autobuy.')");
+		$("#storage_bar" + name).attr("onmouseout", "hideTooltip();");
+	}
 	bonus_switcher.addBottom = function (name) {
 		var bottom_container = $(document.createElement("span"));
 
@@ -174,6 +203,10 @@ function initSwitches() {
 	}
 	bonus_switcher.ratio = function () {
 		return 1 - (minigames[7].vars.bonus_time / minigames[7].vars.bonus_max_time)
+	}
+	bonus_switcher.tooltip = function (name) {
+		$("#storage_bar" + name).attr("onmouseover", "tooltip(this, 0, 12, 'Bonus Factory', 'The next bonus will occur in <span style=\"color:#dcdf1c;\">'+ Math.floor(minigames[7].vars.bonus_time) +'s</span>', function () {return 'The next bonus will occur in <span style=\"color:#dcdf1c;\">'+ Math.floor(minigames[7].vars.bonus_time) +'s</span>'}, true)");
+		$("#storage_bar" + name).attr("onmouseout", "hideTooltip();");
 	}
 	click_switcher.addBottom = function (name) {
 		var bottom_container = $(document.createElement("span"));
@@ -185,11 +218,23 @@ function initSwitches() {
 	click_switcher.ratio = function () {
 		return (minigames[8].vars.stored_clicks / minigames[8].vars.max_clicks);
 	}
+	click_switcher.tooltip = function (name) {
+		$("#storage_bar" + name).attr("onmouseover", "tooltip(this, 0, 3, 'Click Farm', 'You currently have <span style=\"color:#5036FF;\">'+ Math.floor(minigames[8].vars.stored_clicks) +'/' + minigames[8].vars.max_clicks + '</span> clicks stored.', function () {return 'You currently have <span style=\"color:#5036FF;\">'+ Math.floor(minigames[8].vars.stored_clicks) +'/' + minigames[8].vars.max_clicks + '</span> clicks stored.'}, true)");
+		$("#storage_bar" + name).attr("onmouseout", "hideTooltip();");
+	}
 	cyro_switcher.ratio = function () {
 		return minigames[9].vars.target_buff != null;
 	}
+	cyro_switcher.tooltip = function (name) {
+		$("#storage_bar" + name).attr("onmouseover", "tooltip(this, 3, 14, 'Cryogenic Lab', minigames[9].vars.target_buff != null ? '<span style=\"color:#3DCFFF;\">'+ buffs[minigames[9].vars.target_buff].name + '</span> is currently frozen.' : 'No bonus is currently frozen at this time.', function () {return  minigames[9].vars.target_buff != null ? '<span style=\"color:#3DCFFF;\">'+ buffs[minigames[9].vars.target_buff].name + '</span> is currently frozen.' : 'No bonus is currently frozen at this time.'}, true)");
+		$("#storage_bar" + name).attr("onmouseout", "hideTooltip();");
+	}
 	alien_switcher.ratio = function () {
 		return minigames[10].vars.alien_power / minigames[10].vars.max_power;
+	}
+	alien_switcher.tooltip = function (name) {
+		$("#storage_bar" + name).attr("onmouseover", "tooltip(this, 8, 15, 'Alien Research', 'You currently have <span style=\"color:#CC79E8;\">'+ Math.floor(minigames[10].vars.alien_power) +'/' + minigames[10].vars.max_power + '</span> seconds worth of alien research stored.', function () {return 'You currently have <span style=\"color:#CC79E8;\">'+ Math.floor(minigames[10].vars.alien_power) +'/' + minigames[10].vars.max_power + '</span> seconds worth of alien research stored.'}, true)");
+		$("#storage_bar" + name).attr("onmouseout", "hideTooltip();");
 	}
 	computer_switcher.addBottom = function (name) {
 		var bottom_container = $(document.createElement("span"));
@@ -205,6 +250,10 @@ function initSwitches() {
 		else if (minigames[11].vars.program_3 != 0) {ratio = 1 - (minigames[11].vars.program_3_time / 60)} 
 		return ratio;
 	}
+	computer_switcher.tooltip = function (name) {
+		$("#storage_bar" + name).attr("onmouseover", "tooltip(this, 1, 16, 'Mainframe Computer', (minigames[11].vars.program_1 != 0 || minigames[11].vars.program_2 != 0 ||minigames[11].vars.program_3 != 0) ? 'You program step will be complete in <span style=\"color:#3DCFFF;\">'+ Math.floor(60 - switches[11].ratio() * 60)  + '</span> seconds.' : 'No program is currently being ran.', function () {return (minigames[11].vars.program_1 != 0 || minigames[11].vars.program_2 != 0 ||minigames[11].vars.program_3 != 0) ? 'You program step will be complete in <span style=\"color:#3DCFFF;\">'+ Math.floor(60 - switches[11].ratio() * 60)  + '</span> seconds.' : 'No program is currently being ran.'}, true)");
+		$("#storage_bar" + name).attr("onmouseout", "hideTooltip();");
+	}
 	accel_switcher.addBottom = function (name) {
 		var bottom_container = $(document.createElement("span"));
 
@@ -215,8 +264,16 @@ function initSwitches() {
 	accel_switcher.ratio = function () {
 		return minigames[12].vars.accel_bonus / 0.15;
 	}
+	accel_switcher.tooltip = function (name) {
+		$("#storage_bar" + name).attr("onmouseover", "tooltip(this, 5, 17, 'Acceleration Lab', 'Your acceleration bonus is currently <span style=\"color:#e80000;\">'+ Math.floor(minigames[12].vars.accel_bonus / 1 * 100) +'%.', function () {return 'Your acceleration bonus is currently <span style=\"color:#e80000;\">'+ Math.floor(minigames[12].vars.accel_bonus / 1 * 100) +'%.'}, true)");
+		$("#storage_bar" + name).attr("onmouseout", "hideTooltip();");
+	}
 	flux_switcher.ratio = function () {
 		return 1 - (minigames[13].vars.flux_time / 2100);
+	}
+	flux_switcher.tooltip = function (name) {
+		$("#storage_bar" + name).attr("onmouseover", "tooltip(this, 5, 18, 'Fluctuation Lab', 'The next fluctuation will occur in <span style=\"color:#fcff1f;\">'+ secondsToTime(Math.floor(minigames[13].vars.flux_time)) +'.', function () {return 'The next fluctuation will occur in <span style=\"color:#fcff1f;\">'+ secondsToTime(Math.floor(minigames[13].vars.flux_time)) +'.'}, true)");
+		$("#storage_bar" + name).attr("onmouseout", "hideTooltip();");
 	}
 	clone_switcher.ratio = function () {
 		return (minigames[14].vars.clone_charges / minigames[14].vars.clone_max_charges);
