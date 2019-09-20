@@ -964,6 +964,78 @@ function initAchievements() {
 		function () {return assistants[2].level >= 50;}
 	);
 	achievements.push(alien_achieve_ii);
+	
+	var karma_achieve = new Achievement(
+        "Karmatic Effort",
+        7,
+		6,
+        "Have the zen assistant reach level 25",
+        5,
+        20,
+		"Fated",
+		function () {return assistants[4].level >= 25;}
+	);
+	achievements.push(karma_achieve);
+	
+	var karma_achieve_ii = new Achievement(
+        "Karmatic Effort II",
+        8,
+		6,
+        "Have the zen assistant reach level 50",
+        5,
+        20,
+		"Karmatic Effort",
+		function () {return assistants[4].level >= 50;}
+	);
+	achievements.push(karma_achieve_ii);	
+	
+	var idle_achieve = new Achievement(
+        "Idle Effort",
+        9,
+		6,
+        "Have the automation assistant reach level 25",
+        8,
+        30,
+		"Nonillionaire",
+		function () {return assistants[6].level >= 25;}
+	);
+	achievements.push(idle_achieve);
+	
+	var idle_achieve_ii = new Achievement(
+        "Idle Effort II",
+        0,
+		7,
+        "Have the automation assistant reach level 50",
+        8,
+        30,
+		"Idle Effort",
+		function () {return assistants[6].level >= 50;}
+	);
+	achievements.push(idle_achieve_ii);
+	
+	var corrupt_achieve = new Achievement(
+        "Corrupted Effort",
+        1,
+		7,
+        "Have the corrupt assistant reach level 25",
+        9,
+        29,
+		"Sextillionaire",
+		function () {return assistants[5].level >= 25;}
+	);
+	achievements.push(corrupt_achieve);
+	
+	var corrupt_achieve_ii = new Achievement(
+        "Corrupted Effort II",
+        2,
+		7,
+        "Have the corrupt assistant reach level 50",
+        9,
+        29,
+		"Corrupted Effort",
+		function () {return assistants[5].level >= 50;}
+	);
+	achievements.push(corrupt_achieve_ii);
 
 }
 /** Opens the menu that displays all achievements. */
