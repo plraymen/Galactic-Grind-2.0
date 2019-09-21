@@ -325,7 +325,7 @@ function initSwitches() {
 		$("#storage_bar" + name).attr("onmouseout", "hideTooltip();");
 	}
 	stellar_switcher.tooltip = function (name) {
-		$("#storage_bar" + name).attr("onmouseover", "tooltip(this, 0, 28, 'Stellar Factory', 'The stellar factory's production will never decrease, even when temporary bonuses wear off.', function () {return 'The stellar factory's production will never decrease, even when temporary bonuses wear off.'}, true)");
+		$("#storage_bar" + name).attr("onmouseover", "tooltip(this, 0, 28, 'Stellar Factory', 'The stellar factory&apos;s production will never decrease, even when temporary bonuses wear off.', function () {return 'The stellar factory&apos;s production will never decrease, even when temporary bonuses wear off.'}, true)");
 		$("#storage_bar" + name).attr("onmouseout", "hideTooltip();");
 	}
 	political_switcher.addBottom = function (name) {
