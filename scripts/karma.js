@@ -208,7 +208,7 @@ function openSoftReset() {
 function updateSoftResetHTML() {
 	var content_string = "Resetting now will grant <span style='color:#fcff1f;'>" + fancyNumber(FUTURE_KARMA_POINTS - KARMA_POINTS) + "</span> Karma Points increasing total Karma Points to <span style='color:#fcff1f;'>" + fancyNumber(FUTURE_KARMA_POINTS) + "</span> (which increases production by " + fancyNumber(FUTURE_KARMA_POINTS) + "%)";
 	content_string += "<br><br>Warning: Resetting now will reset ALL progress except: Building Statistics, Karma Points, Total Statistics, Subgames, and Assistant Levels";
-	content_string += "<br><br>You have <span style='color:#fcff1f;'>" + fancyNumber(FUTURE_KARMA_POINTS - KARMA_POINTS) + "</span> Karma Points available for upgrades"
+	content_string += "<br><br>You have <span style='color:#fcff1f;'>" + fancyNumber(FUTURE_KARMA_POINTS - SPENT_KARMA_POINTS) + "</span> Karma Points available for upgrades"
 	
 	if (FUTURE_KARMA_POINTS < 100) {
 		content_string += "<br><br>It is recommended that you reach at least 100 Karma Points before resetting."
