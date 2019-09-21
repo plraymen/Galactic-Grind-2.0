@@ -24,6 +24,12 @@ hr {
     height : 100%;
     background-color : black;
 	background-image: url("../images/noise_black.png");
+	overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+#left_content::-webkit-scrollbar { 
+    display: none;
 }
 #center_content {
     position : absolute;
