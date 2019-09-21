@@ -759,9 +759,10 @@ function CorruptionBuilding(name, cost, base_production, seed_production, icon, 
 	
 	this.buy = function (count) {
 		if (subgames[0].credits > this.totalCost(subgames[0].buy_count)) {
-			subgames[0].credits -= this.totalCost(subgames[0].buy_count);
+			var cost = this.totalCost(subgames[0].buy_count)
 			if (count == 10000) {this.count += getMaxNumberOfAffordableBuildings(subgames[0].credits, this.getCurrentCost(), this.cost_multiplier)}
 			else {this.count += subgames[0].buy_count;}
+			subgames[0].credits -= cost;
 			subgames[0].calculateProduction();
 
 			$("#corruption_building_" + subgames[0].buildings.indexOf(this)).html(shortNumber(this.count));

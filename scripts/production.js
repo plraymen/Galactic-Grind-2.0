@@ -193,7 +193,7 @@ function calculateProduction(dt) {
 		// Factory Production
 		if (i == 18) {
 				minigames[18].vars.max_production = Math.max(minigames[18].vars.max_production, building.production * building.production_multiplier * PRODUCTION_MULTIPLIER);
-				building.stats["Credits Produced"] + minigames[18].vars.max_production * building.count * dt;
+				buildings[18].stats["Credits Produced"] += minigames[18].vars.max_production * building.count * dt;
 				continue;
 		}
 		temp_production += building.production * building.count * building.production_multiplier;

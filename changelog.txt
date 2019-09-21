@@ -1,6 +1,14 @@
 Version 1.05
 - Increased the production of tier 3 buildings by 20%.
+- Added tooltips for each building's storage bars.
 - Added achievements for the last 3 assistants.
+- Added the ability to scroll through upgrades.
+- Fixed corruption subgame buildings costing more than displayed.
+- Fixed tooltips disappearing when a temporary bonus wears off.
+- Fixed corruption subgame buy count not persisting.
+- Fixed karma points available for upgrades showing incorrect values.
+- Fixed assistants being able to be automated before unlocking the automation assistant.
+- Fixed stellar factory not displaying credits produced.
 - Credit color is now lighter.
 - Code is now commented.
 
