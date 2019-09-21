@@ -143,6 +143,7 @@ function initSubgames() {
 			this.updateHTML();
 			
 			MENU_CLOSE = false;
+			this.changeBuyCount(this.buy_count);
 		}
 	};
 	corruption_subgame.updateHTML = function () {
