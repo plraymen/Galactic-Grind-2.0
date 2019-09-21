@@ -1,4 +1,4 @@
-Version 1.05
+Version 1.05 - Bugfixes and QoL
 - Increased the production of tier 3 buildings by 20%.
 - Added tooltips for each building's storage bars.
 - Added achievements for the last 3 assistants.
