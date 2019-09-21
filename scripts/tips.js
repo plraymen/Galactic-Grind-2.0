@@ -70,7 +70,7 @@ function HTMLTip(tip) {
 function initTips() {
     var tip_buy_buildings = new Tip("Quick Tip: You can buy multiples of each building by clicking on their background.", function () {return TIER_1_COUNT - TIER_ONE_COUNT == 0;}, 10);
     var tip_tier_two = new Tip("Quick Tip: You can buy tier two buildings by clicking the \"2\" button on the right.", function () {return TIER_2_UNLOCKED == true}, 9);
-    var tip_tier_three = new Tip("Quick Tip: You can buy tier two buildings by clicking the \"3\" button on the right.", function () {return TIER_3_UNLOCKED == true}, 9);
+    var tip_tier_three = new Tip("Quick Tip: You can buy tier three buildings by clicking the \"3\" button on the right.", function () {return TIER_3_UNLOCKED == true}, 9);
     var tip_compound_bonuses = new Tip("Quick Tip: Temporary bonuses compound with each other.", function () {return stats.credits_earned >= 100000000;}, 2);
     var tip_reset = new Tip("Quick Tip: It is a good idea to reset when you will have 2-10 times as many karma points as before.", function () {return KARMA_POINTS >= 90 && FUTURE_KARMA_POINTS > KARMA_POINTS * 2;}, 7);
     var tip_gold = new Tip("Quick Tip: Gold refills cost 10% more for targeting a singular building stacking up to 9x.", function () {return buildings[1].count >= 15;}, 2);
