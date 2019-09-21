@@ -717,7 +717,7 @@ function initAchievements() {
         "Fledgling Oppression",
         8,
 		5,
-        "Own 10 political centers.",
+        "Own 10 political labs.",
         0,
         30,
 		"Octillionaire",

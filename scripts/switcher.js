@@ -65,7 +65,7 @@ function Switcher(colorStart, colorEnd) {
 		return border;
 	}
 	this.ratio = function () {
-		return 0.75;
+		return 1;
 	}
 	this.updateStorageBar = function (name) {
 		$("#storage_container" + name).css("height", this.ratio() * 58 + "px");
@@ -278,11 +278,23 @@ function initSwitches() {
 	clone_switcher.ratio = function () {
 		return (minigames[14].vars.clone_charges / minigames[14].vars.clone_max_charges);
 	}
+	clone_switcher.tooltip = function (name) {
+		$("#storage_bar" + name).attr("onmouseover", "tooltip(this, 8, 21, 'Cloning Lab', 'You currently have <span style=\"color:#CC79E8;\">'+ Math.floor(minigames[14].vars.clone_charges) +'/' + minigames[14].vars.clone_max_charges + '</span> clones available.', function () {return 'You currently have <span style=\"color:#CC79E8;\">'+ Math.floor(minigames[14].vars.clone_charges) +'/' + minigames[14].vars.clone_max_charges + '</span> clones available.'}, true)");
+		$("#storage_bar" + name).attr("onmouseout", "hideTooltip();");
+	}
 	epiphany_switcher.ratio = function () {
 		return 1 - (minigames[15].vars.epiphany_time / minigames[15].vars.epiphany_max_time);
 	}
+	epiphany_switcher.tooltip = function (name) {
+		$("#storage_bar" + name).attr("onmouseover", "tooltip(this, 0, 25, 'Epiphany Center', 'The next epiphany will occur in <span style=\"color:#3DCFFF;\">'+ Math.floor(minigames[15].vars.epiphany_time) +'s</span>.', function () {return 'The next epiphany will occur in <span style=\"color:#3DCFFF;\">'+ Math.floor(minigames[15].vars.epiphany_time) +'s</span>.'}, true)");
+		$("#storage_bar" + name).attr("onmouseout", "hideTooltip();");
+	}
 	merchant_switcher.ratio = function () {
 		return 1 - (minigames[16].vars.package_time / minigames[16].vars.package_max_time);
+	}
+	merchant_switcher.tooltip = function (name) {
+		$("#storage_bar" + name).attr("onmouseover", "tooltip(this, 0, 26, 'Merchant', 'The next delivery will occur in <span style=\"color:#ff1e2d;\">'+ Math.floor(minigames[16].vars.package_time) +'s</span>.', function () {return 'The next delivery will occur in <span style=\"color:#ff1e2d;\">'+ Math.floor(minigames[16].vars.package_time) +'s</span>.'}, true)");
+		$("#storage_bar" + name).attr("onmouseout", "hideTooltip();");
 	}
 	warp_switcher.addBottom = function (name) {
 		var bottom_container = $(document.createElement("span"));
@@ -294,6 +306,10 @@ function initSwitches() {
 	warp_switcher.ratio = function () {
 		return minigames[17].vars.warp_charges / minigames[17].vars.warp_max_charges;
 	}
+	warp_switcher.tooltip = function (name) {
+		$("#storage_bar" + name).attr("onmouseover", "tooltip(this, 0, 27, 'Warp Center', 'You currently have <span style=\"color:#3DCFFF;\">'+ Math.floor(minigames[17].vars.warp_charges) +'/' + minigames[17].vars.warp_max_charges + '</span> warps available.', function () {return 'You currently have <span style=\"color:#3DCFFF;\">'+ Math.floor(minigames[17].vars.warp_charges) +'/' + minigames[17].vars.warp_max_charges + '</span> warps available.'}, true)");
+		$("#storage_bar" + name).attr("onmouseout", "hideTooltip();");
+	}
 	temporal_switcher.addBottom = function (name) {
 		var bottom_container = $(document.createElement("span"));
 
@@ -304,6 +320,14 @@ function initSwitches() {
 	temporal_switcher.ratio = function () {
 		return 1 - (minigames[19].vars.active_effects.length / minigames[19].vars.max_active_effects)
 	}
+	temporal_switcher.tooltip = function (name) {
+		$("#storage_bar" + name).attr("onmouseover", "tooltip(this, 0, 29, 'Temporal Labs', 'You currently have <span style=\"color:#46f5fc;\">'+ Math.floor(minigames[19].vars.active_effects.length) +'/' + minigames[19].vars.max_active_effects + '</span> effects active.', function () {return 'You currently have <span style=\"color:#46f5fc;\">'+ Math.floor(minigames[19].vars.active_effects.length) +'/' + minigames[19].vars.max_active_effects + '</span> effects active.'}, true)");
+		$("#storage_bar" + name).attr("onmouseout", "hideTooltip();");
+	}
+	stellar_switcher.tooltip = function (name) {
+		$("#storage_bar" + name).attr("onmouseover", "tooltip(this, 0, 28, 'Stellar Factory', 'The stellar factory's production will never decrease, even when temporary bonuses wear off.', function () {return 'The stellar factory's production will never decrease, even when temporary bonuses wear off.'}, true)");
+		$("#storage_bar" + name).attr("onmouseout", "hideTooltip();");
+	}
 	political_switcher.addBottom = function (name) {
 		var bottom_container = $(document.createElement("span"));
 
@@ -313,6 +337,10 @@ function initSwitches() {
 	}
 	political_switcher.ratio = function () {
 		return (minigames[20].vars.morale / minigames[20].vars.max_morale)
+	}
+	political_switcher.tooltip = function (name) {
+		$("#storage_bar" + name).attr("onmouseover", "tooltip(this, 0, 30, 'Political Center', 'You currently have <span style=\"color:#fcff1f;\">'+ Math.floor(minigames[20].vars.morale) +'/' + Math.floor(minigames[20].vars.max_morale) + '</span> morale.', function () {return 'You currently have <span style=\"color:#fcff1f;\">'+ Math.floor(minigames[20].vars.morale) +'/' + Math.floor(minigames[20].vars.max_morale) + '</span> morale.'}, true)");
+		$("#storage_bar" + name).attr("onmouseout", "hideTooltip();");
 	}
 	
 	switches.push(cultist_switcher);
