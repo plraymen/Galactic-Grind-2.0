@@ -229,6 +229,7 @@ function currencyString() {
 	if (buildings[8].count != 0) {curr_string += "Clicks: <span style='color:#87E2F5;'>" + Math.round(minigames[8].vars.stored_clicks) + "</span> <span style='color:#4A59FF;'>(" + Math.round(minigames[8].vars.click_time) + "s)</span><br>"}
 	if (buildings[10].count != 0) {curr_string += "Alien Research: <span style='color:#CC79E8;'>" + Math.round(minigames[10].vars.alien_power) + "/" + minigames[10].vars.max_power + "</span> <span style='color:#DAA1ED;'>(+" + Math.round((minigames[10].vars.alien_power_rate) * 100) / 100 + "/s)</span><br>"}
 	if (buildings[13].count != 0) {curr_string += "Fluctuation in: <span style='color:#F4FF1E;'>" + Math.round(minigames[13].vars.flux_time) + "s</span><br>"}
+	if (buildings[14].count != 0) {curr_string += "Clones: <span style='color:#CC79E8;'>" + Math.floor(minigames[14].vars.clone_charges) + "/" + minigames[14].vars.clone_max_charges + "s</span> <span style='color:#CC79E8;'>(" + Math.round(minigames[14].vars.clone_charge_time) + "s)</span><br>"}
 	
 	return curr_string;
 }
