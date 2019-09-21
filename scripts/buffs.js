@@ -197,7 +197,7 @@ function Buff(name, id, x, y, localTooltip, effect, stackable, negative) {
             this.active = false;
             this.stack_count = 1;
             this.removeHTML();
-            hideTooltip();
+            if (this.localTooltip == TOOLTIP_FUNCTION) {hideTooltip();}
 			
 			if (assistants[1].unlocked && assistants[1].level >= assistant_levels[0] && this.negative) {
 				var neg = false;
