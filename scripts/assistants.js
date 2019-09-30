@@ -142,7 +142,7 @@ function Assistant(name, description, icon, x, y) {
 			ability_ele.attr("src", ability.icon);
 			if (!ability.passive) {
 				ability_ele.css("cursor", "pointer");
-				ability_ele.attr("onclick", "if (assistants[6].level >= 5 && assistants[6].unlocked) assistants[" + assistants.indexOf(this) + "].activate_ability(" + i + ")");
+				ability_ele.attr("onclick", "assistants[" + assistants.indexOf(this) + "].activate_ability(" + i + ")");
 				ability_ele.attr("oncontextmenu", "if (assistants[6].level >= 15 && assistants[6].unlocked) assistants[" + assistants.indexOf(this) + "].cycle_ability(" + i + ")");
 				
 			}
