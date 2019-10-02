@@ -538,13 +538,27 @@ function switchedResearch() {
 function switchedBonus() {
 	var bonus_container = $(document.createElement("span"));
 	
-	var bonus_icon = $(document.createElement("img"));
-		bonus_icon.attr("id", "bonus_icon_main").attr("width", "28");
-		bonus_icon.attr("src", "images/bonus_normal.png").attr("style", "display:inline;cursor:pointer");
-		bonus_icon.attr("onclick", "minigames[7].vars.disabled = !minigames[7].vars.disabled;updateBonusIcon()").attr("onmouseover","tooltip(this, 0, 12, 'Halt Production', 'Click to toggle this building&apos;s production of bonuses')").attr("onmouseout", "hideTooltip();");
+	var package_container = $(document.createElement("span")).attr("id", "package_container_main");
 	
-	bonus_container.append(bonus_icon);
-	window.setTimeout(updateBonusIcon, 1);
+	for (var i = 0; i < minigames[7].vars.bonuses_stored.length; i++) {
+		var icon = "images/bonus_production.png";
+		
+		if (minigames[7].vars.bonuses_stored[i] == 0) {icon = "images/bonus_production.png"}
+		else if (minigames[7].vars.bonuses_stored[i] == 1) {icon = "images/bonus_extra_seconds.png"}
+		else if (minigames[7].vars.bonuses_stored[i] == 2) {icon = "images/bonus_click.png"}
+		else {icon = "images/bonus_permanent.png"}
+		
+		var bonus_icon = $(document.createElement("img"));
+		bonus_icon.attr("onclick", "activateBonus($(this), " + i + ", true);$(this).remove();");
+		bonus_icon.attr("src", icon);
+		bonus_icon.attr("onmouseover", "activateBonusTooltip(this, "+i+")");
+		bonus_icon.attr("onmouseout", "hideTooltip()");
+		bonus_icon.css("cursor", "pointer");
+		bonus_icon.attr("width", "28");
+		package_container.append(bonus_icon);
+	}
+	
+	bonus_container.append(package_container);
 	
 	return bonus_container;
 }

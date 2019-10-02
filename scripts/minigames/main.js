@@ -158,17 +158,18 @@ function initMinigames() {
             var stats_content = $(document.createElement("div"));
             stats_content.attr("id", "stats_help");
             var stats_string = "";
-            stats_string += "Credits Produced: <span style='color:#00db0a;'>" + fancyNumber(buildings[0].stats["Credits Produced"]) + "</span><br>";
-            stats_string += "Total Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[0].production * buildings[0].count * buildings[0].production_multiplier * PRODUCTION_MULTIPLIER) + "/s</span><br>";
-            stats_string += "Base Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[0].production * buildings[0].count) + "/s</span><br>&nbsp;&nbsp; <span style='color:#00db0a;'>("+ fancyNumber(buildings[0].production) +" per cultist)</span><br>";
-            stats_string += "Cultists Owned: <span style='color:#ff8300;'>" + buildings[0].count + "</span><br>";
-            stats_string += "Blood: <span style='color:#ff1e2d;'>" + Math.round(this.vars.blood) + "</span> <span style='color:#ff1ea4;'>(" + Math.round(100 * 0.5 * this.vars.max_blood/200)/100 + "/s)</span><br>";
-            stats_string += "Maximum Blood: <span style='color:#ff1e2d;'>" + Math.round(this.vars.max_blood) + "</span><br>";
-            stats_string += "Blood Spent: <span style='color:#ff1e2d;'>" + fancyNumber(this.vars.blood_spent) + "</span><br>";
-            stats_string += "Rituals Performed: <span style='color:#ff1e2d;'>" + Math.round(this.vars.rituals_performed) + "</span><br>";
-            if (unlocks[1].unlocked) {stats_string += "Soot: <span style='color:#888888;'>-" + Math.round(this.vars.soot_counters) + "%</span><br>";}
-            if (unlocks[2].unlocked) {stats_string += "Purity Bonus: <span style='color:#fff728;'>+" + Math.round(this.vars.purity_counters) + "</span> <span style='color:#fffc59;'>(" + Math.round(this.vars.purity_counters) * 3 + "%)</span><br>";}
-            if (unlocks[3].unlocked) {stats_string += "Karma Bonus: <span style='color:#ff1e2d;'>" + Math.round(this.vars.karma_counters) + "</span> <span style='color:#ff1ea4;'>(+" + minigames[0].vars.karma_counters * (15 + (15 + (minigames[0].vars.karma_counters-1)*2))/2 + " production)</span><br>";}
+			stats_string += "Credits Produced: <span style='color:#00db0a;'>" + fancyNumber(buildings[0].stats["Credits Produced"]) + "</span><br>";
+			stats_string += "Total Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[0].production * buildings[0].count * buildings[0].production_multiplier * PRODUCTION_MULTIPLIER) + "/s</span><br>";
+			stats_string += "Base Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[0].production * buildings[0].count) + "/s</span><br>&nbsp;&nbsp; <span style='color:#00db0a;'>("+ fancyNumber(buildings[0].production) +" per cultist)</span><br>";
+			stats_string += "Cultists Owned: <span style='color:#ff8300;'>" + buildings[0].count + "</span><br>";
+			stats_string += "Work Rate: <span style='color:#ff8300;'>" + calcWorkRate(0) + "</span><br>";
+			stats_string += "Blood: <span style='color:#ff1e2d;'>" + Math.round(this.vars.blood) + "</span> <span style='color:#ff1ea4;'>(" + Math.round(100 * 0.5 * this.vars.max_blood/200)/100 + "/s)</span><br>";
+			stats_string += "Maximum Blood: <span style='color:#ff1e2d;'>" + Math.round(this.vars.max_blood) + "</span><br>";
+			stats_string += "Blood Spent: <span style='color:#ff1e2d;'>" + fancyNumber(this.vars.blood_spent) + "</span><br>";
+			stats_string += "Rituals Activated: <span style='color:#ff1e2d;'>" + Math.round(this.vars.rituals_performed) + "</span><br>";
+			if (unlocks[1].unlocked) {stats_string += "Soot: <span style='color:#888888;'>-" + Math.round(this.vars.soot_counters) + "%</span><br>";}
+			if (unlocks[2].unlocked) {stats_string += "Purity Bonus: <span style='color:#fff728;'>+" + Math.round(this.vars.purity_counters) + "</span> <span style='color:#fffc59;'>(" + Math.round(this.vars.purity_counters) * 3 + "%)</span><br>";}
+			if (unlocks[3].unlocked) {stats_string += "Karma Bonus: <span style='color:#ff1e2d;'>" + Math.round(this.vars.karma_counters) + "</span> <span style='color:#ff1ea4;'>(+" + minigames[0].vars.karma_counters * (15 + (15 + (minigames[0].vars.karma_counters-1)*2))/2 + " production)</span><br>";}
             stats_content.html(stats_string); 
             stats_content.css("text-align", "left");
             stats_content.toggle();
@@ -590,6 +591,22 @@ function initMinigames() {
             var stats_content = $(document.createElement("div"));
             stats_content.attr("id", "stats_help");
             var stats_string = "";
+			stats_string += "Credits Produced: <span style='color:#00db0a;'>" + fancyNumber(buildings[2].stats["Credits Produced"]) + "</span><br>";
+			stats_string += "Total Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[2].production * buildings[2].count * buildings[2].production_multiplier * PRODUCTION_MULTIPLIER) + "/s</span><br>";
+			stats_string += "Base Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[2].production * buildings[2].count) + "/s</span><br>&nbsp;&nbsp; <span style='color:#00db0a;'>("+ fancyNumber(buildings[2].production) +" per gambler)</span><br>";
+			stats_string += "Gamblers Owned: <span style='color:#ff8300;'>" + buildings[2].count + "</span><br>";
+			stats_string += "Work Rate: <span style='color:#ff8300;'>" + calcWorkRate(2) + "</span><br>";
+			stats_string += "Cards Remaining: <span style='color:#ff8300;'>"
+			stats_string += remainingCards(minigames[2].vars.deck);
+			stats_string += "</span><br>";
+			stats_string += "Discard Pile: <span style='color:#ff8300;'>";
+			stats_string += remainingCards(minigames[2].vars.discard_pile);
+			stats_string += "</span><br>";
+			stats_string += "Available Draws: <span style='color:#5EC1FF;'>" + Math.round(this.vars.draw_charges) + "/" + Math.round(this.vars.draw_charges_max) + " (" + Math.round(this.vars.draw_time)+"s)</span><br>";
+			stats_string += "Cards Drawn: <span style='color:#6673FF;'>" + Math.round(this.vars.cards_drawn) + "</span><br>";
+			stats_string += "Available Discards: <span style='color:#5EC1FF;'>" + Math.round(this.vars.discard_charges) + "/" + Math.round(this.vars.discard_charges_max) + " (" + Math.round(this.vars.discard_time)+"s)</span><br>";
+			stats_string += "Cards Discarded: <span style='color:#6673FF;'>" + Math.round(this.vars.cards_discarded) + "</span><br>";
+			stats_string += "Gambling Bonus: <span style='color:#6673FF;'>" + Math.round((this.vars.card_bonus - 1) * 100) + "%</span><br>";
             stats_content.html(stats_string); 
             stats_content.css("text-align", "left");
             stats_content.toggle();
@@ -813,6 +830,13 @@ function initMinigames() {
             var stats_content = $(document.createElement("div"));
             stats_content.attr("id", "stats_help");
             var stats_string = "";
+			stats_string += "Credits Produced: <span style='color:#00db0a;'>" + fancyNumber(buildings[3].stats["Credits Produced"]) + "</span><br>";
+			stats_string += "Total Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[3].production * buildings[3].count * buildings[3].production_multiplier * PRODUCTION_MULTIPLIER) + "/s</span><br>";
+			stats_string += "Base Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[3].production * buildings[3].count) + "/s</span><br>&nbsp;&nbsp; <span style='color:#00db0a;'>("+ fancyNumber(buildings[3].production) +" per power plant)</span><br>";
+			stats_string += "Power Plants Owned: <span style='color:#ff8300;'>" + buildings[3].count + "</span><br>";
+			stats_string += "Work Rate: <span style='color:#ff8300;'>" + calcWorkRate(3) + "</span><br>";
+			stats_string += "Power: <span style='color:#fddc24;'>" + Math.round(this.vars.power) + "/" + minigames[3].vars.max_power + "</span> <span style='color:#FD7024;'>(+" + Math.round((this.vars.power_rate) * 100) / 100 + "/s)</span><br>";
+			stats_string += "Power Generated: <span style='color:#fddc24;'>" + fancyNumber(minigames[3].vars.power_generated) + "</span><br>";
             stats_content.html(stats_string); 
             stats_content.css("text-align", "left");
             stats_content.toggle();
@@ -1024,6 +1048,12 @@ function initMinigames() {
             var stats_content = $(document.createElement("div"));
             stats_content.attr("id", "stats_help");
             var stats_string = "";
+			stats_string += "Credits Produced: <span style='color:#00db0a;'>" + fancyNumber(buildings[4].stats["Credits Produced"]) + "</span><br>";
+			stats_string += "Total Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[4].production * buildings[4].count * buildings[4].production_multiplier * PRODUCTION_MULTIPLIER) + "/s</span><br>";
+			stats_string += "Base Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[4].production * buildings[4].count) + "/s</span><br>&nbsp;&nbsp; <span style='color:#00db0a;'>("+ fancyNumber(buildings[4].production) +" per bank)</span><br>";
+			stats_string += "Banks Owned: <span style='color:#ff8300;'>" + buildings[4].count + "</span><br>";
+			stats_string += "Work Rate: <span style='color:#ff8300;'>" + calcWorkRate(4) + "</span><br>";
+			stats_string += "Investments Made: <span style='color:#F5F5F5;'>" + minigames[4].vars.investments_made + "</span><br>";
             stats_content.html(stats_string); 
             stats_content.css("text-align", "left");
             stats_content.toggle();
@@ -1331,6 +1361,13 @@ function initMinigames() {
             var stats_content = $(document.createElement("div"));
             stats_content.attr("id", "stats_help");
             var stats_string = "";
+			stats_string += "Credits Produced: <span style='color:#00db0a;'>" + fancyNumber(buildings[5].stats["Credits Produced"]) + "</span><br>";
+			stats_string += "Total Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[5].production * buildings[5].count * buildings[5].production_multiplier * PRODUCTION_MULTIPLIER) + "/s</span><br>";
+			stats_string += "Base Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[5].production * buildings[5].count) + "/s</span><br>&nbsp;&nbsp; <span style='color:#00db0a;'>("+ fancyNumber(buildings[5].production) +" per research center)</span><br>";
+			stats_string += "Research Centers Owned: <span style='color:#ff8300;'>" + buildings[5].count + "</span><br>";
+			stats_string += "Work Rate: <span style='color:#ff8300;'>" + calcWorkRate(5) + "</span><br>";
+			stats_string += "Research Points: <span style='color:#5036FF;'>" + minigames[5].vars.research_points + "</span> <span style='color:#36B8FF;'>(" + Math.floor(minigames[5].vars.research_time) + "s)</span> <br>";
+			stats_string += "Researches Made: <span style='color:#5036FF;'>" + minigames[5].vars.researches_made + "</span><br>";
             stats_content.html(stats_string); 
             stats_content.css("text-align", "left");
             stats_content.toggle();
@@ -1468,6 +1505,11 @@ function initMinigames() {
             var stats_content = $(document.createElement("div"));
             stats_content.attr("id", "stats_help");
             var stats_string = "";
+			stats_string += "Credits Produced: <span style='color:#00db0a;'>" + fancyNumber(buildings[6].stats["Credits Produced"]) + "</span><br>";
+			stats_string += "Total Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[6].production * buildings[6].count * buildings[6].production_multiplier * PRODUCTION_MULTIPLIER) + "/s</span><br>";
+			stats_string += "Base Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[6].production * buildings[6].count) + "/s</span><br>&nbsp;&nbsp; <span style='color:#00db0a;'>("+ fancyNumber(buildings[6].production) +" per factory)</span><br>";
+			stats_string += "Factories Owned: <span style='color:#ff8300;'>" + buildings[6].count + "</span><br>";
+			stats_string += "Work Rate: <span style='color:#ff8300;'>" + calcWorkRate(6) + "</span><br>";
             stats_content.html(stats_string); 
             stats_content.css("text-align", "left");
             stats_content.toggle();
@@ -1529,14 +1571,14 @@ function initMinigames() {
 	
 	bonus_minigame.vars = {
 		total_bonuses: 0,
-		total_malfunctions: 0,
-		bonus_time: 90,
-		bonus_max_time: 90,
-		bonus_iteration: 0,
-		disabled: false,
+		bonus_time: 120,
+		bonus_max_time: 120,
+		package_bonus: 1,
+		max_packages: 3,
+		bonuses_stored: [], // 0 = 15% production bonus, 1 = 10 seconds worth of production, 2 = 30% bonus to clicking, 4 = +1% production permanently
 	}
 	bonus_minigame.upgrades = [
-		[107, function () {return true;}, "Unlocks once you own 10 warp facilities."],
+		[107, function () {return true;}, "Unlocks once you own 10 bonus factories."],
 		[108, function () {return buildings[7].count >= 10;}, "Unlocks once you own 25 bonus factories."],
 		[109, function () {return buildings[7].count >= 25;}, "Unlocks once you own 50 bonus factories."],
 		[110, function () {return buildings[7].count >= 50;}, "Unlocks once you own 75 bonus factories."],
@@ -1563,17 +1605,31 @@ function initMinigames() {
         minigame_container.append(explanation);
 	
 		var bonus_minigame_display = $(document.createElement("span"));
-		bonus_minigame_display.attr("id", "bonus_minigame_display").attr("style", "font-size:25px;color:#7a4801 ;").html("Next Effect: " + Math.round(this.vars.bonus_time) + "s");
+		bonus_minigame_display.attr("id", "bonus_minigame_display").attr("style", "font-size:25px;color:#7a4801 ;").html("Next Bonus: " + Math.round(this.vars.bonus_time) + "s");
 		
-		var bonus_icon = $(document.createElement("img"));
-		bonus_icon.attr("id", "bonus_icon")
-		bonus_icon.attr("src", "images/bonus_normal.png").attr("style", "display:inline;cursor:pointer");
-		bonus_icon.attr("onclick", "minigames[7].vars.disabled = !minigames[7].vars.disabled;updateBonusIcon()").attr("onmouseover","tooltip(this, 0, 12, 'Halt Production', 'Click to toggle this building&apos;s production of bonuses')").attr("onmouseout", "hideTooltip();");
+		var package_container = $(document.createElement("div")).attr("id", "package_container");
 		
 		minigame_container.append(bonus_minigame_display);
-		minigame_container.append($(document.createElement("br")));
-		minigame_container.append(bonus_icon);
 		
+		
+		for (var i = 0; i < this.vars.bonuses_stored.length; i++) {
+			var icon = "images/bonus_production.png";
+			
+			if (this.vars.bonuses_stored[i] == 0) {icon = "images/bonus_production.png"}
+			else if (this.vars.bonuses_stored[i] == 1) {icon = "images/bonus_extra_seconds.png"}
+			else if (this.vars.bonuses_stored[i] == 2) {icon = "images/bonus_click.png"}
+			else {icon = "images/bonus_permanent.png"}
+			
+			var bonus_icon = $(document.createElement("img"));
+			bonus_icon.attr("onclick", "activateBonus($(this), " + i + ");$(this).remove();");
+			bonus_icon.attr("src", icon);
+			bonus_icon.attr("onmouseover", "activateBonusTooltip(this, "+i+")");
+			bonus_icon.attr("onmouseout", "hideTooltip()");
+			bonus_icon.css("cursor", "pointer");
+			package_container.append(bonus_icon);
+		}
+		
+		minigame_container.append(package_container);
         $(".building_tab").append(minigame_container);
 		
         updateUnlocks();
@@ -1599,7 +1655,7 @@ function initMinigames() {
             description_header.html("Details (Click To Toggle)");
             description.append(description_header);
             var description_content = $(document.createElement("div"));
-            description_content.html("&nbsp;&nbsp;&nbsp;Bonus Factories grant a 12% bonus for 30 seconds once every 90 seconds, every 4th time the bonus will be replaced by a -12% reduction for 45 seconds."); 
+            description_content.html("&nbsp;&nbsp;&nbsp;Bonus Factories slowly produce and store up to 3 random bonuses. These bonuses can be manually activated, and excess bonuses will be automatically activated."); 
             description_content.css("text-align", "left");
             description_content.toggle();
             description.append(description_content);
@@ -1612,6 +1668,13 @@ function initMinigames() {
             var stats_content = $(document.createElement("div"));
             stats_content.attr("id", "stats_help");
             var stats_string = "";
+			stats_string += "Credits Produced: <span style='color:#00db0a;'>" + fancyNumber(buildings[7].stats["Credits Produced"]) + "</span><br>";
+			stats_string += "Total Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[7].production * buildings[7].count * buildings[7].production_multiplier * PRODUCTION_MULTIPLIER) + "/s</span><br>";
+			stats_string += "Base Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[7].production * buildings[7].count) + "/s</span><br>&nbsp;&nbsp; <span style='color:#00db0a;'>("+ fancyNumber(buildings[7].production) +" per warp facility)</span><br>";
+			stats_string += "Bonus Factories Owned: <span style='color:#ff8300;'>" + buildings[7].count + "</span><br>";
+			stats_string += "Work Rate: <span style='color:#ff8300;'>" + calcWorkRateTier2(7) + "</span><br>";
+			stats_string += "Total Bonuses: <span style='color:#9e6e2b;'>" + minigames[7].vars.total_bonuses + "</span><br>";	
+			stats_string += "Permanent Bonus: <span style='color:#9e6e2b;'>" + Math.round((minigames[7].vars.package_bonus - 1) * 100) + "%</span><br>";	
             stats_content.html(stats_string); 
             stats_content.css("text-align", "left");
             stats_content.toggle();
@@ -1656,9 +1719,9 @@ function initMinigames() {
 		stats_string += "Base Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[7].production * buildings[7].count) + "/s</span><br>&nbsp;&nbsp; <span style='color:#00db0a;'>("+ fancyNumber(buildings[7].production) +" per warp facility)</span><br>";
 		stats_string += "Bonus Factories Owned: <span style='color:#ff8300;'>" + buildings[7].count + "</span><br>";
 		stats_string += "Work Rate: <span style='color:#ff8300;'>" + calcWorkRateTier2(7) + "</span><br>";
-		stats_string += "Total Bonuses: <span style='color:#9e6e2b;'>" + minigames[7].vars.total_bonuses + "</span><br>";
-		stats_string += "Total Malfunctions: <span style='color:#9e6e2b;'>" + minigames[7].vars.total_malfunctions + "</span><br>";
-		$("#stats_help").html(stats_string); 		
+		stats_string += "Total Bonuses: <span style='color:#9e6e2b;'>" + minigames[7].vars.total_bonuses + "</span><br>";	
+		stats_string += "Permanent Bonus: <span style='color:#9e6e2b;'>" + Math.round((minigames[7].vars.package_bonus - 1) * 100) + "%</span><br>";	
+		$("#stats_help").html(stats_string);
 		
 		var upgrades_string = "";
 		
@@ -1669,30 +1732,38 @@ function initMinigames() {
 	}
 	bonus_minigame.update = function (dt) {
 		this.vars.bonus_time -= dt;
-		if (this.vars.disabled) {this.vars.bonus_time += dt}
-		
-		if (this.vars.bonus_time <= 0) {
-			this.vars.bonus_time = this.vars.bonus_max_time - upgrades[113].bought * 15 - upgrades[230].bought;
-			
-			this.vars.bonus_iteration += 1;
-			if (this.vars.bonus_iteration % (4 + upgrades[114].bought)  == 0) {
-				this.vars.bonus_iteration = 0;
-				this.vars.total_malfunctions += 1;
-				buffs[24].activate(45);
-			} else {
-				this.vars.total_bonuses += 1;
-				buffs[23].activate(30);
-			}
-			updateBonusIcon();
+		if (this.vars.bonuses_stored.length == this.vars.max_packages && automation[7].vars.disabled) {
+			this.vars.bonus_time += dt;
 		}
 		
-		buildings[7].stats["Total Bonuses"] = this.vars.total_bonuses;
-		buildings[7].stats["Total Malfunctions"] = this.vars.total_malfunctions;
-		
-		if (this.vars.total_bonuses >= 40) {upgrades[113].makeAvailable()}
-		if (this.vars.total_bonuses >= 80) {upgrades[114].makeAvailable()}
-		if (this.vars.total_bonuses >= 160) {upgrades[115].makeAvailable()}
-		if (this.vars.total_bonuses >= 240) {upgrades[116].makeAvailable()}
+		if (this.vars.bonus_time <= 0) {
+			this.vars.bonus_time += this.vars.bonus_max_time - upgrades[113].bought * 15 - upgrades[230].bought;
+			this.vars.max_packages = 3 + upgrades[116].bought;
+			
+			var bonus_type = 0;
+			var ran = Math.random();
+			
+			if (ran < 0.33) {bonus_type = 0}
+			else if (ran < 0.66) {bonus_type = 1}
+			else if (ran < 0.99) {bonus_type = 2}
+			else {bonus_type = 3}
+			
+			minigames[7].vars.bonuses_stored.push(bonus_type);
+			
+			if (this.vars.bonuses_stored.length > this.vars.max_packages) {
+				activateBonus($("#world_container"), this.vars.bonuses_stored.length - 1);
+			}
+			
+			this.vars.total_bonuses += 1;
+			buildings[7].stats["Total Bonuses"] = this.vars.total_bonuses;
+			
+			if (this.vars.total_bonuses >= 40) {upgrades[113].makeAvailable()}
+			if (this.vars.total_bonuses >= 80) {upgrades[114].makeAvailable()}
+			if (this.vars.total_bonuses >= 160) {upgrades[115].makeAvailable()}
+			if (this.vars.total_bonuses >= 240) {upgrades[116].makeAvailable()}
+			
+			updateBonusPackages();
+		}
 	}
 	
     var click_minigame = new Minigame();
@@ -1803,6 +1874,12 @@ function initMinigames() {
             var stats_content = $(document.createElement("div"));
             stats_content.attr("id", "stats_help");
             var stats_string = "";
+			stats_string += "Credits Produced: <span style='color:#00db0a;'>" + fancyNumber(buildings[8].stats["Credits Produced"]) + "</span><br>";
+			stats_string += "Total Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[8].production * buildings[8].count * buildings[8].production_multiplier * PRODUCTION_MULTIPLIER) + "/s</span><br>";
+			stats_string += "Base Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[8].production * buildings[8].count) + "/s</span><br>&nbsp;&nbsp; <span style='color:#00db0a;'>("+ fancyNumber(buildings[8].production) +" per click farm)</span><br>";
+			stats_string += "Click Farms Owned: <span style='color:#ff8300;'>" + buildings[8].count + "</span><br>";
+			stats_string += "Work Rate: <span style='color:#ff8300;'>" + calcWorkRateTier2(8) + "</span><br>";
+			stats_string += "Clicks Made: <span style='color:#87E2F5;'>" + Math.round(this.vars.clicks_made) + "</span><br>";
             stats_content.html(stats_string); 
             stats_content.css("text-align", "left");
             stats_content.toggle();
@@ -2004,6 +2081,13 @@ function initMinigames() {
             var stats_content = $(document.createElement("div"));
             stats_content.attr("id", "stats_help");
             var stats_string = "";
+			stats_string += "Credits Produced: <span style='color:#00db0a;'>" + fancyNumber(buildings[9].stats["Credits Produced"]) + "</span><br>";
+			stats_string += "Total Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[9].production * buildings[9].count * buildings[9].production_multiplier * PRODUCTION_MULTIPLIER) + "/s</span><br>";
+			stats_string += "Base Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[9].production * buildings[9].count) + "/s</span><br>&nbsp;&nbsp; <span style='color:#00db0a;'>("+ fancyNumber(buildings[9].production) +" per cryogenic lab)</span><br>";
+			stats_string += "Cryogenic Labs Owned: <span style='color:#ff8300;'>" + buildings[9].count + "</span><br>";
+			stats_string += "Work Rate: <span style='color:#ff8300;'>" + calcWorkRateTier2(9) + "</span><br>";
+			if (this.vars.target_buff != null) {stats_string += "Buff Frozen: <span style='color:#3DCFFF;'>" + buffs[this.vars.target_buff].name + "</span><br>";}
+			else {stats_string += "Buff Frozen: <span style='color:#3DCFFF;'>None</span><br>";}
             stats_content.html(stats_string); 
             stats_content.css("text-align", "left");
             stats_content.toggle();
@@ -2145,6 +2229,13 @@ function initMinigames() {
             var stats_content = $(document.createElement("div"));
             stats_content.attr("id", "stats_help");
             var stats_string = "";
+			stats_string += "Credits Produced: <span style='color:#00db0a;'>" + fancyNumber(buildings[10].stats["Credits Produced"]) + "</span><br>";
+			stats_string += "Total Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[10].production * buildings[10].count * buildings[10].production_multiplier * PRODUCTION_MULTIPLIER) + "/s</span><br>";
+			stats_string += "Base Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[10].production * buildings[10].count) + "/s</span><br>&nbsp;&nbsp; <span style='color:#00db0a;'>("+ fancyNumber(buildings[10].production) +" per alien lab)</span><br>";
+			stats_string += "Alien Labs Owned: <span style='color:#ff8300;'>" + buildings[10].count + "</span><br>";
+			stats_string += "Work Rate: <span style='color:#ff8300;'>" + calcWorkRateTier2(10) + "</span><br>";
+			stats_string += "Research: <span style='color:#CC79E8;'>" + Math.round(this.vars.alien_power) + "/" + minigames[10].vars.max_power + "</span> <span style='color:#DAA1ED;'>(+" + Math.round((this.vars.alien_power_rate) * 100) / 100 + "/s)</span><br>";
+			stats_string += "Research Generated: <span style='color:#CC79E8;'>" + fancyNumber(minigames[10].vars.alien_power_generated) + "</span><br>";
             stats_content.html(stats_string); 
             stats_content.css("text-align", "left");
             stats_content.toggle();
@@ -2347,6 +2438,12 @@ function initMinigames() {
             var stats_content = $(document.createElement("div"));
             stats_content.attr("id", "stats_help");
             var stats_string = "";
+			stats_string += "Credits Produced: <span style='color:#00db0a;'>" + fancyNumber(buildings[11].stats["Credits Produced"]) + "</span><br>";
+			stats_string += "Total Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[11].production * buildings[11].count * buildings[11].production_multiplier * PRODUCTION_MULTIPLIER) + "/s</span><br>";
+			stats_string += "Base Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[11].production * buildings[11].count) + "/s</span><br>&nbsp;&nbsp; <span style='color:#00db0a;'>("+ fancyNumber(buildings[11].production) +" per mainframe computer)</span><br>";
+			stats_string += "Mainframe Computers Owned: <span style='color:#ff8300;'>" + buildings[11].count + "</span><br>";
+			stats_string += "Work Rate: <span style='color:#ff8300;'>" + calcWorkRateTier2(11) + "</span><br>";
+			stats_string += "Programs Ran: <span style='color:#ff8300;'>" + Math.round(this.vars.programs_ran) + "</span><br>";
             stats_content.html(stats_string); 
             stats_content.css("text-align", "left");
             stats_content.toggle();
@@ -2575,6 +2672,11 @@ function initMinigames() {
             var stats_content = $(document.createElement("div"));
             stats_content.attr("id", "stats_help");
             var stats_string = "";
+			stats_string += "Credits Produced: <span style='color:#00db0a;'>" + fancyNumber(buildings[12].stats["Credits Produced"]) + "</span><br>";
+			stats_string += "Total Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[12].production * buildings[12].count * buildings[12].production_multiplier * PRODUCTION_MULTIPLIER) + "/s</span><br>";
+			stats_string += "Base Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[12].production * buildings[12].count) + "/s</span><br>&nbsp;&nbsp; <span style='color:#00db0a;'>("+ fancyNumber(buildings[12].production) +" per acceleration lab)</span><br>";
+			stats_string += "Acceleration Labs Owned: <span style='color:#ff8300;'>" + buildings[12].count + "</span><br>";
+			stats_string += "Work Rate: <span style='color:#ff8300;'>" + calcWorkRateTier2(12) + "</span><br>";
             stats_content.html(stats_string); 
             stats_content.css("text-align", "left");
             stats_content.toggle();
@@ -2748,6 +2850,12 @@ function initMinigames() {
             var stats_content = $(document.createElement("div"));
             stats_content.attr("id", "stats_help");
             var stats_string = "";
+			stats_string += "Credits Produced: <span style='color:#00db0a;'>" + fancyNumber(buildings[13].stats["Credits Produced"]) + "</span><br>";
+			stats_string += "Total Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[13].production * buildings[13].count * buildings[13].production_multiplier * PRODUCTION_MULTIPLIER) + "/s</span><br>";
+			stats_string += "Base Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[13].production * buildings[13].count) + "/s</span><br>&nbsp;&nbsp; <span style='color:#00db0a;'>("+ fancyNumber(buildings[13].production) +" per fluctuation lab)</span><br>";
+			stats_string += "Fluctuation Labs Owned: <span style='color:#ff8300;'>" + buildings[13].count + "</span><br>";
+			stats_string += "Work Rate: <span style='color:#ff8300;'>" + calcWorkRateTier2(13) + "</span><br>";
+			stats_string += "Total Fluctuations: <span style='color:#F4FF1E;'>" + this.vars.total_fluxes + "</span><br>";
             stats_content.html(stats_string); 
             stats_content.css("text-align", "left");
             stats_content.toggle();
@@ -2891,6 +2999,13 @@ function initMinigames() {
             var stats_content = $(document.createElement("div"));
             stats_content.attr("id", "stats_help");
             var stats_string = "";
+			stats_string += "Credits Produced: <span style='color:#00db0a;'>" + fancyNumber(buildings[14].stats["Credits Produced"]) + "</span><br>";
+			stats_string += "Total Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[14].production * buildings[14].count * buildings[14].production_multiplier * PRODUCTION_MULTIPLIER) + "/s</span><br>";
+			stats_string += "Base Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[14].production * buildings[14].count) + "/s</span><br>&nbsp;&nbsp; <span style='color:#00db0a;'>("+ fancyNumber(buildings[14].production) +" per cloning lab)</span><br>";
+			stats_string += "Cloning Labs Owned: <span style='color:#ff8300;'>" + buildings[14].count + "</span><br>";
+			stats_string += "Work Rate: <span style='color:#ff8300;'>" + calcWorkRateTier2(14) + "</span><br>";
+			stats_string += "Clones available: <span style='color:#CD60FF;'>" + this.vars.clone_charges + "</span> <span style='color:#CD60FF;'>("+ Math.round(this.vars.clone_charge_time)+ "s)</span><br>";
+			stats_string += "Total Clones: <span style='color:#CD60FF;'>" + this.vars.total_clones + "</span><br>";
             stats_content.html(stats_string); 
             stats_content.css("text-align", "left");
             stats_content.toggle();
@@ -3057,6 +3172,13 @@ function initMinigames() {
             var stats_content = $(document.createElement("div"));
             stats_content.attr("id", "stats_help");
             var stats_string = "";
+			stats_string += "Credits Produced: <span style='color:#00db0a;'>" + fancyNumber(buildings[15].stats["Credits Produced"]) + "</span><br>";
+			stats_string += "Total Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[15].production * buildings[15].count * buildings[15].production_multiplier * PRODUCTION_MULTIPLIER) + "/s</span><br>";
+			stats_string += "Base Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[15].production * buildings[15].count) + "/s</span><br>&nbsp;&nbsp; <span style='color:#00db0a;'>("+ fancyNumber(buildings[15].production) +" per epiphany center)</span><br>";
+			stats_string += "Epiphany Centers Owned: <span style='color:#ff8300;'>" + buildings[15].count + "</span><br>";
+			stats_string += "Work Rate: <span style='color:#ff8300;'>" + calcWorkRateTier2(15) + "</span><br>";
+			stats_string += "Next Epiphany: <span style='color:#1fe1ff;'>" + Math.floor(this.vars.epiphany_time) + "s</span><br>";
+			stats_string += "Total Epiphanies: <span style='color:#1fe1ff;'>" + this.vars.total_epiphanies + "</span><br>";
             stats_content.html(stats_string); 
             stats_content.css("text-align", "left");
             stats_content.toggle();
@@ -3221,6 +3343,12 @@ function initMinigames() {
             var stats_content = $(document.createElement("div"));
             stats_content.attr("id", "stats_help");
             var stats_string = "";
+			stats_string += "Credits Produced: <span style='color:#00db0a;'>" + fancyNumber(buildings[16].stats["Credits Produced"]) + "</span><br>";
+			stats_string += "Total Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[16].production * buildings[16].count * buildings[16].production_multiplier * PRODUCTION_MULTIPLIER) + "/s</span><br>";
+			stats_string += "Base Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[16].production * buildings[16].count) + "/s</span><br>&nbsp;&nbsp; <span style='color:#00db0a;'>("+ fancyNumber(buildings[16].production) +" per merchant)</span><br>";
+			stats_string += "Merchants Owned: <span style='color:#ff8300;'>" + buildings[16].count + "</span><br>";
+			stats_string += "Work Rate: <span style='color:#ff8300;'>" + calcWorkRateTier2(16) + "</span><br>";
+			stats_string += "Total Packages: <span style='color:#e80000;'>" + this.vars.total_packages + "</span><br>";
             stats_content.html(stats_string); 
             stats_content.css("text-align", "left");
             stats_content.toggle();
@@ -3396,6 +3524,13 @@ function initMinigames() {
             var stats_content = $(document.createElement("div"));
             stats_content.attr("id", "stats_help");
             var stats_string = "";
+			stats_string += "Credits Produced: <span style='color:#00db0a;'>" + fancyNumber(buildings[17].stats["Credits Produced"]) + "</span><br>";
+			stats_string += "Total Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[17].production * buildings[7].count * buildings[7].production_multiplier * PRODUCTION_MULTIPLIER) + "/s</span><br>";
+			stats_string += "Base Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[17].production * buildings[7].count) + "/s</span><br>&nbsp;&nbsp; <span style='color:#00db0a;'>("+ fancyNumber(buildings[17].production) +" per warp facility)</span><br>";
+			stats_string += "Warp Facilities Owned: <span style='color:#ff8300;'>" + buildings[17].count + "</span><br>";
+			stats_string += "Work Rate: <span style='color:#ff8300;'>" + calcWorkRateTier2(17) + "</span><br>";
+			stats_string += "Warps: <span style='color:#87E2F5;'>" + Math.round(this.vars.warp_charges) + "/" + minigames[17].vars.warp_max_charges + "</span> <span style='color:#4A59FF;'>(" + Math.round(this.vars.warp_time) + "s)</span><br>";
+			stats_string += "Warps Activated: <span style='color:#87E2F5;'>" + minigames[17].vars.warp_activations + "</span><br>";
             stats_content.html(stats_string); 
             stats_content.css("text-align", "left");
             stats_content.toggle();
@@ -3529,6 +3664,11 @@ function initMinigames() {
             var stats_content = $(document.createElement("div"));
             stats_content.attr("id", "stats_help");
             var stats_string = "";
+			stats_string += "Credits Produced: <span style='color:#00db0a;'>" + fancyNumber(buildings[18].stats["Credits Produced"]) + "</span><br>";
+			stats_string += "Total Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[18].production * buildings[18].count * buildings[18].production_multiplier * PRODUCTION_MULTIPLIER) + "/s</span><br>";
+			stats_string += "Base Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[18].production * buildings[18].count) + "/s</span><br>&nbsp;&nbsp; <span style='color:#00db0a;'>("+ fancyNumber(buildings[18].production) +" per stellar factory)</span><br>";
+			stats_string += "Stellar Factories Owned: <span style='color:#ff8300;'>" + buildings[18].count + "</span><br>";
+			stats_string += "Work Rate: <span style='color:#ff8300;'>" + calcWorkRateTier2(18) + "</span><br>";
             stats_content.html(stats_string); 
             stats_content.css("text-align", "left");
             stats_content.toggle();
@@ -3704,6 +3844,11 @@ function initMinigames() {
             var stats_content = $(document.createElement("div"));
             stats_content.attr("id", "stats_help");
             var stats_string = "";
+			stats_string += "Credits Produced: <span style='color:#00db0a;'>" + fancyNumber(buildings[19].stats["Credits Produced"]) + "</span><br>";
+			stats_string += "Total Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[19].production * buildings[19].count * buildings[19].production_multiplier * PRODUCTION_MULTIPLIER) + "/s</span><br>";
+			stats_string += "Base Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[19].production * buildings[19].count) + "/s</span><br>&nbsp;&nbsp; <span style='color:#00db0a;'>("+ fancyNumber(buildings[19].production) +" per temporal laboratory)</span><br>";
+			stats_string += "Temporal Laboratories Owned: <span style='color:#ff8300;'>" + buildings[19].count + "</span><br>";
+			stats_string += "Work Rate: <span style='color:#ff8300;'>" + calcWorkRateTier2(19) + "</span><br>";
             stats_content.html(stats_string); 
             stats_content.css("text-align", "left");
             stats_content.toggle();
@@ -3870,6 +4015,12 @@ function initMinigames() {
             var stats_content = $(document.createElement("div"));
             stats_content.attr("id", "stats_help");
             var stats_string = "";
+			stats_string += "Credits Produced: <span style='color:#00db0a;'>" + fancyNumber(buildings[20].stats["Credits Produced"]) + "</span><br>";
+			stats_string += "Total Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[20].production * buildings[19].count * buildings[20].production_multiplier * PRODUCTION_MULTIPLIER) + "/s</span><br>";
+			stats_string += "Base Production: <span style='color:#00db0a;'>" + fancyNumber(buildings[20].production * buildings[19].count) + "/s</span><br>&nbsp;&nbsp; <span style='color:#00db0a;'>("+ fancyNumber(buildings[20].production) +" per political center)</span><br>";
+			stats_string += "Political Centers Owned: <span style='color:#ff8300;'>" + buildings[20].count + "</span><br>";
+			stats_string += "Work Rate: <span style='color:#ff8300;'>" + calcWorkRateTier2(20) + "</span><br>";
+			stats_string += "Total Decrees: <span style='color:#ffd21f;'>" + this.vars.total_decrees + "</span><br>";
             stats_content.html(stats_string); 
             stats_content.css("text-align", "left");
             stats_content.toggle();

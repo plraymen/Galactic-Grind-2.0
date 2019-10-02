@@ -134,6 +134,7 @@ function calculateProduction(dt) {
 	if (minigames[0].vars.soot_counters >= 99) {minigames[0].vars.soot_counters = 99;}
     PRODUCTION_MULTIPLIER *= 1 + (minigames[0].vars.purity_counters/100 * 3);
 	PRODUCTION_MULTIPLIER *= minigames[2].vars.card_bonus;
+	PRODUCTION_MULTIPLIER *= minigames[7].vars.package_bonus;
 	
 	PRODUCTION_MULTIPLIER *= research_growth;
 	PRODUCTION_MULTIPLIER *= corrupt_bonus;
@@ -264,6 +265,7 @@ function handleClick() {
 	
 	if (buffs[11].active && !buffs[11].frozen) {click_value *= 2}
 	if (buffs[12].active && !buffs[12].frozen) {click_value *= 0.5}
+	if (buffs[33].active && !buffs[33].frozen) {click_value *= 1.3}
 	
 	if (challenges[7].running) {click_value = PRODUCTION}
 	

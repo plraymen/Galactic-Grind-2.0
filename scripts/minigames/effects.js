@@ -1246,3 +1246,97 @@ function decree(decree_id, noPopup) {
 	if (minigames[20].vars.total_decrees > 2000) {upgrades[293].makeAvailable()}
 	if (minigames[20].vars.total_decrees > 5000) {upgrades[294].makeAvailable()}
 }
+/** Handles the user activating a bonus factory bonus, the automatic activation from overflow. */
+function activateBonus(self, bonus_index) {
+	if (minigames[7].vars.length != 0) {
+		if (self != null && self != $("#world_container")) {hideTooltip();}
+		
+		var bonus = minigames[7].vars.bonuses_stored[bonus_index];
+		minigames[7].vars.bonuses_stored.splice(bonus_index, 1);
+	
+		if (bonus == 0) {
+			buffs[23].activate(60 + 12 * upgrades[114].bought);
+			if (self != null) {popupText("+25% Production", self.offset().left + self.width()/2, self.offset().top);}
+		} else if (bonus == 1) {
+			addClockTicks(10);
+			if (self != null) {popupText("+10 Seconds", self.offset().left + self.width()/2, self.offset().top);}
+		} else if (bonus == 2) {
+			buffs[33].activate(60 + 12 * upgrades[114].bought);
+			if (self != null) {popupText("+30% Click Value", self.offset().left + self.width()/2, self.offset().top);}
+		} else if (bonus == 3) {
+			minigames[7].vars.package_bonus += 0.01;
+			if (self != null) {popupText("+1% Permanently", self.offset().left + self.width()/2, self.offset().top);}
+		}
+		
+		updateBonusPackages();
+	}
+}
+function activateBonusTooltip(self, bonus_index) {
+	var bonus_index = minigames[7].vars.bonuses_stored[bonus_index];
+	var title_string = "";
+	var content_string = "";
+	if (bonus_index == 0) {
+		title_string = "Production Bonus";
+		content_string = "Activating this bonus will increase production by 15% for 60 seconds.";
+	}
+	else if (bonus_index == 1) {
+		title_string = "Extra Seconds";
+		content_string = "Activating this bonus will grant 10 extra seconds worth of time.";
+	}
+	else if (bonus_index == 2) {
+		title_string = "Clicking Bonus";
+		content_string = "Activating this bonus will increase the value from clicking by 30% for 60 seconds";
+	}
+	else if (bonus_index == 3) {
+		title_string = "Permanent Bonus";
+		content_string = "Activating this bonus will permanently increase production by 1%"
+	}
+	
+	tooltip(self, 0, 12, title_string, content_string);
+}
+
+function updateBonusPackages() {
+	var package_container = $("#package_container");
+	if (package_container.length) {
+		package_container.empty();
+			
+		for (var i = 0; i < minigames[7].vars.bonuses_stored.length; i++) {
+			var icon = "images/bonus_production.png";
+			
+			if (minigames[7].vars.bonuses_stored[i] == 0) {icon = "images/bonus_production.png"}
+			else if (minigames[7].vars.bonuses_stored[i] == 1) {icon = "images/bonus_extra_seconds.png"}
+			else if (minigames[7].vars.bonuses_stored[i] == 2) {icon = "images/bonus_click.png"}
+			else {icon = "images/bonus_permanent.png"}
+			
+			var bonus_icon = $(document.createElement("img"));
+			bonus_icon.attr("onclick", "activateBonus($(this), " + i + ");$(this).remove();");
+			bonus_icon.attr("src", icon);
+			bonus_icon.attr("onmouseover", "activateBonusTooltip(this, "+i+")");
+			bonus_icon.attr("onmouseout", "hideTooltip()");
+			bonus_icon.css("cursor", "pointer");
+			package_container.append(bonus_icon);
+		}
+	}
+	var main_package_container = $("#package_container_main");
+	if (main_package_container.length) {
+		main_package_container.empty();
+			
+		for (var i = 0; i < minigames[7].vars.bonuses_stored.length; i++) {
+			var icon = "images/bonus_production.png";
+			
+			if (minigames[7].vars.bonuses_stored[i] == 0) {icon = "images/bonus_production.png"}
+			else if (minigames[7].vars.bonuses_stored[i] == 1) {icon = "images/bonus_extra_seconds.png"}
+			else if (minigames[7].vars.bonuses_stored[i] == 2) {icon = "images/bonus_click.png"}
+			else {icon = "images/bonus_permanent.png"}
+			
+			var bonus_icon = $(document.createElement("img"));
+			bonus_icon.attr("onclick", "activateBonus($(this), " + i + ");$(this).remove();");
+			bonus_icon.attr("src", icon);
+			bonus_icon.attr("onmouseover", "activateBonusTooltip(this, "+i+")");
+			bonus_icon.attr("onmouseout", "hideTooltip()");
+			bonus_icon.attr("width", "28");
+			bonus_icon.css("cursor", "pointer");
+			main_package_container.append(bonus_icon);
+		}
+	}	
+}

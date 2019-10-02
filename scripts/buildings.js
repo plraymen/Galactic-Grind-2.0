@@ -454,8 +454,8 @@ function initBuildings() {
 	var bonus = new Building("Bonus",
 						    "Bonus Factory", 
 						    "bonus_factory",
-						    "Bonus Factories grant bonuses over predictable intervals, with periodic negative effects.",
-						    "Bonus Factories grant bonuses over predictable intervals, with periodic negative effects.",
+						    "Bonus factories slowly store random bonuses which can later be manually activated.",
+						    "Bonus factories slowly store random bonuses which can later be manually activated.",
 						    1423828125000000, //Cost 1.42 Quadrillion
 						    10000000000000, //10 Trillion Production
 						    2,
@@ -467,7 +467,6 @@ function initBuildings() {
 						    12);
 							
 	bonus.stats["Total Bonuses"] = 0;
-	bonus.stats["Total Malfunctions"] = 0;
 							
 	var click = new Building("Click",
 						    "Click Farm", 

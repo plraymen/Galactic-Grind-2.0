@@ -1453,9 +1453,9 @@ function initUpgrades() {
         function () {},
 	)//}
 	var upgrade_114 = new Upgrade( //{
-        "Less Defects",
-        "less_defects",
-        "Bonus factories will produce a negative effect every 5th time rather than every 4th time.",
+        "Improved Quality",
+        "improved_quality",
+        "The bonuses from the bonus factory will last 20% longer.",
         "",
         7,
         12,
@@ -1477,9 +1477,9 @@ function initUpgrades() {
         function () {},
 	)//}
 	var upgrade_116 = new Upgrade( //{
-        "Universal Improvement",
-        "universal_improvement",
-        "Reduces the duration of negative effects by 5%.",
+        "Warehouses",
+        "warehouses",
+        "Increases the maximum number of bonuses that can be stored by the bonus factory by 1.",
         "",
         9,
         12,

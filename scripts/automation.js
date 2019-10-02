@@ -348,10 +348,42 @@ function initAutomation() {
 	}
 	
 	var bonus_automation = new Automation();
-	bonus_automation.vars = {};
-	bonus_automation.createHTML = function () {
-		
+	bonus_automation.vars = {
+		disabled: false,
 	}
+	bonus_automation.createHTML = function () {
+		var disable_div = $(document.createElement("div"));
+			disable_div.attr("id", "disable_div");
+			disable_div.attr("style", "font-size: 130%;");
+			disable_div.html("<br>Disable excess auto-activation:");
+			
+		var disable_button = $(document.createElement("div"));
+			disable_button.attr("onclick", "automation[7].automate()");
+			disable_button.attr("id", "disable_button");
+			if (this.vars.disabled) {
+				disable_button.attr("style", "font-size: 20px; font-weight: 900; color: black; background-color: #018f17; border: 3px solid black; border-radius: 4px; padding:5px; background-image: linear-gradient(#00b81c, #018f17); margin: 8px; cursor: pointer");
+				disable_button.html("ON");
+			} else {
+				disable_button.attr("style", "font-size: 20px; font-weight: 900; color: black; background-color: #018f17; border: 3px solid black; border-radius: 4px; padding:5px; background-image: linear-gradient(#8f0101, #c40000); margin: 8px; cursor: pointer");
+				disable_button.html("OFF");
+			}
+			
+		$("#building_automation_background").append(disable_div);
+		$("#building_automation_background").append(disable_button);
+	}
+	bonus_automation.automate = function () {
+		this.vars.disabled = !this.vars.disabled;
+		
+		var disable_button = $("#disable_button");
+		if (this.vars.disabled) {
+			disable_button.attr("style", "font-size: 20px; font-weight: 900; color: black; background-color: #018f17; border: 3px solid black; border-radius: 4px; padding:5px; background-image: linear-gradient(#00b81c, #018f17); margin: 8px; cursor: pointer");
+			disable_button.html("ON");
+		} else {
+			disable_button.attr("style", "font-size: 20px; font-weight: 900; color: black; background-color: #018f17; border: 3px solid black; border-radius: 4px; padding:5px; background-image: linear-gradient(#8f0101, #c40000); margin: 8px; cursor: pointer");
+			disable_button.html("OFF");
+		}
+	}
+	bonus_automation.automationTick = function () {}
 	
 	var click_automation = new Automation();
 	click_automation.vars = {

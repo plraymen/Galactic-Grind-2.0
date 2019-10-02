@@ -224,14 +224,16 @@ function load() {
 	var temp_version = VERSION;
     
     if (load) {
+		var previous_version = 0;
 		if (!load.VERSION) {
 			VERSION = 0.1
+		} else {
+			previous_version = load.VERSION;
 		}
 		
         CREDITS = load.CREDITS;
         BUY_COUNT = 1;
         CURRENT_TIER = 1;
-        //TIER_1_COUNT = load.TIER_1_COUNT;
 		OFFLINE_PRODUCTION = load.OFFLINE_PRODUCTION;
         PRODUCTION = load.PRODUCTION;
         GAME_SPEED = load.GAME_SPEED;
@@ -471,9 +473,30 @@ function load() {
 		if (automation[8].vars.auto_path == undefined) {automation[8].vars.auto_path = false}
 		if (automation[14].vars.auto_clone == undefined) {automation[14].vars.auto_clone = false}
 		if (automation[14].vars.last_clone == undefined) {automation[14].vars.last_clone = 0}
+		if (automation[7].vars.disabled == undefined) {automation[14].vars.disabled = false}
 		if (minigames[16].vars.package_bonus == -1) {minigames[16].vars.package_bonus = 0;}
 		if (!hotkeys.activateChallenge) {hotkeys.activateChallenge = 'c'}
 		if (!hotkeys.miniMenu) {hotkeys.miniMenu = 'Control'}
+		
+		// Rest the bonus minigame's variables but keep the total number of bonuses produced
+		if (previous_version < 0.299) {
+			minigames[7].vars = {
+				total_bonuses: 0,
+				bonus_time: 120,
+				bonus_max_time: 120,
+				package_bonus: 1,
+				max_packages: 3,
+				bonuses_stored: [], // 0 = 15% production bonus, 1 = 10 seconds worth of production, 2 = 30% bonus to clicking, 4 = +1% production permanently
+			}
+			minigames[7].vars.total_bonuses = load.minigame_vars[7].total_bonuses;
+			
+			upgrades[113].bought = false;
+			upgrades[114].bought = false;
+			upgrades[115].bought = false;
+			upgrades[116].bought = false;
+			
+			
+		}
 		
 
 		if (load.NOW) {offlineProduction((Date.now() - load.NOW) / 1000);setTimeout(updateClockDisplay, 1000)}

@@ -1,3 +1,7 @@
+Version 1.10 - Content and Bugfixes
+- Revised the bonus factory building.
+- Fixed statistics tab not opening.
+
 Version 1.05 - Bugfixes and QoL
 - Increased the production of tier 3 buildings by 20%.
 - Added tooltips for each building's storage bars.

@@ -143,7 +143,7 @@ function Buff(name, id, x, y, localTooltip, effect, stackable, negative) {
 				var kong_bonus = 1;
 				if (!this.negative && kongBuys.galactic_expansion) {kong_bonus = 1.1}
 				this.time += duration * (1 + 0.03 * minigames[5].vars.research_tree[16].bought + 0.002 * minigames[5].vars.research_tree[32].bought + 0.1 * (assistants[5].level > assistant_levels[3])) * kong_bonus;
-				if (upgrades[116].bought) {this.time /= 1.05}
+				//if (upgrades[116].bought) {this.time /= 1.05}
 				this.active = true;
 				if (this.time >= this.max_time) {
 				   this.max_time = this.time;
@@ -254,7 +254,7 @@ function initBuffs() {
 	var demonic_curse = new Buff("Demonic Curse", 20, 5, 1, function () {return " Decreases production by 15%.<br><span style='float:left;'>"+ Math.round(buffs[20].time) +"s remaining</span>";} ,function () {PRODUCTION_MULTIPLIER /= 1.15;}, false, true);
 	var intelligent_consumption = new Buff("Intelligent Consumption", 21, 6, 1, function () {return " Increases production by " + roundPlace(consumption_bonus * 100).toFixed(2) + "%.<br><span style='float:left;'>"+ Math.round(buffs[21].time) +"s remaining</span>";} ,function () {PRODUCTION_MULTIPLIER *= 1 + consumption_bonus;}, false, false);
 	var inertia_bonus = new Buff("Inertia", 22, 7, 1, function () {return "Prevents production from changing.<br><span style='float:left;'>"+ Math.round(buffs[22].time) +"s remaining</span>";} ,function () {}, false, false);
-	var factory_bonus = new Buff("Factory Bonus", 23, 8, 1, function () {return "Increases production by 12%.<br><span style='float:left;'>"+ Math.round(buffs[23].time) +"s remaining</span>";} ,function () {PRODUCTION_MULTIPLIER *= 1.12;}, false, false);
+	var factory_bonus = new Buff("Factory Bonus", 23, 8, 1, function () {return "Increases production by 15%.<br><span style='float:left;'>"+ Math.round(buffs[23].time) +"s remaining</span>";} ,function () {PRODUCTION_MULTIPLIER *= 1.15;}, false, false);
 	var factory_penalty = new Buff("Factory Penalty", 24, 8, 1, function () {return "Decreases production by 12%.<br><span style='float:left;'>"+ Math.round(buffs[24].time) +"s remaining</span>";} ,function () {PRODUCTION_MULTIPLIER /= 1.12;}, false, true);
 	var decree_penalty = new Buff("Collection Exhaustion", 25, 0, 2, function () {return "Halts production.<br><span style='float:left;'>"+ Math.round(buffs[25].time) +"s remaining</span>";} ,function () {}, false, true);
 	var petty_bonus = new Buff("Petty Bonus", 26, 1, 2, function () {return "Increases production by " + ((Math.pow(1.01, minigames[20].vars.petty_counters) - 1) * 100).toFixed(1) + "%.<br><span style='float:left;'>"+ Math.round(buffs[26].time) +"s remaining</span>";} ,function () {PRODUCTION_MULTIPLIER *= 1 + Math.pow(1.01, minigames[20].vars.petty_counters);}, false, false);
@@ -264,6 +264,7 @@ function initBuffs() {
 	var mine_sacrifice = new Buff("Mine Sacrifice", 30, 5, 2, function () {return "Increases production by 20%.<br><span style='float:left;'>"+ Math.round(buffs[30].time) +"s remaining</span>";} ,function () {PRODUCTION_MULTIPLIER *= 1.20}, false, false);
 	var power_sacrifice = new Buff("Power Sacrifice", 31, 6, 2, function () {return "Autoclicks twice per second.<br><span style='float:left;'>"+ Math.round(buffs[31].time) +"s remaining</span>";} ,function () {}, false, false);
 	var underground_corruption = new Buff("Underground Corruption", 32, 7, 2, function () {return "Increases production by 25%.<br><span style='float:left;'>"+ Math.round(buffs[32].time) +"s remaining</span>";} ,function () {PRODUCTION_MULTIPLIER *= 1.25;}, false);
+	var factory_clicks = new Buff("Factory Clicks", 33, 8, 2, function () {return "Increases the value from clicking by 30%.<br><span style='float:left;'>"+ Math.round(buffs[33].time) +"s remaining</span>";} ,function () {}, false);
 
 	buffs.push(blood_rush);
 	buffs.push(soot_bonus);
@@ -298,4 +299,5 @@ function initBuffs() {
 	buffs.push(mine_sacrifice);
 	buffs.push(power_sacrifice);
 	buffs.push(underground_corruption);
+	buffs.push(factory_clicks);
 }

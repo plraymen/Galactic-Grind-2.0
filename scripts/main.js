@@ -3,7 +3,7 @@
  */
  
 //Global variable declarations
-var VERSION = 0.2;
+var VERSION = 0.3;
 var CREDITS = 0;
 var BUY_COUNT = 1;
 var UPDATE_BUILDINGS = false;
