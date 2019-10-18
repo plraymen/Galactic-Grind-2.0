@@ -29,6 +29,10 @@ function calculateProduction(dt) {
 		if (minigames[3].vars.powered_buildings.includes(i) && !upgrades[47].bought) {building.production_multiplier *= 1.5}
 		else if (minigames[3].vars.powered_buildings.includes(i)) {building.production_multiplier *= 1.6}
 		
+		if (i < 7 && karma_upgrades[30].bought) {
+			building.production_multiplier *= 1.2;
+		}
+		
 		if (alien_target == i) {building.production_multiplier *= 1.25}
 		
 		if (upgrades[76].bought) {building.production += 25}
@@ -135,6 +139,7 @@ function calculateProduction(dt) {
     PRODUCTION_MULTIPLIER *= 1 + (minigames[0].vars.purity_counters/100 * 3);
 	PRODUCTION_MULTIPLIER *= minigames[2].vars.card_bonus;
 	PRODUCTION_MULTIPLIER *= minigames[7].vars.package_bonus;
+	PRODUCTION_MULTIPLIER *= minigames[13].vars.flux_multiplier;
 	
 	PRODUCTION_MULTIPLIER *= research_growth;
 	PRODUCTION_MULTIPLIER *= corrupt_bonus;
@@ -266,6 +271,7 @@ function handleClick() {
 	if (buffs[11].active && !buffs[11].frozen) {click_value *= 2}
 	if (buffs[12].active && !buffs[12].frozen) {click_value *= 0.5}
 	if (buffs[33].active && !buffs[33].frozen) {click_value *= 1.3}
+	if (buffs[35].active && !buffs[35].frozen) {click_value *= 1.75}
 	
 	if (challenges[7].running) {click_value = PRODUCTION}
 	
@@ -311,7 +317,7 @@ function autoclick(dt) {
 /** Calculates offline production.
 * @param {float} time - Time time since the user last played.
 */
-function offlineProduction(time) {
+function offlineProduction(time, previous_version) {
 	if (assistants[1].level >= assistant_levels[1]) {
 		for (var i = 0; i < assistants.length; i++) {
 			for (var j = 0; j < assistants[i].abilities.length; j++) {
@@ -354,6 +360,10 @@ function offlineProduction(time) {
 	//if (upgrades[185].bought) {offline_contents_string += "<span style='color:#87E2F5;'>" + offline_warps + " Warps</span> ";}
 	if (upgrades[186].bought) {offline_contents_string += "<span style='color:#87E2F5;'>" + offline_clicks + " Clicks</span> ";}
 	if (upgrades[188].bought) {offline_contents_string += "<span style='color:#CC79E8;'>" + Math.floor(offline_alien) + " Alien Research</span> ";}
+	
+	if (previous_version && previous_version < 0.499) {
+		offline_contents_string += "<br>Note: Major changes were made to cryogenic labs, bonus factories, and fluctuation labs, you can see more details in the changelog.";
+	}
 	
 	$("#offline_contents").html(offline_contents_string);
 	

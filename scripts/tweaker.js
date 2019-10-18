@@ -13,6 +13,11 @@ var tweaker = {
 		decree_collection_cost: 55,
 		decree_petty_cost: 15,
 		decree_help_cost: 75,
+		
+		flux_production_cost: 30,
+		flux_clicks_cost: 26,
+		flux_prices_cost: 30,
+		flux_translation_cost: 35,
 	},
 	
 	upgrades: {

@@ -1621,8 +1621,8 @@ function initUpgrades() {
         function () {},
 	)//}
 	var upgrade_128 = new Upgrade( //{
-        "Flash Freeze",
-        "flash_freeze",
+        "Permafrost II",
+        "permafrost",
         "Increases base production of cryogenic labs by " + fancyNumber(2000000000000 * tweaker.upgrades.building_base_2)  + ".",
         "",
         1,
@@ -1633,8 +1633,8 @@ function initUpgrades() {
         function () {},
 	)//}
 	var upgrade_129 = new Upgrade( //{
-        "Kelvin Scale",
-        "kelvin_scale",
+        "Permafrost III",
+        "permafrost_iii",
         "Increases base production of cryogenic labs by " + fancyNumber(2000000000000 * tweaker.upgrades.building_base_3)  + ".",
         "",
         2,
@@ -1645,8 +1645,8 @@ function initUpgrades() {
         function () {},
 	)//}
 	var upgrade_130 = new Upgrade( //{
-        "Cryogenic Processing",
-        "telling_time",
+        "Permafrost IV",
+        "permafrost_iv",
         "Increases base production of cryogenic labs by " + fancyNumber(2000000000000 * tweaker.upgrades.building_base_4)  + ".",
         "",
         3,
@@ -1657,8 +1657,8 @@ function initUpgrades() {
         function () {},
 	)//}
 	var upgrade_131 = new Upgrade( //{
-        "Frozen Solid",
-        "frozen_solid",
+        "Permafrost V",
+        "permafrost_v",
         "Increases base production of cryogenic labs by " + fancyNumber(2000000000000 * tweaker.upgrades.building_base_5)  + ".",
         "",
         4,
@@ -1669,8 +1669,8 @@ function initUpgrades() {
         function () {},
 	)//}
 	var upgrade_132 = new Upgrade( //{
-        "Absolute Zero",
-        "absolute_zero",
+        "Permafrost VI",
+        "permafrost_vi",
         "Increases base production of cryogenic labs by " + fancyNumber(2000000000000 * tweaker.upgrades.building_base_6)  + ".",
         "",
         5,
@@ -1681,50 +1681,50 @@ function initUpgrades() {
         function () {},
 	)//}
 	var upgrade_133 = new Upgrade( //{
-        "Warp Storage",
-        "warp_storage",
-        "Increases maximum of warps able to be stored by 5.",
+        "Flash Freeze",
+        "flash_freeze",
+        "Allows the freezing of negative effects.",
         "",
-        6,
-        12,
+        7,
+        32,
 		50000000000000000,
         function () {},
         function () {},
         function () {},
 	)//}
 	var upgrade_134 = new Upgrade( //{
-        "Temporal Anomaly",
-        "temporal_anomaly",
-        "Each time a warp is used 5 extra seconds worth of time are granted.",
+        "Frozen Solid",
+        "frozen_solid",
+        "Increases the number of buffs that can be frozen by 1.",
         "",
-        7,
-        12,
+        8,
+        32,
 		500000000000000000,
         function () {},
         function () {},
         function () {},
 	)//}
 	var upgrade_135 = new Upgrade( //{
-        "Warp Recharge",
-        "warp_recharge",
-        "Decreases the amount of time it takes to generate another warp by 15 seconds.",
+        "Creeping Chill",
+        "creeping_chill",
+        "Increases production by 5%.",
         "",
-        8,
-        12,
+        9,
+        32,
 		5000000000000000000,
-        function () {},
+        function () {PRODUCTION_MULTIPLIER *= 1.05},
         function () {},
         function () {},
 	)//}
 	var upgrade_136 = new Upgrade( //{
-        "Great Leap Forward",
-        "great_leap_forward",
-        "Warp activations grant 35, rather than 30 seconds worth of production.",
+        "Absolute Zero",
+        "Absolute Zero",
+        "Increases production by 5%.",
         "",
-        9,
-        12,
+        0,
+        33,
 		50000000000000000000,
-        function () {},
+        function () {PRODUCTION_MULTIPLIER *= 1.05},
         function () {},
         function () {},
 	)//}
@@ -2161,9 +2161,9 @@ function initUpgrades() {
         function () {},
 	)//}
 	var upgrade_173 = new Upgrade( //{
-        "Perfect Prediction",
-        "perfect_prediction",
-        "Displays the exact time until the next fluctuation.",
+        "Faster Fluctuations",
+        "further_fluctuations",
+        "Decreases the time it takes to generate flux by 10 seconds.",
         "",
         6,
         18,
@@ -2173,21 +2173,21 @@ function initUpgrades() {
         function () {},
 	)//}
 	var upgrade_174 = new Upgrade( //{
-        "Beyond Perfect Prediction",
-        "beyond_perfect_prediction",
-        "Displays the effect of the next fluctuation.",
+        "Further Fluctuations",
+        "further_fluctuations",
+        "Increases production by 5%.",
         "",
         7,
         18,
 		500000000000000000,
-        function () {},
+        function () {PRODUCTION_MULTIPLIER *= 1.05},
         function () {},
         function () {},
 	)//}
 	var upgrade_175 = new Upgrade( //{
-        "Faster Fluctuations",
-        "faster_fluctuations",
-        "Decreases time between fluctuations by 2 minutes.",
+        "Flux Storage",
+        "flux_storage",
+        "Increases the maximum amount of flux that fluctuation labs can store by 15.",
         "",
         8,
         18,
@@ -2197,9 +2197,9 @@ function initUpgrades() {
         function () {},
 	)//}
 	var upgrade_176 = new Upgrade( //{
-        "Extreme Fluctuations",
-        "extreme_fluctuations",
-        "All positive random values produced by fluctuations will be at their maximum possible value.",
+        "Lesser Consequences",
+        "lesser_consequences",
+        "Reduces the duration of the flux crash by 10 seconds.",
         "",
         9,
         18,
@@ -3076,7 +3076,7 @@ function initUpgrades() {
         9,
         17,
 		0,
-        function () {if (BUFFLESS) {PRODUCTION *= 1.02}},
+        function () {if (BUFFLESS) {PRODUCTION_MULTIPLIER *= 1.02}},
         function () {},
         function () {},
 	)//}

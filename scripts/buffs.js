@@ -87,9 +87,25 @@ function Buff(name, id, x, y, localTooltip, effect, stackable, negative) {
     };
 	/** Toggle this buff's frozen property, to prevent the buff from being updated in a normal manner. */
 	this.toggleFreeze = function () {
+		var buff_index = buffs.indexOf(this)
+		
 		if (buildings[9].count == 0) {return;}
 		if (this.id == 26) {return;}
+		if (this.negative && !upgrades[133].bought) {return;}
 
+		if (!minigames[9].vars.target_buffs.includes(buff_index) && minigames[9].vars.target_buffs.length < minigames[9].vars.maximum_buffs) {
+			minigames[9].vars.target_buffs.push(buff_index);
+			
+			this.frozen = true;
+			this.createHTML();
+		} else if (minigames[9].vars.target_buffs.includes(buff_index)) {
+			var index = minigames[9].vars.target_buffs.indexOf(buff_index)
+			minigames[9].vars.target_buffs.splice(index);
+			
+			this.frozen = false;
+			this.createHTML();
+		}
+		/*
 		if (minigames[9].vars.target_buff != buffs.indexOf(this)) {
 			for (var i = 0; i < buffs.length; i++) {
 				if (buffs[i].frozen) {
@@ -105,6 +121,7 @@ function Buff(name, id, x, y, localTooltip, effect, stackable, negative) {
 			this.frozen = false;
 			this.createHTML();
 		}
+		*/
 	}
     /** Updates the HTML for this buff's icon. */
 	this.updateHTML = function () {
@@ -265,6 +282,10 @@ function initBuffs() {
 	var power_sacrifice = new Buff("Power Sacrifice", 31, 6, 2, function () {return "Autoclicks twice per second.<br><span style='float:left;'>"+ Math.round(buffs[31].time) +"s remaining</span>";} ,function () {}, false, false);
 	var underground_corruption = new Buff("Underground Corruption", 32, 7, 2, function () {return "Increases production by 25%.<br><span style='float:left;'>"+ Math.round(buffs[32].time) +"s remaining</span>";} ,function () {PRODUCTION_MULTIPLIER *= 1.25;}, false);
 	var factory_clicks = new Buff("Factory Clicks", 33, 8, 2, function () {return "Increases the value from clicking by 30%.<br><span style='float:left;'>"+ Math.round(buffs[33].time) +"s remaining</span>";} ,function () {}, false);
+	var variable_production = new Buff("Variable Production", 34, 9, 2, function () {return "Increases production by 50%.<br><span style='float:left;'>"+ Math.round(buffs[34].time) +"s remaining</span>";} ,function () {PRODUCTION_MULTIPLIER *= 1.50;}, false);
+	var variable_clicks = new Buff("Variable Clicks", 35, 0, 3, function () {return "Increases the value from clicking by 75%.<br><span style='float:left;'>"+ Math.round(buffs[35].time) +"s remaining</span>";} ,function () {}, false);
+	var variable_prices = new Buff("Variable Prices", 36, 1, 3, function () {return "Decreases the price of all buildings 20%.<br><span style='float:left;'>"+ Math.round(buffs[36].time) +"s remaining</span>";} ,function () {COST_REDUCTION *= 1.2}, false);
+	var variable_crash = new Buff("Variable Crash", 37, 2, 3, function () {return "Cuts production in half.<br><span style='float:left;'>"+ Math.round(buffs[37].time) +"s remaining</span>";} ,function () {PRODUCTION_MULTIPLIER *= 0.5;}, false, true);
 
 	buffs.push(blood_rush);
 	buffs.push(soot_bonus);
@@ -300,4 +321,8 @@ function initBuffs() {
 	buffs.push(power_sacrifice);
 	buffs.push(underground_corruption);
 	buffs.push(factory_clicks);
+	buffs.push(variable_production);
+	buffs.push(variable_clicks);
+	buffs.push(variable_prices);
+	buffs.push(variable_crash);
 }

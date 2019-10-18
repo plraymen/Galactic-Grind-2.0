@@ -550,8 +550,8 @@ function initBuildings() {
 	var fluctuation = new Building("Flux",
 						    "Fluctuation Lab", 
 						    "fluctuation_lab",
-						    "Fluctuation labs will produce one large random effect once every 25 to 35 minutes.",
-						    "Fluctuation labs will produce one large random effect once every 25 to 35 minutes.",
+						    "Fluctuation labs generate flux that can be used to activate powerful abilities, followed by a crash.",
+						    "Fluctuation labs generate flux that can be used to activate powerful abilities, followed by a crash.",
 						    1423828125000000, //Cost 1.42 Quadrillion
 						    10000000000000, //10 Trillion Production
 						    2,

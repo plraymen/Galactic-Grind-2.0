@@ -106,6 +106,7 @@ document.addEventListener('keydown', (event) => {
 			if ($("#acceleration_lab").is(":visible")) {accelTarget(0)}	  
 			if ($("#temporal_research_lab").is(":visible")) {toggleTemporal(0)}	  
 			if ($("#political_center").is(":visible")) {decree(0)}
+			if ($("#fluctuation_lab").is(":visible")) {flux(0)}
 		}  
 		else if (key == hotkeys.activate_building_2) {
 			if ($("#cultist").is(":visible")) {performRitual(5, 60)}	
@@ -115,7 +116,8 @@ document.addEventListener('keydown', (event) => {
 			if ($("#click_farm").is(":visible")) {runPath()}
 			if ($("#acceleration_lab").is(":visible")) {accelTarget(1)}
 			if ($("#temporal_research_lab").is(":visible")) {toggleTemporal(1)}	
-			if ($("#political_center").is(":visible")) {decree(1)}			
+			if ($("#political_center").is(":visible")) {decree(1)}
+			if ($("#fluctuation_lab").is(":visible")) {flux(1)}
 		}  
 		else if (key == hotkeys.activate_building_3) {
 			if ($("#cultist").is(":visible")) {performRitual(1, 60)}
@@ -126,12 +128,14 @@ document.addEventListener('keydown', (event) => {
 			if ($("#acceleration_lab").is(":visible")) {accelTarget(2)}
 			if ($("#temporal_research_lab").is(":visible")) {toggleTemporal(2)}
 			if ($("#political_center").is(":visible")) {decree(2)}
+			if ($("#fluctuation_lab").is(":visible")) {flux(2)}
 		}  
 		else if (key == hotkeys.activate_building_4) {
 			if ($("#cultist").is(":visible") && unlocks[1].unlocked) {performRitual(3, 95)}
 			if ($("#gambler").is(":visible") && unlocks[6].unlocked) {peek()}
 			if ($("#temporal_research_lab").is(":visible")) {toggleTemporal(3)}
-			if ($("#political_center").is(":visible")) {decree(3)}			
+			if ($("#political_center").is(":visible")) {decree(3)}
+			if ($("#fluctuation_lab").is(":visible")) {flux(3)}			
 		}
 		else if (key == hotkeys.activate_building_5) {
 			if ($("#cultist").is(":visible") && unlocks[2].unlocked) {performRitual(2, 110)}

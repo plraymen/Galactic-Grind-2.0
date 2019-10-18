@@ -3,7 +3,7 @@
  */
  
 //Global variable declarations
-var VERSION = 0.3;
+var VERSION = 0.5;
 var CREDITS = 0;
 var BUY_COUNT = 1;
 var UPDATE_BUILDINGS = false;
@@ -508,4 +508,12 @@ function updateSettingsRefresh() {
 	if (settings.refresh_rate == 0) {$("#refresh_slow_checkbox").attr("checked","checked");} else {$("#refresh_slow_checkbox").removeAttr("checked");}
 	if (settings.refresh_rate == 1) {$("#refresh_med_checkbox").attr("checked","checked");} else {$("#refresh_med_checkbox").removeAttr("checked");}
 	if (settings.refresh_rate == 2) {$("#refresh_fast_checkbox").attr("checked","checked");} else {$("#refresh_fast_checkbox").removeAttr("checked");}
+}
+
+function arrayRemove(arr, value) {
+
+   return arr.filter(function(ele){
+       return ele != value;
+   });
+
 }

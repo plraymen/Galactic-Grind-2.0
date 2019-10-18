@@ -714,6 +714,7 @@ function shuffle() {
 	for (var i = 0; i < minigames[2].vars.deck.length; i++) {
 		minigames[2].vars.discard_pile.push(minigames[2].vars.deck[i]);
 	}
+	minigames[2].vars.discard_pile = Array.from(new Set(minigames[2].vars.discard_pile))
 	minigames[2].vars.deck = minigames[2].vars.discard_pile.shuffle();
 	minigames[2].vars.discard_pile = [];
 	$("#discard_pile").attr("src", "images/card_shuffle.png");
@@ -1092,50 +1093,59 @@ function calcWorkRateTier2(building_id) {
 	return Math.round(temp_value * 100) + "%";
 }
 /** Handles the effects occurring when a fluctuation from the fluctuation minigame is triggered. */
-function flux() {
-	switch (minigames[13].vars.next_flux) {
+function flux(flux_id) {
+	switch (flux_id) {
+		// Variable Production
 		case 0:
-			buffs[15].activate(270);
-			minigames[13].vars.flux_bonus_multiplier = 1.6 - Math.random() * .2;
-			if (upgrades[176].bought) {minigames[13].vars.flux_bonus_multiplier = 1.6}
-			popupText("<center>Fluctuation</center><br> +" + Math.round(minigames[13].vars.flux_bonus_multiplier * 100 - 100) + "% production", $("#world_container").offset().left + $("#world_container").width()/2, $("#world_container").offset().top);
-		break;
-		case 1:
-			var temp_add = Math.round(120 + Math.random() * 60);
-			if (upgrades[176].bought) {temp_add = 180}
-			addClockTicks(temp_add);
-			popupText("<center>Fluctuation</center><br> +" + secondsToTime(temp_add) + "", $("#world_container").offset().left + $("#world_container").width()/2, $("#world_container").offset().top);
-		break;
-		case 2:
-			var temp_add = Math.round(230 + Math.random() * 40)
-			if (upgrades[176].bought) {temp_add = 270}
-			popupText("<center>Fluctuation</center><br> +" + temp_add + " instant clicks", $("#world_container").offset().left + $("#world_container").width()/2, $("#world_container").offset().top);
-			for (var i = 0; i < temp_add; i++) {
-				handleClick();
+			if (minigames[13].vars.flux_points > tweaker.minigames.flux_production_cost) {
+				buffs[34].activate(90);
+				popupText("Variable Production", $("#world_container").offset().left + $("#world_container").width()/2, $("#world_container").offset().top);
+				minigames[13].vars.flux_points -= tweaker.minigames.flux_production_cost;
+				fluxActivated();
 			}
-		break;
+			break;
+		
+		case 1:
+			if (minigames[13].vars.flux_points > tweaker.minigames.flux_clicks_cost) {
+				buffs[35].activate(90);
+				popupText("Variable Clicks", $("#world_container").offset().left + $("#world_container").width()/2, $("#world_container").offset().top);
+				minigames[13].vars.flux_points -= tweaker.minigames.flux_clicks_cost;
+				fluxActivated();
+			}
+			break;
+			
+		case 2:
+			if (minigames[13].vars.flux_points > tweaker.minigames.flux_prices_cost) {
+				buffs[36].activate(30);
+				popupText("Variable Prices", $("#world_container").offset().left + $("#world_container").width()/2, $("#world_container").offset().top);
+				minigames[13].vars.flux_points -= tweaker.minigames.flux_prices_cost;
+				fluxActivated();
+			}
+			break;
 		case 3:
-			buffs[16].activate(150);
-			minigames[13].vars.flux_bonus_multiplier = 1.6 - Math.random() * .2;
-			popupText("<center>Fluctuation</center><br> -" + Math.round(minigames[13].vars.flux_bonus_multiplier * 100 - 100) + "% production", $("#world_container").offset().left + $("#world_container").width()/2, $("#world_container").offset().top);
-		break;
-		case 4:
-			var temp_add = Math.round(60 + Math.random() * 60)
-			addClockTicks(-temp_add);
-			if (CLOCK_TICKS < 0) {CLOCK_TICKS = 0; addClockTicks(0);}
-			addClockTicks(0);
-			popupText("<center>Fluctuation</center><br> " + secondsToTime(temp_add) + " removed", $("#world_container").offset().left + $("#world_container").width()/2, $("#world_container").offset().top);
+			if (minigames[13].vars.flux_points > tweaker.minigames.flux_translation_cost) {
+				minigames[13].vars.flux_multiplier += 0.01
+				popupText("Translation", $("#world_container").offset().left + $("#world_container").width()/2, $("#world_container").offset().top);
+				minigames[13].vars.flux_points -= tweaker.minigames.flux_translation_cost;
+				fluxActivated();
+			}
+			break;
 	}
-	
-	minigames[13].vars.next_flux = Math.floor(Math.random() * 5);
-	
-	minigames[13].vars.total_fluxes += 1;
-	buildings[13].stats["Total Fluctuations"] = minigames[13].vars.total_fluxes;
-	
+}
+function fluxActivated() {
 	if (minigames[13].vars.total_fluxes >= 1) {upgrades[173].makeAvailable();}
 	if (minigames[13].vars.total_fluxes >= 2) {upgrades[174].makeAvailable();}
 	if (minigames[13].vars.total_fluxes >= 4) {upgrades[175].makeAvailable();}
 	if (minigames[13].vars.total_fluxes >= 8) {upgrades[176].makeAvailable();}
+	
+	minigames[13].vars.total_fluxes += 1;
+	buildings[13].stats["Total Fluctuations"] = minigames[13].vars.total_fluxes;
+	
+	if (minigames[13].vars.negative_time == 120) {
+		minigames[13].vars.negative_time -= 1;
+	} else {
+		minigames[13].vars.negative_time = -1;
+	}
 	
 	updateStorageBars();
 }
@@ -1249,7 +1259,7 @@ function decree(decree_id, noPopup) {
 /** Handles the user activating a bonus factory bonus, the automatic activation from overflow. */
 function activateBonus(self, bonus_index) {
 	if (minigames[7].vars.length != 0) {
-		if (self != null && self != $("#world_container")) {hideTooltip();}
+		if (self != null && self.attr("id") != "world_container") {hideTooltip();}
 		
 		var bonus = minigames[7].vars.bonuses_stored[bonus_index];
 		minigames[7].vars.bonuses_stored.splice(bonus_index, 1);
@@ -1339,4 +1349,16 @@ function updateBonusPackages() {
 			main_package_container.append(bonus_icon);
 		}
 	}	
+}
+/* Toggles the click farm automatic click option */
+function toggleAutoClick() {
+	minigames[8].vars.autoclick = !minigames[8].vars.autoclick;
+	
+	if (minigames[8].vars.autoclick) {
+		if ($("#click_farm_auto_button").length) $("#click_farm_auto_button").attr("src", "images/click_on.png");
+		if ($("#click_farm_auto_button_main").length) $("#click_farm_auto_button_main").attr("src", "images/click_on.png");
+	} else {
+		$("#click_farm_auto_button").attr("src", "images/click_off.png");
+		if ($("#click_farm_auto_button_main").length) $("#click_farm_auto_button_main").attr("src", "images/click_off.png");
+	}
 }

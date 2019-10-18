@@ -111,6 +111,20 @@ function softReset() {
 	
 	//Free Buildings
 	for (var i = 0; i < 7; i++) {
+		if (karma_upgrades[i+31].bought) {
+			buildings[i].count += 5;
+			buildings[i].free_count += 5;
+		
+			buildings[i].unlocked = true;
+			TIER_1_COUNT += 1;
+			testTierTwo();
+			updateUnlocks();
+			$("#tier_cost_display").html(fancyNumber(tierPrice(buildings[i].tier)));
+			
+			changeTier(buildings[i].tier);
+			buildings[i].unlockUpgrades();
+		}
+		
 		if (challenges[i] && challenges[i].unlocked) {
 			buildings[i].count += 10;
 			buildings[i].free_count += 10;
@@ -310,8 +324,17 @@ function initKarmaUpgrades() {
 	karma_upgrades.push(new KarmaUpgrade("Karmatic Future III", "Karma not yet obtained from resetting increases production by 60% of what it otherwise would have.", 9, 2, 200, -536, 100000, function () {}, function () {}, 24)); //25
 	karma_upgrades.push(new KarmaUpgrade("Karmatic Future IV", "Karma not yet obtained from resetting increases production by 80% of what it otherwise would have.", 0, 3, 200, -636, 1000000, function () {}, function () {}, 25)); //26
 	karma_upgrades.push(new KarmaUpgrade("Karmatic Future V", "Karma not yet obtained from resetting increases production by 100% of what it otherwise would have.", 1, 3, 200, -736, 10000000, function () {}, function () {}, 26)); //27
-	karma_upgrades.push(new KarmaUpgrade("Zen Assistant", "Unlocks an assistant that increases production while no bonuses are active, and unlocks many new abilities. The assistant grants larger bonuses as time passes.", 1, 1, 120, 464, 700, function () {assistants[4].unlocked = true;updateSubgameButtons();}, function () {}, 0)); //28
+	karma_upgrades.push(new KarmaUpgrade("Zen Assistant", "Unlocks an assistant that increases production while no bonuses are active, and unlocks many new abilities. The assistant grants larger bonuses as time passes.", 1, 1, 120, 444, 700, function () {assistants[4].unlocked = true;updateSubgameButtons();}, function () {}, 0)); //28
 	karma_upgrades.push(new KarmaUpgrade("Assistant Assistance", "Increases the rate that assistants gain levels by 50%.", 2, 1, 120, 614, 1000, function () {}, function () {ASSISTANT_RATE *= 1.5}, 28)); //29
+	karma_upgrades.push(new KarmaUpgrade("Tier 1 Boost", "Increases the production of all tier one buildings by 20%.", 4, 4, -80, 444, 50, function () {}, function () {}, 0)); //30
+	karma_upgrades.push(new KarmaUpgrade("Free Cultists", "Grants 5 free cultists on reset (this does not increase the price of cultists).", 6, 3, -260, 264, 2000, function () {}, function () {}, 30)); //31
+	karma_upgrades.push(new KarmaUpgrade("Free Mines", "Grants 5 free mines on reset (this does not increase the price of mines).", 7, 3, -260, 324, 2000, function () {}, function () {}, 30)); //32
+	karma_upgrades.push(new KarmaUpgrade("Free Gamblers", "Grants 5 free gamblers on reset (this does not increase the price of gamblers).", 8, 3, -260, 384, 2000, function () {}, function () {}, 30)); //33
+	karma_upgrades.push(new KarmaUpgrade("Free Power", "Grants 5 free power plants on reset (this does not increase the price of power plants).", 9, 3, -260, 444, 2000, function () {}, function () {}, 30)); //34
+	karma_upgrades.push(new KarmaUpgrade("Free Banks", "Grants 5 free banks on reset (this does not increase the price of banks).", 0, 4, -260, 504, 2000, function () {}, function () {}, 30)); //35
+	karma_upgrades.push(new KarmaUpgrade("Free Research", "Grants 5 free research centers on reset (this does not increase the price of research centers).", 1, 4, -260, 564, 2000, function () {}, function () {}, 30)); //36
+	karma_upgrades.push(new KarmaUpgrade("Free Factories", "Grants 5 free factories on reset (this does not increase the price of factories).", 2, 4, -260, 624, 2000, function () {}, function () {}, 30)); //37
+	karma_upgrades.push(new KarmaUpgrade("Smart Gamblers", "The auto-draw option for gamblers is improved, and will draw, discard, or shuffle, when the odds are the good to do so.", 3, 4, -360, 384, 25000, function () {}, function () {}, 33)); //38
 	
 	karma_tree.context = document.getElementById("fullscreen_karma").getContext("2d");
 }

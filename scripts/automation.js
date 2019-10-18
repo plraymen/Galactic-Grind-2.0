@@ -156,8 +156,10 @@ function initAutomation() {
 		}
 	}
 	gambler_automation.automationTick = function () {
-		if (this.vars.auto_draw) {
+		if (this.vars.auto_draw && !karma_upgrades[38].bought) {
 			drawCard(true);
+		} else if (this.vars.auto_draw) {
+			smarterGambler();
 		}
 	}
 
@@ -481,9 +483,67 @@ function initAutomation() {
 	}
 	
 	var flux_automation = new Automation();
-	flux_automation.vars = {};
+	flux_automation.vars = {
+		target_flux: -1,
+	}
 	flux_automation.createHTML = function () {
+		var autoflux_div = $(document.createElement("div"));
+			autoflux_div.attr("id", "autoflux_div");
+			autoflux_div.attr("style", "font-size: 130%;");
+			autoflux_div.html("<br>Automatic Fluctuations:");
 		
+        var flux_production = $(document.createElement("img"));
+			flux_production.attr("src", "images/fluctuation_variable_production.png").attr("width", "48").attr("id", "fluctuation_automation_0");
+			flux_production.attr("class", "automatable");
+			flux_production.attr("onclick", "automation[13].automate(0, this);");        
+			
+		var flux_clicks = $(document.createElement("img"));
+			flux_clicks.attr("src", "images/fluctuation_variable_clicks.png").attr("width", "48").attr("id", "fluctuation_automation_1");
+			flux_clicks.attr("class", "automatable");
+			flux_clicks.attr("onclick", "automation[13].automate(1, this);");		
+			
+		var flux_prices = $(document.createElement("img"));
+			flux_prices.attr("src", "images/fluctuation_variable_prices.png").attr("width", "48").attr("id", "fluctuation_automation_2");
+			flux_prices.attr("class", "automatable");
+			flux_prices.attr("onclick", "automation[13].automate(2, this);");		
+		
+		var flux_translation = $(document.createElement("img"));
+			flux_translation.attr("src", "images/fluctuation_translation.png").attr("width", "48").attr("id", "fluctuation_automation_3");
+			flux_translation.attr("class", "automatable");
+			flux_translation.attr("onclick", "automation[13].automate(3, this);");		
+			
+		
+		$("#building_automation_background").append(autoflux_div);
+		$("#building_automation_background").append(flux_production);
+		$("#building_automation_background").append($(document.createTextNode(" ")));
+		$("#building_automation_background").append(flux_clicks);
+		$("#building_automation_background").append($(document.createTextNode(" ")));
+		$("#building_automation_background").append(flux_prices);
+		$("#building_automation_background").append($(document.createTextNode(" ")));
+		$("#building_automation_background").append(flux_translation);
+		
+		if (this.vars.target_flux != -1) {
+			$("#fluctuation_automation_" + this.vars.target_flux).addClass("automated");
+		}
+	}
+	flux_automation.automate = function(flux, ele) {
+		if (this.vars.target_flux == flux) {
+			this.vars.target_flux = -1;
+			$(ele).removeClass("automated");
+		} else {
+			this.vars.target_flux = flux;
+			
+			$('.automatable').each(function() {
+				$(this).removeClass("automated");
+			});
+			
+			$(ele).addClass("automated");
+		}
+	}
+	flux_automation.automationTick = function () {
+		if (this.vars.target_flux != -1) {
+			flux(this.vars.target_flux);
+		}
 	}
 	
 	var clone_automation = new Automation();
@@ -643,4 +703,75 @@ function initAutomation() {
 	automation.push(stellar_automation);
 	automation.push(temporal_automation);
 	automation.push(political_automation);
+}
+
+
+/*
+The following code was kindly given by Elestan
+*/
+
+function canDraw() {
+    return (minigames[2].vars.draw_charges >= 1);
+}
+function canDiscard() {
+    return (minigames[2].vars.discard_charges >= 1);
+}
+function canShuffle() {
+    return (unlocks[5].unlocked && (minigames[2].vars.deck.length <= 3));
+}
+function canPeek() {
+    return (unlocks[6].unlocked && (minigames[2].vars.peek_charges >= 1));
+}
+function havePeeked() {
+    return ($("#deck_background").attr("src") == "images/card_" + minigames[2].vars.deck.peek() + ".png" || $("#deck_background_main").attr("src") == "images/card_" + minigames[2].vars.deck.peek() + ".png");
+}
+function nextCard() {
+    return (minigames[2].vars.deck.peek());
+}
+function isBadCard(card) {
+    return ((card == 1) || (card == 3) || (card == 5) || (card == 7));
+}
+
+// Evaluate the quality of the remaining cards
+function getDeckQuality() { 
+    var bad_count = 0;
+    var good_count = 0;
+    for (var i = 0; i < minigames[2].vars.deck.length; ++i) {
+        var card = minigames[2].vars.deck[i];
+        if (isBadCard(card)) {
+            ++bad_count;
+        } else {
+            ++good_count;
+        }
+    }
+    if (good_count == 0) return 0;  // All bad
+    if (bad_count == 0) return 3;  // All good
+    if (bad_count > good_count) return 1;  // Mostly bad
+    return 2;  // Even odds or better.
+}
+
+function smarterGambler() {
+    // Deal with certain outcomes first
+    if (havePeeked() && !isBadCard(nextCard())) { drawCard(true); return; }
+    var deckQuality = getDeckQuality();
+    if (deckQuality > 2) { drawCard(true);  return; }
+
+    // Shuffles are free, so prefer them when the odds are poor
+    if ((deckQuality < 2) && canShuffle()) { shuffleDeck(true);  return; }
+
+    // More certain outcomes
+    if (deckQuality == 0) { discardCard(true);  return; }
+    if (havePeeked() && isBadCard(nextCard())) { discardCard(true);  return; }
+
+    // Forced choices
+    if (canDraw() && !canDiscard()) { drawCard(true); return; }
+    if (!canDraw() && canDiscard()) { discardCard(true); return; }
+
+    // Try to peek
+    if (canPeek()) { peek(true); return; }
+
+    // Play the odds
+    if (deckQuality < 2) { discardCard(true); return; }
+    drawCard(true);
+    return;
 }

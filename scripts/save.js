@@ -471,9 +471,11 @@ function load() {
 		if (automation[4].vars.auto_gold_to_cash == undefined) {automation[4].vars.auto_gold_to_cash = false}
 		if (automation[4].vars.auto_cash_to_gold == undefined) {automation[4].vars.auto_cash_to_gold = false}
 		if (automation[8].vars.auto_path == undefined) {automation[8].vars.auto_path = false}
+		if (automation[13].vars.target_flux == undefined) {automation[13].vars.target_flux = -1}
 		if (automation[14].vars.auto_clone == undefined) {automation[14].vars.auto_clone = false}
 		if (automation[14].vars.last_clone == undefined) {automation[14].vars.last_clone = 0}
 		if (automation[7].vars.disabled == undefined) {automation[14].vars.disabled = false}
+		if (minigames[8].vars.autoclick == undefined) {minigames[8].vars.autoclick = false}
 		if (minigames[16].vars.package_bonus == -1) {minigames[16].vars.package_bonus = 0;}
 		if (!hotkeys.activateChallenge) {hotkeys.activateChallenge = 'c'}
 		if (!hotkeys.miniMenu) {hotkeys.miniMenu = 'Control'}
@@ -493,13 +495,44 @@ function load() {
 			upgrades[113].bought = false;
 			upgrades[114].bought = false;
 			upgrades[115].bought = false;
-			upgrades[116].bought = false;
-			
-			
+			upgrades[116].bought = false;	
 		}
-		
+		// Reset the fluctuation lab
+		if (previous_version < 0.399) {
+			minigames[13].vars = {
+				flux_time: 60,
+				flux_multiplier: 1,
+				flux_points: 30,
+				max_flux_points: 30,
+				negative_time: 120,
+				max_negative_time: 120,
+				total_fluxes: 0,
+			}
+			minigames[13].vars.total_fluxes = load.minigame_vars[13].total_fluxes;
+			
+			upgrades[173].bought = false;
+			upgrades[174].bought = false;
+			upgrades[175].bought = false;
+			upgrades[176].bought = false;	
+		}
+		// Reset the cryogenic lab
+		if (previous_version < 0.499) {
+			minigames[9].vars = {
+				target_buffs: [],
+				maximum_buffs: 1,
+				frozen_time: 0,
+			}
+			if (load.minigame_vars[9].target_buff != null) {
+				minigames[9].vars.target_buffs.push(load.minigame_vars[9].target_buff);
+			}
+			
+			upgrades[133].bought = false;
+			upgrades[134].bought = false;
+			upgrades[135].bought = false;
+			upgrades[136].bought = false;	
+		}
 
-		if (load.NOW) {offlineProduction((Date.now() - load.NOW) / 1000);setTimeout(updateClockDisplay, 1000)}
+		if (load.NOW) {offlineProduction((Date.now() - load.NOW) / 1000, previous_version);setTimeout(updateClockDisplay, 1000)}
     }
 	
 	UPDATE_UPGRADES = true;
@@ -507,12 +540,16 @@ function load() {
 	
 	changeTier(CURRENT_TIER);
 	
-	if (minigames[9].vars.target_buff != null) {
+	/*if (minigames[9].vars.target_buff != null) {
 		var temp = minigames[9].vars.target_buff;
 		minigames[9].vars.target_buff = null;
 		buffs[temp].toggleFreeze();
-	}
+	}*/
 	
+	//console.log(minigames[9].vars.target_buffs.length);
+	for (var i = 0; i < minigames[9].vars.target_buffs.length; i++) {
+		buffs[minigames[9].vars.target_buffs[i]].toggleFreeze();
+	}
 
 }
 /** Updates autosave time.
