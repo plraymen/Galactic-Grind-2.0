@@ -31,6 +31,9 @@ function calculateProduction(dt) {
 		
 		if (i < 7 && karma_upgrades[30].bought) {
 			building.production_multiplier *= 1.2;
+		}		
+		if (i < 14 && i >= 7 && karma_upgrades[39].bought) {
+			building.production_multiplier *= 1.2;
 		}
 		
 		if (alien_target == i) {building.production_multiplier *= 1.25}

@@ -68,7 +68,7 @@ function Upgrade(display_name, name, description, flavor_text, x, y, price, effe
             UPDATE_UPGRADES = true;
         }
     }
-    this.updateHTML = function () {
+    this.updateHTML = function (greyout) {
         if (this.available && !this.bought) {
             var upgrade = $(document.createElement("div"));
 			var expanded_description = upgradeDescription(this);
@@ -77,6 +77,8 @@ function Upgrade(display_name, name, description, flavor_text, x, y, price, effe
             upgrade.attr("onmouseleave", "hideTooltip()");
             upgrade.attr("onclick", "upgrades["+upgrades.indexOf(this)+"].buy();");
 			upgrade.attr("id", this.name);
+			
+			if (greyout) {upgrade.css("filter", "grayscale(100%)")}
             
             $("#upgrades_container").append(upgrade);
         }
@@ -4336,11 +4338,26 @@ function updateUpgrades() {
     if (!UPDATE_UPGRADES) {return;}
     
     $("#upgrades_container").empty();
+	
+	var sorted = [];
     
     var len = upgrades.length;
     for (var i = 0; i < len; i++) {
-        upgrades[i].updateHTML();
+		//upgrades[i].updateHTML();
+		sorted.push(upgrades[i]);
     }
+	
+	sorted.sort(function(a, b) { return a.price - b.price });
+	
+	len = sorted.length;
+	for (var i = 0; i < len; i++) {
+		if (CREDITS > sorted[i].price) {
+			sorted[i].updateHTML();
+		} else {
+			sorted[i].updateHTML(true);
+		}
+	}
+	
     
     UPDATE_UPGRADES = false;
 }
