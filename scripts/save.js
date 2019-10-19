@@ -476,6 +476,7 @@ function load() {
 		if (automation[14].vars.last_clone == undefined) {automation[14].vars.last_clone = 0}
 		if (automation[7].vars.disabled == undefined) {automation[14].vars.disabled = false}
 		if (minigames[8].vars.autoclick == undefined) {minigames[8].vars.autoclick = false}
+		if (minigames[13].vars.flux_time == 1800) {minigames[13].vars.flux_time = 60}
 		if (minigames[16].vars.package_bonus == -1) {minigames[16].vars.package_bonus = 0;}
 		if (!hotkeys.activateChallenge) {hotkeys.activateChallenge = 'c'}
 		if (!hotkeys.miniMenu) {hotkeys.miniMenu = 'Control'}

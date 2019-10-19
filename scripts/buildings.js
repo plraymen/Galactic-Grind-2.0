@@ -757,7 +757,7 @@ function createBuildingTab(building) {
     var stats = $(document.createElement("img"));
     stats.attr("src", "images/icon_stats.png");
     stats.attr("style", "cursor:pointer");
-	stats.attr("onclick", "minigames["+building_index+"].createDetails();$('#detail_container').children(':nth-child(3)').children(':nth-child(2)').show();MENU_CLOSE = false;$('#detail_container').attr('onclick', 'MENU_CLOSE = false;');")
+	stats.attr("onclick", "SHOWN_DETAILS = "+building_index+";minigames["+building_index+"].createDetails();$('#detail_container').children(':nth-child(3)').children(':nth-child(2)').show();MENU_CLOSE = false;$('#detail_container').attr('onclick', 'MENU_CLOSE = false;');")
     stats.attr("onmouseover","tooltip(this, -0, -0, '"+building.display_name+"'+' Stats', calculateStats("+building_index+"))");
     stats.attr("onmouseout", "hideTooltip();");
     
@@ -766,7 +766,7 @@ function createBuildingTab(building) {
     help.attr("style", "cursor:pointer");
     help.attr("onmouseover","tooltip(this, 1, -0, '"+building.display_name+"'+' Help', 'Click to view detailed information about this building, including stats, help, and upgrades.');MENU_CLOSE = false;");
     help.attr("onmouseout", "hideTooltip();");
-    help.attr("onclick", "minigames["+building_index+"].createDetails();MENU_CLOSE = false;$('#detail_container').attr('onclick', 'MENU_CLOSE = false;');")    
+    help.attr("onclick", "SHOWN_DETAILS = "+building_index+";minigames["+building_index+"].createDetails();MENU_CLOSE = false;$('#detail_container').attr('onclick', 'MENU_CLOSE = false;');")    
 	
 	var building_upgrade_container = $(document.createElement("div"));
 		building_upgrade_container.attr("style", "position:relative;z-index:19");

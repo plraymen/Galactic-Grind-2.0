@@ -227,7 +227,7 @@ function initMinigames() {
         var close_button = $(document.createElement("img"));
         close_button.attr("src", "images/button_x.png");
         close_button.attr("style", "position:absolute;top:0px;right:0px;cursor:pointer;");
-        close_button.attr("onclick", "$('#detail_container').hide();");
+        close_button.attr("onclick", "$('#detail_container').hide();SHOWN_DETAILS = -1;");
 		close_button.attr("onmouseover", "$(this).attr('src', 'images/button_x_hover.png')");
 		close_button.attr("onmouseout", "$(this).attr('src', 'images/button_x.png')");
         
@@ -392,7 +392,7 @@ function initMinigames() {
         var close_button = $(document.createElement("img"));
         close_button.attr("src", "images/button_x.png");
         close_button.attr("style", "position:absolute;top:0px;right:0px;cursor:pointer;");
-        close_button.attr("onclick", "$('#detail_container').hide();")
+        close_button.attr("onclick", "$('#detail_container').hide();SHOWN_DETAILS = -1;")
 		close_button.attr("onmouseover", "$(this).attr('src', 'images/button_x_hover.png')");
 		close_button.attr("onmouseout", "$(this).attr('src', 'images/button_x.png')");
         
@@ -659,7 +659,7 @@ function initMinigames() {
         var close_button = $(document.createElement("img"));
         close_button.attr("src", "images/button_x.png");
         close_button.attr("style", "position:absolute;top:0px;right:0px;cursor:pointer;");
-        close_button.attr("onclick", "$('#detail_container').hide();");
+        close_button.attr("onclick", "$('#detail_container').hide();SHOWN_DETAILS = -1;");
 		close_button.attr("onmouseover", "$(this).attr('src', 'images/button_x_hover.png')");
 		close_button.attr("onmouseout", "$(this).attr('src', 'images/button_x.png')");
         
@@ -864,7 +864,7 @@ function initMinigames() {
         var close_button = $(document.createElement("img"));
         close_button.attr("src", "images/button_x.png");
         close_button.attr("style", "position:absolute;top:0px;right:0px;cursor:pointer;");
-        close_button.attr("onclick", "$('#detail_container').hide();");
+        close_button.attr("onclick", "$('#detail_container').hide();SHOWN_DETAILS = -1;");
 		close_button.attr("onmouseover", "$(this).attr('src', 'images/button_x_hover.png')");
 		close_button.attr("onmouseout", "$(this).attr('src', 'images/button_x.png')");
         
@@ -1081,7 +1081,7 @@ function initMinigames() {
         var close_button = $(document.createElement("img"));
         close_button.attr("src", "images/button_x.png");
         close_button.attr("style", "position:absolute;top:0px;right:0px;cursor:pointer;");
-        close_button.attr("onclick", "$('#detail_container').hide();");
+        close_button.attr("onclick", "$('#detail_container').hide();SHOWN_DETAILS = -1;");
 		close_button.attr("onmouseover", "$(this).attr('src', 'images/button_x_hover.png')");
 		close_button.attr("onmouseout", "$(this).attr('src', 'images/button_x.png')");
 		
@@ -1395,7 +1395,7 @@ function initMinigames() {
         var close_button = $(document.createElement("img"));
         close_button.attr("src", "images/button_x.png");
         close_button.attr("style", "position:absolute;top:0px;right:0px;cursor:pointer;");
-        close_button.attr("onclick", "$('#detail_container').hide();");
+        close_button.attr("onclick", "$('#detail_container').hide();SHOWN_DETAILS = -1;");
 		close_button.attr("onmouseover", "$(this).attr('src', 'images/button_x_hover.png')");
 		close_button.attr("onmouseout", "$(this).attr('src', 'images/button_x.png')");
         
@@ -1537,7 +1537,7 @@ function initMinigames() {
         var close_button = $(document.createElement("img"));
         close_button.attr("src", "images/button_x.png");
         close_button.attr("style", "position:absolute;top:0px;right:0px;cursor:pointer;");
-        close_button.attr("onclick", "$('#detail_container').hide();");
+        close_button.attr("onclick", "$('#detail_container').hide();SHOWN_DETAILS = -1;");
 		close_button.attr("onmouseover", "$(this).attr('src', 'images/button_x_hover.png')");
 		close_button.attr("onmouseout", "$(this).attr('src', 'images/button_x.png')");
         
@@ -1702,7 +1702,7 @@ function initMinigames() {
         var close_button = $(document.createElement("img"));
         close_button.attr("src", "images/button_x.png");
         close_button.attr("style", "position:absolute;top:0px;right:0px;cursor:pointer;");
-        close_button.attr("onclick", "$('#detail_container').hide();");
+        close_button.attr("onclick", "$('#detail_container').hide();SHOWN_DETAILS = -1;");
 		close_button.attr("onmouseover", "$(this).attr('src', 'images/button_x_hover.png')");
 		close_button.attr("onmouseout", "$(this).attr('src', 'images/button_x.png')");
         
@@ -1924,7 +1924,7 @@ function initMinigames() {
         var close_button = $(document.createElement("img"));
         close_button.attr("src", "images/button_x.png");
         close_button.attr("style", "position:absolute;top:0px;right:0px;cursor:pointer;");
-        close_button.attr("onclick", "$('#detail_container').hide();");
+        close_button.attr("onclick", "$('#detail_container').hide();SHOWN_DETAILS = -1;");
 		close_button.attr("onmouseover", "$(this).attr('src', 'images/button_x_hover.png')");
 		close_button.attr("onmouseout", "$(this).attr('src', 'images/button_x.png')");
         
@@ -2152,7 +2152,7 @@ function initMinigames() {
         var close_button = $(document.createElement("img"));
         close_button.attr("src", "images/button_x.png");
         close_button.attr("style", "position:absolute;top:0px;right:0px;cursor:pointer;");
-        close_button.attr("onclick", "$('#detail_container').hide();");
+        close_button.attr("onclick", "$('#detail_container').hide();SHOWN_DETAILS = -1;");
 		close_button.attr("onmouseover", "$(this).attr('src', 'images/button_x_hover.png')");
 		close_button.attr("onmouseout", "$(this).attr('src', 'images/button_x.png')");
         
@@ -2315,7 +2315,7 @@ function initMinigames() {
         var close_button = $(document.createElement("img"));
         close_button.attr("src", "images/button_x.png");
         close_button.attr("style", "position:absolute;top:0px;right:0px;cursor:pointer;");
-        close_button.attr("onclick", "$('#detail_container').hide();");
+        close_button.attr("onclick", "$('#detail_container').hide();SHOWN_DETAILS = -1;");
 		close_button.attr("onmouseover", "$(this).attr('src', 'images/button_x_hover.png')");
 		close_button.attr("onmouseout", "$(this).attr('src', 'images/button_x.png')");
         
@@ -2523,7 +2523,7 @@ function initMinigames() {
         var close_button = $(document.createElement("img"));
         close_button.attr("src", "images/button_x.png");
         close_button.attr("style", "position:absolute;top:0px;right:0px;cursor:pointer;");
-        close_button.attr("onclick", "$('#detail_container').hide();");
+        close_button.attr("onclick", "$('#detail_container').hide();SHOWN_DETAILS = -1;");
 		close_button.attr("onmouseover", "$(this).attr('src', 'images/button_x_hover.png')");
 		close_button.attr("onmouseout", "$(this).attr('src', 'images/button_x.png')");
         
@@ -2756,7 +2756,7 @@ function initMinigames() {
         var close_button = $(document.createElement("img"));
         close_button.attr("src", "images/button_x.png");
         close_button.attr("style", "position:absolute;top:0px;right:0px;cursor:pointer;");
-        close_button.attr("onclick", "$('#detail_container').hide();");
+        close_button.attr("onclick", "$('#detail_container').hide();SHOWN_DETAILS = -1;");
 		close_button.attr("onmouseover", "$(this).attr('src', 'images/button_x_hover.png')");
 		close_button.attr("onmouseout", "$(this).attr('src', 'images/button_x.png')");
         
@@ -2949,7 +2949,7 @@ function initMinigames() {
         var close_button = $(document.createElement("img"));
         close_button.attr("src", "images/button_x.png");
         close_button.attr("style", "position:absolute;top:0px;right:0px;cursor:pointer;");
-        close_button.attr("onclick", "$('#detail_container').hide();");
+        close_button.attr("onclick", "$('#detail_container').hide();SHOWN_DETAILS = -1;");
 		close_button.attr("onmouseover", "$(this).attr('src', 'images/button_x_hover.png')");
 		close_button.attr("onmouseout", "$(this).attr('src', 'images/button_x.png')");
         
@@ -3111,7 +3111,7 @@ function initMinigames() {
         var close_button = $(document.createElement("img"));
         close_button.attr("src", "images/button_x.png");
         close_button.attr("style", "position:absolute;top:0px;right:0px;cursor:pointer;");
-        close_button.attr("onclick", "$('#detail_container').hide();");
+        close_button.attr("onclick", "$('#detail_container').hide();SHOWN_DETAILS = -1;");
 		close_button.attr("onmouseover", "$(this).attr('src', 'images/button_x_hover.png')");
 		close_button.attr("onmouseout", "$(this).attr('src', 'images/button_x.png')");
         
@@ -3284,7 +3284,7 @@ function initMinigames() {
         var close_button = $(document.createElement("img"));
         close_button.attr("src", "images/button_x.png");
         close_button.attr("style", "position:absolute;top:0px;right:0px;cursor:pointer;");
-        close_button.attr("onclick", "$('#detail_container').hide();");
+        close_button.attr("onclick", "$('#detail_container').hide();SHOWN_DETAILS = -1;");
 		close_button.attr("onmouseover", "$(this).attr('src', 'images/button_x_hover.png')");
 		close_button.attr("onmouseout", "$(this).attr('src', 'images/button_x.png')");
         
@@ -3454,7 +3454,7 @@ function initMinigames() {
         var close_button = $(document.createElement("img"));
         close_button.attr("src", "images/button_x.png");
         close_button.attr("style", "position:absolute;top:0px;right:0px;cursor:pointer;");
-        close_button.attr("onclick", "$('#detail_container').hide();");
+        close_button.attr("onclick", "$('#detail_container').hide();SHOWN_DETAILS = -1;");
 		close_button.attr("onmouseover", "$(this).attr('src', 'images/button_x_hover.png')");
 		close_button.attr("onmouseout", "$(this).attr('src', 'images/button_x.png')");
         
@@ -3636,7 +3636,7 @@ function initMinigames() {
         var close_button = $(document.createElement("img"));
         close_button.attr("src", "images/button_x.png");
         close_button.attr("style", "position:absolute;top:0px;right:0px;cursor:pointer;");
-        close_button.attr("onclick", "$('#detail_container').hide();");
+        close_button.attr("onclick", "$('#detail_container').hide();SHOWN_DETAILS = -1;");
 		close_button.attr("onmouseover", "$(this).attr('src', 'images/button_x_hover.png')");
 		close_button.attr("onmouseout", "$(this).attr('src', 'images/button_x.png')");
         
@@ -3774,7 +3774,7 @@ function initMinigames() {
         var close_button = $(document.createElement("img"));
         close_button.attr("src", "images/button_x.png");
         close_button.attr("style", "position:absolute;top:0px;right:0px;cursor:pointer;");
-        close_button.attr("onclick", "$('#detail_container').hide();");
+        close_button.attr("onclick", "$('#detail_container').hide();SHOWN_DETAILS = -1;");
 		close_button.attr("onmouseover", "$(this).attr('src', 'images/button_x_hover.png')");
 		close_button.attr("onmouseout", "$(this).attr('src', 'images/button_x.png')");
         
@@ -3954,7 +3954,7 @@ function initMinigames() {
         var close_button = $(document.createElement("img"));
         close_button.attr("src", "images/button_x.png");
         close_button.attr("style", "position:absolute;top:0px;right:0px;cursor:pointer;");
-        close_button.attr("onclick", "$('#detail_container').hide();");
+        close_button.attr("onclick", "$('#detail_container').hide();SHOWN_DETAILS = -1;");
 		close_button.attr("onmouseover", "$(this).attr('src', 'images/button_x_hover.png')");
 		close_button.attr("onmouseout", "$(this).attr('src', 'images/button_x.png')");
         
@@ -4126,7 +4126,7 @@ function initMinigames() {
         var close_button = $(document.createElement("img"));
         close_button.attr("src", "images/button_x.png");
         close_button.attr("style", "position:absolute;top:0px;right:0px;cursor:pointer;");
-        close_button.attr("onclick", "$('#detail_container').hide();");
+        close_button.attr("onclick", "$('#detail_container').hide();SHOWN_DETAILS = -1;");
 		close_button.attr("onmouseover", "$(this).attr('src', 'images/button_x_hover.png')");
 		close_button.attr("onmouseout", "$(this).attr('src', 'images/button_x.png')");
         

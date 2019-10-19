@@ -72,6 +72,7 @@ document.addEventListener('keydown', (event) => {
 			if (SHOWN_TAB != -1) {
 				toggleBuildingTab(buildings[SHOWN_TAB]);
 			}
+			SHOWN_DETAILS = -1;
 			stopEdit();
 			hideTooltip();
 			//Pop into tutorial
@@ -380,6 +381,8 @@ $(document).on("click", function () {
 		$("#soft_reset_confirmation").remove();
 		$("#kong_shop").remove();
 		$("#login_popup").remove();
+		
+		SHOWN_DETAILS = -1;
 	}
 	MENU_CLOSE = true;
 });

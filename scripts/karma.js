@@ -78,8 +78,8 @@ function softReset() {
 	minigames[9].vars.target_buff = null;
 	minigames[10].vars.alien_power = minigames[10].vars.max_power;
 	minigames[12].vars.accel_target = -1;
-	minigames[13].vars.flux_time = 1800;
-	minigames[14].vars.clone_charges = 1;minigames[14].vars.clone_targets = [];minigames[14].vars.clone_times = [];
+	minigames[14].vars.clone_charges = 1;
+	minigames[14].vars.clone_targets = [];minigames[14].vars.clone_times = [];
 	minigames[15].vars.epiphany_time = 300;minigames[15].vars.epiphany_target = -1;
 	minigames[16].vars.package_time = 300;
 	minigames[17].vars.warp_charges = 3;minigames[17].vars.warp_time = 180;

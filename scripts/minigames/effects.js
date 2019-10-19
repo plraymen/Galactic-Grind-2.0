@@ -310,7 +310,7 @@ function updateBuildingExplanation(building_id) {
 /** Updates the help text in the building submenu.
  */
 function updateBuildingHelp() {
-    if (SHOWN_TAB != -1) {minigames[SHOWN_TAB].updateDetails();}
+    if (SHOWN_DETAILS != -1) {minigames[SHOWN_DETAILS].updateDetails();}
 }
 /** Creates and returns a jquery element for the given upgrade array.
  * @param {array} upgrade - The upgrade array containing all necessary data for the element.
