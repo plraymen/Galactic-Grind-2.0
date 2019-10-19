@@ -22,6 +22,7 @@ var WORLD_TIME = 0;
 var CLOCK_TICKS = 0;
 var GAME_SPEED = 1;
 var SHOWN_TAB = -1;
+var SHOWN_DETAILS = -1;
 var TOOLTIP_FUNCTION = null;
 var BUFFLESS = true;
 var CLICK_BASE = 1;
