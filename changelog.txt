@@ -1,3 +1,9 @@
+Version 1.11 - Content and Bugfixes
+- Added karma upgrade for +20% tier two production.
+- Added 7 karma upgrades for free tier 2 buildings.
+- Fixed karma upgrades tooltips going haywire.
+
+
 Version 1.10 - Content and Bugfixes
 - Revised the bonus factory building.
 	+ Now generates one of four different bonuses

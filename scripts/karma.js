@@ -125,6 +125,20 @@ function softReset() {
 			buildings[i].unlockUpgrades();
 		}
 		
+		if (karma_upgrades[i+40].bought) {
+			buildings[i+7].count += 5;
+			buildings[i+7].free_count += 5;
+		
+			buildings[i+7].unlocked = true;
+			TIER_2_COUNT += 1;
+			testTierThree();
+			updateUnlocks();
+			//$("#tier_cost_display").html(fancyNumber(tierPrice(buildings[i].tier)));
+			
+			//changeTier(buildings[i].tier);
+			buildings[i].unlockUpgrades();
+		}
+		
 		if (challenges[i] && challenges[i].unlocked) {
 			buildings[i].count += 10;
 			buildings[i].free_count += 10;
@@ -335,6 +349,14 @@ function initKarmaUpgrades() {
 	karma_upgrades.push(new KarmaUpgrade("Free Research", "Grants 5 free research centers on reset (this does not increase the price of research centers).", 1, 4, -260, 564, 2000, function () {}, function () {}, 30)); //36
 	karma_upgrades.push(new KarmaUpgrade("Free Factories", "Grants 5 free factories on reset (this does not increase the price of factories).", 2, 4, -260, 624, 2000, function () {}, function () {}, 30)); //37
 	karma_upgrades.push(new KarmaUpgrade("Smart Gamblers", "The auto-draw option for gamblers is improved, and will draw, discard, or shuffle, when the odds are the good to do so.", 3, 4, -360, 384, 25000, function () {}, function () {}, 33)); //38
+	karma_upgrades.push(new KarmaUpgrade("Tier 2 Boost", "Increases the production of all tier two buildings by 20%.", 5, 4, 320, 444, 250, function () {}, function () {}, 0)); //39
+	karma_upgrades.push(new KarmaUpgrade("Free Factories", "Grants 5 free bonus factories on reset (this does not increase the price of bonus factories).", 6, 4, 500, 264, 75000, function () {}, function () {}, 39)); //40
+	karma_upgrades.push(new KarmaUpgrade("Free Clicks", "Grants 5 free click farms on reset (this does not increase the price of click farms).", 7, 4, 500, 324, 75000, function () {}, function () {}, 39)); //41
+	karma_upgrades.push(new KarmaUpgrade("Free Freezes", "Grants 5 free cryogenic labs on reset (this does not increase the price of cryogenic labs).", 8, 4, 500, 384, 75000, function () {}, function () {}, 39)); //42
+	karma_upgrades.push(new KarmaUpgrade("Free Aliens", "Grants 5 free alien labs on reset (this does not increase the price of alien labs).", 9, 4, 500, 444, 75000, function () {}, function () {}, 39)); //43
+	karma_upgrades.push(new KarmaUpgrade("Free Computers", "Grants 5 free mainframe computers on reset (this does not increase the price of mainframe computers).", 0, 5, 500, 504, 75000, function () {}, function () {}, 39)); //44
+	karma_upgrades.push(new KarmaUpgrade("Free Acceleration", "Grants 5 free acceleration labs on reset (this does not increase the price of acceleration labs).", 1, 5, 500, 564, 75000, function () {}, function () {}, 39)); //45
+	karma_upgrades.push(new KarmaUpgrade("Free Flux", "Grants 5 free fluctuation labs on reset (this does not increase the price of fluctations labs).", 2, 5, 500, 624, 75000, function () {}, function () {}, 39)); //46
 	
 	karma_tree.context = document.getElementById("fullscreen_karma").getContext("2d");
 }
