@@ -106,7 +106,7 @@ function karmaTooltip(node) {
     var y = ele.offset().top + node.y - karma_tree.camera.y;
     
 	if (x + $("#tooltip").width() > $(window).width()) {
-		x = ele.offset().left + node.x - minigames[5].vars.research_camera.x - $("#tooltip").width();
+		x = ele.offset().left + node.x - karma_tree.camera.x - $("#tooltip").width();
 	}	
 
     $("#tooltip").offset({ top: (y), left: (x)});
