@@ -34,7 +34,7 @@ function fancyNumber(x) {
 		else if (x>=1e54 && x<1e57) {return negative + roundPlace(x/1e54).toFixed(2)+" Septendecillion"}
 		else if (x>=1e57 && x<1e60) {return negative + roundPlace(x/1e57).toFixed(2)+" Octodecillion"}
 		else if (x>=1e60 && x<1e63) {return negative + roundPlace(x/1e60).toFixed(2)+" Novemdecillion"}
-		else {return "Infinity"}
+		else if (x>=1e63){return negative + x.toPrecision(3);}
 	} else {
 		if (x < 1000000) {return negative + (Math.ceil(x*10)/10).toFixed(1);}
 		else {return negative + x.toPrecision(3);}

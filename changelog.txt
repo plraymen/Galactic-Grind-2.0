@@ -2,6 +2,7 @@ Version 1.11 - Content and Bugfixes
 - Added karma upgrade for +20% tier two production.
 - Added 7 karma upgrades for free tier 2 buildings.
 - Fixed karma upgrades tooltips going haywire.
+- Fixed stats tab switching when building tab switched.
 - Fixed flux not generating correctly after resets.
 
 Version 1.10 - Content and Bugfixes
